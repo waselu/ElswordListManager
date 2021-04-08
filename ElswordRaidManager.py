@@ -28,55 +28,55 @@ charArray = [
     {"classNaming": ["NI", "NovaImperator", "Raven3"], "emoji": "<:NI:828906563854401557>"},
 
     #Eve
-    {"classNaming": ["CU", "CodeUlimate", "Eve1"], "emoji": ""},
-    {"classNaming": ["CE", "CodeEmpress", "Eve2"], "emoji": ""},
-    {"classNaming": ["CS", "CodeSariel", "Eve3"], "emoji": ""},
+    {"classNaming": ["CU", "CodeUlimate", "Eve1"], "emoji": "<:CU:829692771001434123>"},
+    {"classNaming": ["CE", "CodeEmpress", "Eve2"], "emoji": "<:CE:829692784616144937>"},
+    {"classNaming": ["CS", "CodeSariel", "Eve3"], "emoji": "<:CS:829692792996626492>"},
 
     #Chung
-    {"classNaming": ["CC", "CometCrusader", "Chung1"], "emoji": ""},
-    {"classNaming": ["FP", "FatamPhantom", "Chung2"], "emoji": ""},
-    {"classNaming": ["CeT", "Centurion", "Chung3"], "emoji": ""},
+    {"classNaming": ["CC", "CometCrusader", "Chung1"], "emoji": "<:CC:829692798965907506>"},
+    {"classNaming": ["FP", "FatamPhantom", "Chung2"], "emoji": "<:FP:829692805261426768>"},
+    {"classNaming": ["CeT", "Centurion", "Chung3"], "emoji": "<:CeT:829692812248350740>"},
 
     #Ara
-    {"classNaming": ["Aps", "Apsara", "Ara1"], "emoji": ""},
-    {"classNaming": ["Devi", "Ara2"], "emoji": ""},
-    {"classNaming": ["SH", "Shakti", "Ara3"], "emoji": ""},
+    {"classNaming": ["Aps", "Apsara", "Ara1"], "emoji": "<:Aps:829692821556297768>"},
+    {"classNaming": ["Devi", "Ara2"], "emoji": "<:Devi:829692829151526953>"},
+    {"classNaming": ["SH", "Shakti", "Ara3"], "emoji": "<:SH:829692836790009856>"},
 
     #Elesis
-    {"classNaming": ["ES", "EmpireSword", "Elesis1"], "emoji": ""},
-    {"classNaming": ["FL", "FlameLord", "Elesis2"], "emoji": ""},
-    {"classNaming": ["BQ", "BloodyQueen", "Elesis3"], "emoji": ""},
+    {"classNaming": ["ES", "EmpireSword", "Elesis1"], "emoji": "<:ES:829692843583864833>"},
+    {"classNaming": ["FL", "FlameLord", "Elesis2"], "emoji": "<:FL:829692850333417493>"},
+    {"classNaming": ["BQ", "BloodyQueen", "Elesis3"], "emoji": "<:BQ:829692858138099713>"},
 
     #Add
-    {"classNaming": ["DB", "DoomBringer", "Add1"], "emoji": ""},
-    {"classNaming": ["DoM", "Dominator", "Add2"], "emoji": ""},
-    {"classNaming": ["MP", "MadParadox", "Add3"], "emoji": ""},
+    {"classNaming": ["DB", "DoomBringer", "Add1"], "emoji": "<:DB:829692865458339840>"},
+    {"classNaming": ["DoM", "Dominator", "Add2"], "emoji": "<:DoM:829692872197668884>"},
+    {"classNaming": ["MP", "MadParadox", "Add3"], "emoji": "<:MP:829692880179298334>"},
 
     #Luciel
-    {"classNaming": ["Cat", "Catastrophe", "Luciel1"], "emoji": ""},
-    {"classNaming": ["IN", "Innocent", "Luciel2"], "emoji": ""},
-    {"classNaming": ["DiA", "Diangelion", "Luciel3"], "emoji": ""},
+    {"classNaming": ["Cat", "Catastrophe", "Luciel1"], "emoji": "<:CaT:829692887818174484>"},
+    {"classNaming": ["IN", "Innocent", "Luciel2"], "emoji": "<:IN:829692895664930816>"},
+    {"classNaming": ["DiA", "Diangelion", "Luciel3"], "emoji": "<:DiA:829692905031073842>"},
 
     #Rose
-    {"classNaming": ["TB", "TempestBurster", "Rose1"], "emoji": ""},
-    {"classNaming": ["BlM", "BM", "BlackMassacre", "Rose2"], "emoji": ""},
-    {"classNaming": ["Minverva", "Rose3"], "emoji": ""},
-    {"classNaming": ["PO", "PrimeOperator", "Rose4"], "emoji": ""},
+    {"classNaming": ["TB", "TempestBurster", "Rose1"], "emoji": "<:TB:829692997171806218>"},
+    {"classNaming": ["BlM", "BM", "BlackMassacre", "Rose2"], "emoji": "<:BlM:829693008319610920>"},
+    {"classNaming": ["MN", "Minerva", "Rose3"], "emoji": "<:MN:829693015697260544>"},
+    {"classNaming": ["PO", "PrimeOperator", "Rose4"], "emoji": "<:PO:829693022211014677>"},
 
     #Ain
-    {"classNaming": ["Richter", "Ain1"], "emoji": ""},
-    {"classNaming": ["BL", "Bluhen", "Ain2"], "emoji": ""},
-    {"classNaming": ["HR", "Herrscher", "Ain3"], "emoji": ""},
+    {"classNaming": ["RI", "Richter", "Ain1"], "emoji": "<:RI:829693030138642453>"},
+    {"classNaming": ["BL", "Bluhen", "Ain2"], "emoji": "<:BL:829693036996460576>"},
+    {"classNaming": ["HR", "Herrscher", "Ain3"], "emoji": "<:HR:829693044478443580>"},
 
     #Laby
-    {"classNaming": ["EtW", "EternityWinner", "Laby1"], "emoji": ""},
-    {"classNaming": ["RaS", "RadiantSoul", "Laby2"], "emoji": ""},
-    {"classNaming": ["NL", "Nisha", "NishaLabyrinth", "Laby3"], "emoji": ""},
+    {"classNaming": ["EtW", "EternityWinner", "Laby1"], "emoji": "<:EtW:829693052670312499>"},
+    {"classNaming": ["RaS", "RadiantSoul", "Laby2"], "emoji": "<:RaS:829693063508656140>"},
+    {"classNaming": ["NL", "Nisha", "NishaLabyrinth", "Laby3"], "emoji": "<:NL:829693114222379008>"},
 
     #Noah
-    {"classNaming": ["LB", "Liberator", "Noah1"], "emoji": ""},
-    {"classNaming": ["CL", "Celestia", "Noah2"], "emoji": ""},
-    {"classNaming": ["NP", "NyxPieta", "Noah3"], "emoji": ""},
+    {"classNaming": ["LB", "Liberator", "Noah1"], "emoji": "<:LB:829693124698832936>"},
+    {"classNaming": ["CL", "Celestia", "Noah2"], "emoji": "<:CL:829693133171326978>"},
+    {"classNaming": ["NP", "NyxPieta", "Noah3"], "emoji": "<:NP:829693142995435582>"},
 ]
 
 attributes = [
