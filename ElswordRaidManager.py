@@ -7,37 +7,76 @@ import sys
 #TODO: full class list
 
 charArray = [
+    #Elsword
     {"classNaming": ["KE", "KnightEmperor", "Elsword1"], "emoji": "<:KE:828899757359366166>"},
     {"classNaming": ["RM", "RuneMaster", "Elsword2"], "emoji": "<:RM:828906428584296470>"},
     {"classNaming": ["IM", "Immortal", "Elsword3"], "emoji": "<:IM:828906440948973568>"},
 
+    #Aisha
     {"classNaming": ["AeS", "AetherSage", "Aisha1"], "emoji": "<:AeS:828906464453066822>"},
     {"classNaming": ["OZ", "OzSorcerer", "Aisha2"], "emoji": "<:OZ:828906512742612992>"},
     {"classNaming": ["MtM", "Metamorphy", "Aisha3"], "emoji": "<:MtM:828906520639963197>"},
 
+    #Rena
     {"classNaming": ["AN", "Anemos", "Rena1"], "emoji": "<:AN:828906527023824917>"},
     {"classNaming": ["DaB", "DayBreaker", "Rena2"], "emoji": "<:DaB:828906534837682176>"},
     {"classNaming": ["TW", "Twilight", "Rena3"], "emoji": "<:TW:828906542303805472>"},
 
+    #Raven
     {"classNaming": ["FB", "FuriousBlade", "Raven1"], "emoji": "<:FB:828906550957572147>"},
     {"classNaming": ["RH", "RageHearts", "Raven2"], "emoji": "<:RH:828906557462806548>"},
-    {"classNaming": ["NI", "NovaImperator", "Raven3"], "emoji": "<:NI:828906563854401557>"}
+    {"classNaming": ["NI", "NovaImperator", "Raven3"], "emoji": "<:NI:828906563854401557>"},
 
-    {"classNaming": ["CU", "CodeUlimate", "Eve1"], "emoji": ""}
-    {"classNaming": ["CE", "CodeEmpress", "Eve2"], "emoji": ""}
-    {"classNaming": ["CS", "CodeSariel", "Eve3"], "emoji": ""}
+    #Eve
+    {"classNaming": ["CU", "CodeUlimate", "Eve1"], "emoji": ""},
+    {"classNaming": ["CE", "CodeEmpress", "Eve2"], "emoji": ""},
+    {"classNaming": ["CS", "CodeSariel", "Eve3"], "emoji": ""},
 
-    {"classNaming": ["CC", "CometCrusader", "Chung1"], "emoji": ""}
-    {"classNaming": ["FP", "FatamPhantom", "Chung2"], "emoji": ""}
-    {"classNaming": ["CeT", "Centurion", "Chung3"], "emoji": ""}
+    #Chung
+    {"classNaming": ["CC", "CometCrusader", "Chung1"], "emoji": ""},
+    {"classNaming": ["FP", "FatamPhantom", "Chung2"], "emoji": ""},
+    {"classNaming": ["CeT", "Centurion", "Chung3"], "emoji": ""},
 
-    {"classNaming": ["Aps", "Apsara", "Ara1"], "emoji": ""}
-    {"classNaming": ["Devi", "Ara2"], "emoji": ""}
-    {"classNaming": ["SH", "Shakti", "Ara3"], "emoji": ""}
+    #Ara
+    {"classNaming": ["Aps", "Apsara", "Ara1"], "emoji": ""},
+    {"classNaming": ["Devi", "Ara2"], "emoji": ""},
+    {"classNaming": ["SH", "Shakti", "Ara3"], "emoji": ""},
 
-    {"classNaming": ["ES", "EmpireSword", "Elesis1"], "emoji": ""}
-    {"classNaming": ["FL", "FlameLord", "Elesis2"], "emoji": ""}
-    {"classNaming": ["BQ", "BloodyQueen", "Elesis3"], "emoji": ""}
+    #Elesis
+    {"classNaming": ["ES", "EmpireSword", "Elesis1"], "emoji": ""},
+    {"classNaming": ["FL", "FlameLord", "Elesis2"], "emoji": ""},
+    {"classNaming": ["BQ", "BloodyQueen", "Elesis3"], "emoji": ""},
+
+    #Add
+    {"classNaming": ["DB", "DoomBringer", "Add1"], "emoji": ""},
+    {"classNaming": ["DoM", "Dominator", "Add2"], "emoji": ""},
+    {"classNaming": ["MP", "MadParadox", "Add3"], "emoji": ""},
+
+    #Luciel
+    {"classNaming": ["Cat", "Catastrophe", "Luciel1"], "emoji": ""},
+    {"classNaming": ["IN", "Innocent", "Luciel2"], "emoji": ""},
+    {"classNaming": ["DiA", "Diangelion", "Luciel3"], "emoji": ""},
+
+    #Rose
+    {"classNaming": ["TB", "TempestBurster", "Rose1"], "emoji": ""},
+    {"classNaming": ["BlM", "BM", "BlackMassacre", "Rose2"], "emoji": ""},
+    {"classNaming": ["Minverva", "Rose3"], "emoji": ""},
+    {"classNaming": ["PO", "PrimeOperator", "Rose4"], "emoji": ""},
+
+    #Ain
+    {"classNaming": ["Richter", "Ain1"], "emoji": ""},
+    {"classNaming": ["BL", "Bluhen", "Ain2"], "emoji": ""},
+    {"classNaming": ["HR", "Herrscher", "Ain3"], "emoji": ""},
+
+    #Laby
+    {"classNaming": ["EtW", "EternityWinner", "Laby1"], "emoji": ""},
+    {"classNaming": ["RaS", "RadiantSoul", "Laby2"], "emoji": ""},
+    {"classNaming": ["NL", "Nisha", "NishaLabyrinth", "Laby3"], "emoji": ""},
+
+    #Noah
+    {"classNaming": ["LB", "Liberator", "Noah1"], "emoji": ""},
+    {"classNaming": ["CL", "Celestia", "Noah2"], "emoji": ""},
+    {"classNaming": ["NP", "NyxPieta", "Noah3"], "emoji": ""},
 ]
 
 attributes = [
