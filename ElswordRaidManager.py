@@ -2,9 +2,16 @@ import discord
 from discord.ext import commands
 import sys 
 
+##Usable by other users##
 #TODO: help command
+
+##Disconnect possible##
 #TODO: save in file or storage
+
+##Mandatory##
 #TODO: Stone attributes and emojis
+
+##Propreté du code##
 #TODO: create char array according to attribute array
 #TODO: implement get name in findEmojiByAttributeName
 
@@ -234,7 +241,7 @@ async def set(ctx, className, *args):
             attributeValue = not invertAttr
 
             if not attribute in userRaidLists[ctx.author][index]:
-                await ctx.send("Bad syntax, use the help command for more information")
+                await ctx.send("Attribute '" + attribute + "' doesn't exist")
             
             await ctx.send("Setting attribute " + attribute + " as " + str(attributeValue))
             userRaidLists[ctx.author][index][attribute] = attributeValue
