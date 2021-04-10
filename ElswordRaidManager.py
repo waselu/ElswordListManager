@@ -4,7 +4,9 @@ import sys
 
 #TODO: help command
 #TODO: save in file or storage
-#TODO: full class list
+#TODO: Stone attributes and emojis
+#TODO: create char array according to attribute array
+#TODO: implement get name in findEmojiByAttributeName
 
 charArray = [
     #Elsword
@@ -14,7 +16,7 @@ charArray = [
 
     #Aisha
     {"classNaming": ["AeS", "AetherSage", "Aisha1"], "emoji": "<:AeS:828906464453066822>"},
-    {"classNaming": ["OZ", "OzSorcerer", "Aisha2"], "emoji": "<:OZ:828906512742612992>"},
+    {"classNaming": ["Oz", "OzSorcerer", "Aisha2"], "emoji": "<:OZ:828906512742612992>"},
     {"classNaming": ["MtM", "Metamorphy", "Aisha3"], "emoji": "<:MtM:828906520639963197>"},
 
     #Rena
@@ -40,7 +42,7 @@ charArray = [
     #Ara
     {"classNaming": ["Aps", "Apsara", "Ara1"], "emoji": "<:Aps:829692821556297768>"},
     {"classNaming": ["Devi", "Ara2"], "emoji": "<:Devi:829692829151526953>"},
-    {"classNaming": ["SH", "Shakti", "Ara3"], "emoji": "<:SH:829692836790009856>"},
+    {"classNaming": ["Shakti", "SH", "Ara3"], "emoji": "<:SH:829692836790009856>"},
 
     #Elesis
     {"classNaming": ["ES", "EmpireSword", "Elesis1"], "emoji": "<:ES:829692843583864833>"},
@@ -53,7 +55,7 @@ charArray = [
     {"classNaming": ["MP", "MadParadox", "Add3"], "emoji": "<:MP:829692880179298334>"},
 
     #Luciel
-    {"classNaming": ["Cat", "Catastrophe", "Luciel1"], "emoji": "<:CaT:829692887818174484>"},
+    {"classNaming": ["CaT", "Catastrophe", "Luciel1"], "emoji": "<:CaT:829692887818174484>"},
     {"classNaming": ["IN", "Innocent", "Luciel2"], "emoji": "<:IN:829692895664930816>"},
     {"classNaming": ["DiA", "Diangelion", "Luciel3"], "emoji": "<:DiA:829692905031073842>"},
 
@@ -147,32 +149,37 @@ async def doIfClassFoundInUserList(ctx, className, successFunction, failureFunct
 
     await doIfUserFoundInUserList(ctx, userFound, userNotFound)
 
-def userListToServerList(user):
+def userListToServerList(user, emojis = True):
     if not user in userRaidLists:
         return "You have no list yet"
 
     userList = userRaidLists[user]
-    userList.sort(key = lambda charDef: 1 if charDef["fresh"] else -1)
 
-    raidString = ""
+    raidString = "" if emojis else "```"
     mustIncludeFlameMark = False
     for index, classDef in enumerate(userList):
         if (classDef['fresh'] or classDef['farm']):
             if (not classDef['fresh']):
                 mustIncludeFlameMark = True
+            if ((not classDef['fresh']) and index > 0 and userList[index - 1]['fresh']):
+                raidString += findEmojiByAttributeName("fresh") + ' ' if emojis else ':fresh: '
             if (classDef['fresh'] and index > 0 and not userList[index - 1]['fresh'] and mustIncludeFlameMark):
-                raidString += findEmojiByAttributeName("flamemark") + ' '
-            raidString += classDef["emoji"] + ' '
+                raidString += findEmojiByAttributeName("flamemark") + ' ' if emojis else ':flamemark: '
+            if (classDef['fresh']):
+                mustIncludeFlameMark = False
+            raidString += classDef["emoji"] + ' ' if emojis else ':' + classDef["className"] + ': '
             if (classDef['dps']):
-                raidString += findEmojiByAttributeName("dps") + ' '
+                raidString += findEmojiByAttributeName("dps") + ' ' if emojis else ':dps: '
             if (classDef['sage']):
-                raidString += findEmojiByAttributeName("sage") + ' '
-        if (not classDef['fresh'] and index + 1 == len(userList) and mustIncludeFlameMark):
-            raidString += findEmojiByAttributeName("flamemark") + ' '
-        if (classDef['fresh'] and index + 1 == len(userList)):
-            raidString += findEmojiByAttributeName("fresh") + ' '
+                raidString += findEmojiByAttributeName("sage") + ' ' if emojis else ':FullSage: '
+            if (not classDef['fresh'] and index + 1 == len(userList) and mustIncludeFlameMark):
+                raidString += findEmojiByAttributeName("flamemark") + ' ' if emojis else ':flamemark: '
+            if (classDef['fresh'] and index + 1 == len(userList)):
+                raidString += findEmojiByAttributeName("fresh") + ' ' if emojis else ':fresh: '
 
-    return raidString if raidString else "Your list is empty"
+    if (raidString == "```"):
+        raidString += " "
+    return (raidString if emojis else raidString + "```") if raidString else "Your list is empty"
 
 client = commands.Bot(command_prefix = "?", description = "Rosso raid list manager")
 
@@ -215,18 +222,24 @@ async def remove(ctx, *args):
 @client.command()
 async def set(ctx, className, *args):
     async def setAttribute(ctx, index, realName):
-        if len(args) > 2 or (len(args) == 2 and (args[0] != "not")):
-            await ctx.send("Bad syntax, use the help command for more information")
-            return
+        invertAttr = False
+        for attr in args:
+            if attr == 'not':
+                invertAttr = True
+                await ctx.send("invert")
+                continue
 
-        attribute = args[0] if len(args) == 1 else args[1]
-        attributeValue = True if len(args) == 1 else False
+            attribute = attr
+            await ctx.send("Attribute = " + attribute)
+            attributeValue = not invertAttr
 
-        if not attribute in userRaidLists[ctx.author][index]:
-            await ctx.send("Bad syntax, use the help command for more information")
-            return
+            if not attribute in userRaidLists[ctx.author][index]:
+                await ctx.send("Bad syntax, use the help command for more information")
+            
+            await ctx.send("Setting attribute " + attribute + " as " + str(attributeValue))
+            userRaidLists[ctx.author][index][attribute] = attributeValue
+            invertAttr = False
 
-        userRaidLists[ctx.author][index][attribute] = attributeValue
         await ctx.send(userListToServerList(ctx.author))
 
     async def classNotFound(ctx, realName):
@@ -259,23 +272,21 @@ async def run(ctx, *args):
     await ctx.send(userListToServerList(ctx.author))
 
 @client.command()
-async def raidList(ctx):
-    await ctx.send(userListToServerList(ctx.author))
-
-@client.command()
 async def list(ctx):
     async def userFound(ctx):
         userList = userRaidLists[ctx.author]
         userList.sort(key = lambda charDef: findElswordClass(charDef["className"])["index"])
         listStr = ""
         for classDef in userRaidLists[ctx.author]:
-            listStr += "\n" + classDef["emoji"]
-        await ctx.send(listStr)
+            listStr += classDef["emoji"] + " "
+        await ctx.send("Your Character(s): " + listStr)
 
     async def userNotFound(ctx):
         await ctx.send("You have no list yet")
 
     await doIfUserFoundInUserList(ctx, userFound, userNotFound)
+    await ctx.send("List: " + userListToServerList(ctx.author))
+    await ctx.send("Raid Server List: " + userListToServerList(ctx.author, False))
 
 @client.command()
 async def weeklyreset(ctx):
