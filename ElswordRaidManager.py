@@ -233,17 +233,14 @@ async def set(ctx, className, *args):
         for attr in args:
             if attr == 'not':
                 invertAttr = True
-                await ctx.send("invert")
                 continue
 
             attribute = attr
-            await ctx.send("Attribute = " + attribute)
             attributeValue = not invertAttr
 
             if not attribute in userRaidLists[ctx.author][index]:
                 await ctx.send("Attribute '" + attribute + "' doesn't exist")
             
-            await ctx.send("Setting attribute " + attribute + " as " + str(attributeValue))
             userRaidLists[ctx.author][index][attribute] = attributeValue
             invertAttr = False
 
