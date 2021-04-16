@@ -4,16 +4,19 @@ import sys
 
 ##Usable by other users##
 #TODO: help command
+#TODO: sort (autosort) command
 
 ##Disconnect possible##
 #TODO: save in file or storage
 
 ##Mandatory##
-#TODO: Stone attributes and emojis
+#TODO: multiple classes on move command
+
+##LONG TERM##
+#TODO: set/addlist command (example: setlist cl sage reset ke dps tw yellow)
 
 ##Propreté du code##
-#TODO: create char array according to attribute array
-#TODO: implement get name in findEmojiByAttributeName
+#TODO: implement get name in findEmojiByAttributeName (allow list(emoji = False) to use functions instead of plain strings in list)
 
 charArray = [
     #Elsword
@@ -89,10 +92,22 @@ charArray = [
 ]
 
 attributes = [
-    {"name": "dps", "value": False, "set": True,  "emoji": "<:dps:828908669978673182>"},
-    {"name": "sage", "value": False, "set": True, "emoji": "<:sage:828908664810373130>"},
-    {"name": "fresh", "value": True, "set": True, "emoji": "<:fresh:828908656144678964>"},
-    {"name": "flamemark", "value": False, "set": False, "emoji": "<:flamemark:828910673626923038>"}   
+    {"name": "dps", "value": False, "canSet": True, "isDefault": True,  "emoji": "<:dps:828908669978673182>"},
+    {"name": "sage", "value": False, "canSet": True, "isDefault": True, "emoji": "<:sage:828908664810373130>"},
+    {"name": "farm", "value": False, "canSet": True, "isDefault": True, "emoji": ""},
+
+    #Canrun attributes
+    {"name": "fresh", "value": True, "canSet": True, "isDefault": True, "emoji": "<:fresh:828908656144678964>"},
+    {"name": "reset", "value": False, "canSet": True, "isDefault": True, "emoji": "<:reset:832571110906003496>"},
+    {"name": "flamemark", "value": False, "canSet": False, "isDefault": False, "emoji": "<:flamemark:828910673626923038>"},
+
+    #Stone attributes
+    {"name": "stone", "value": None, "canSet": False, "isDefault": True, "emoji": ""}, #attribute
+    {"name": "red", "value": None, "canSet": True, "isDefault": False, "emoji": "<:redcrystal:830525849391464511>"},
+    {"name": "blue", "value": None, "canSet": True, "isDefault": False, "emoji": "<:bluecrystal:830525860418551899>"},
+    {"name": "yellow", "value": None, "canSet": True, "isDefault": False, "emoji": "<:yellowcrystal:830525869487161354>"},
+    {"name": "giant", "value": None, "canSet": True, "isDefault": False, "emoji": "<:giantcrystal:830525874007965766>"},
+    {"name": "nostone", "value": None, "canSet": True, "isDefault": False, "emoji": ""}
 ]
 
 userRaidLists = {
@@ -165,24 +180,21 @@ def userListToServerList(user, emojis = True):
     raidString = "" if emojis else "```"
     mustIncludeFlameMark = False
     for index, classDef in enumerate(userList):
-        if (classDef['fresh'] or classDef['farm']):
-            if (not classDef['fresh']):
-                mustIncludeFlameMark = True
-            if ((not classDef['fresh']) and index > 0 and userList[index - 1]['fresh']):
-                raidString += findEmojiByAttributeName("fresh") + ' ' if emojis else ':fresh: '
-            if (classDef['fresh'] and index > 0 and not userList[index - 1]['fresh'] and mustIncludeFlameMark):
-                raidString += findEmojiByAttributeName("flamemark") + ' ' if emojis else ':flamemark: '
-            if (classDef['fresh']):
-                mustIncludeFlameMark = False
+        if (classDef['fresh'] or classDef['reset'] or classDef['farm']):
             raidString += classDef["emoji"] + ' ' if emojis else ':' + classDef["className"] + ': '
             if (classDef['dps']):
                 raidString += findEmojiByAttributeName("dps") + ' ' if emojis else ':dps: '
             if (classDef['sage']):
                 raidString += findEmojiByAttributeName("sage") + ' ' if emojis else ':FullSage: '
-            if (not classDef['fresh'] and index + 1 == len(userList) and mustIncludeFlameMark):
-                raidString += findEmojiByAttributeName("flamemark") + ' ' if emojis else ':flamemark: '
-            if (classDef['fresh'] and index + 1 == len(userList)):
-                raidString += findEmojiByAttributeName("fresh") + ' ' if emojis else ':fresh: '
+            if (classDef['stone'] != None):
+                raidString += findEmojiByAttributeName(classDef['stone']) + ' ' if emojis else ':' + classDef['stone'] + 'crystal: '
+            if (index < len(userList) and (index == len(userList) - 1 or classDef['fresh'] != userList[index + 1]['fresh'] or classDef['reset'] != userList[index + 1]['reset'])):
+                if classDef['fresh']:
+                    raidString += findEmojiByAttributeName("fresh") + ' ' if emojis else ':fresh: '
+                elif classDef['reset']:
+                    raidString += findEmojiByAttributeName("reset") + ' ' if emojis else ':reset: '
+                else:
+                    raidString += findEmojiByAttributeName("flamemark") + ' ' if emojis else ':flamemark: '
 
     if (raidString == "```"):
         raidString += " "
@@ -196,14 +208,23 @@ async def on_ready():
 
 @client.command()
 async def add(ctx, *args):
+    attributesArray = {}
+    for attributeDef in attributes:
+        if attributeDef["isDefault"]:
+            attributesArray[attributeDef["name"]] = attributeDef["value"]
+
     async def classFound(ctx, index, realName):
         await ctx.send("You already added " + realName + " to your list")
     
     async def classNotFound(ctx, realName):
-        userRaidLists[ctx.author] = userRaidLists[ctx.author] + [{"className": realName, "emoji": findEmojiByClassName(realName), "dps": False, "sage": False, "fresh": True, "farm": False}]
+        classDef = {"className": realName, "emoji": findEmojiByClassName(realName)}
+        classDef.update(attributesArray)
+        userRaidLists[ctx.author] = userRaidLists[ctx.author] + [classDef]
 
     async def userNotFound(ctx, realName):
-        userRaidLists[ctx.author] = [{"className": realName, "emoji": findEmojiByClassName(realName), "dps": False, "sage": False, "fresh": True, "farm": False}]
+        classDef = {"className": realName, "emoji": findEmojiByClassName(realName)}
+        classDef.update(attributesArray)
+        userRaidLists[ctx.author] = [classDef]
 
     for className in args:
         await doIfClassFoundInUserList(ctx, className, classFound, classNotFound, userNotFound)
@@ -228,20 +249,71 @@ async def remove(ctx, *args):
 
 @client.command()
 async def set(ctx, className, *args):
-    async def setAttribute(ctx, index, realName):
+    def canSetAttribute(attribute):
+        for attributeDef in attributes:
+            if attributeDef['name'] == attribute:
+                return attributeDef['canSet']
+        return False
+
+    def callFresh(classDef, invert):
+        return {"fresh": True, "reset": False} if not invert else {"fresh": False, "reset": False}
+
+    def callReset(classDef, invert):
+        return {"fresh": False, "reset": True} if not invert else {"reset": False}
+
+    def callStone(classDef, invert, stoneColor):
+        if stoneColor == "nostone":
+            return {"stone": None} if not invert else {}
+        if invert:
+            return {"stone": None} if classDef["stone"] == stoneColor else {}
+        return {"stone": stoneColor}
+
+    def callStoneRed(classDef, invert):
+        return callStone(classDef, invert, "red")
+
+    def callStoneBlue(classDef, invert):
+        return callStone(classDef, invert, "blue")
+
+    def callStoneYellow(classDef, invert):
+        return callStone(classDef, invert, "yellow")
+
+    def callStoneGiant(classDef, invert):
+        return callStone(classDef, invert, "giant")
+
+    def callStoneNostone(classDef, invert):
+        return callStone(classDef, invert, "nostone")
+
+    attributeCases = [
+        {"attribute": "fresh", "call": callFresh},
+        {"attribute": "reset", "call": callReset},
+        {"attribute": "red", "call": callStoneRed},
+        {"attribute": "blue", "call": callStoneBlue},
+        {"attribute": "yellow", "call": callStoneYellow},
+        {"attribute": "giant", "call": callStoneGiant},
+        {"attribute": "nostone", "call": callStoneNostone}
+    ]
+
+    async def setAttribute(ctx, index, attribute, invert):
+        setObject = {attribute: not invert}
+        for attributeCase in attributeCases:
+            if attributeCase["attribute"] == attribute:
+                setObject = attributeCase["call"](userRaidLists[ctx.author][index], invert)
+        
+        for attributeName, attributeValue in setObject.items():
+            userRaidLists[ctx.author][index][attributeName] = attributeValue
+
+    async def classFound(ctx, index, realName):
         invertAttr = False
-        for attr in args:
-            if attr == 'not':
+        for attribute in args:
+            if attribute == 'not':
                 invertAttr = True
                 continue
 
-            attribute = attr
-            attributeValue = not invertAttr
-
-            if not attribute in userRaidLists[ctx.author][index]:
+            if not canSetAttribute(attribute):
                 await ctx.send("Attribute '" + attribute + "' doesn't exist")
             
-            userRaidLists[ctx.author][index][attribute] = attributeValue
+            await setAttribute(ctx, index, attribute, invertAttr)
+
             invertAttr = False
 
         await ctx.send(userListToServerList(ctx.author))
@@ -253,7 +325,7 @@ async def set(ctx, className, *args):
     async def userNotFound(ctx, realName):
         await ctx.send("You have no list yet")
 
-    await doIfClassFoundInUserList(ctx, className, setAttribute, classNotFound, userNotFound)
+    await doIfClassFoundInUserList(ctx, className, classFound, classNotFound, userNotFound)
 
 @client.command()
 async def run(ctx, *args):
@@ -278,10 +350,10 @@ async def run(ctx, *args):
 @client.command()
 async def list(ctx):
     async def userFound(ctx):
-        userList = userRaidLists[ctx.author]
+        userList = userRaidLists[ctx.author].copy()
         userList.sort(key = lambda charDef: findElswordClass(charDef["className"])["index"])
         listStr = ""
-        for classDef in userRaidLists[ctx.author]:
+        for classDef in userList:
             listStr += classDef["emoji"] + " "
         await ctx.send("Your Character(s): " + listStr)
 
@@ -291,6 +363,25 @@ async def list(ctx):
     await doIfUserFoundInUserList(ctx, userFound, userNotFound)
     await ctx.send("List: " + userListToServerList(ctx.author))
     await ctx.send("Raid Server List: " + userListToServerList(ctx.author, False))
+
+@client.command()
+async def move(ctx, className, indexMoveTo):
+    async def classFound(ctx, index, realName):
+        if (int(indexMoveTo) <= 0 or int(indexMoveTo) > len(userRaidLists[ctx.author])):
+            await ctx.send("This is index isn't in your list")
+            return
+        item = userRaidLists[ctx.author][index]
+        del(userRaidLists[ctx.author][index])
+        userRaidLists[ctx.author].insert(int(indexMoveTo) - 1, item)
+
+    async def classNotFound(ctx, realName):
+        await ctx.send(realName + " was not fount in your list")
+
+    async def userNotFound(ctx, realName):
+        await ctx.send("You have no list yet")
+
+    await doIfClassFoundInUserList(ctx, className, classFound, classNotFound, userNotFound)
+    await ctx.send(userListToServerList(ctx.author))
 
 @client.command()
 async def weeklyreset(ctx):
