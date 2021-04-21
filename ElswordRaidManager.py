@@ -1,16 +1,14 @@
 import discord
 from discord.ext import commands
-import sys 
+import sys
+import json
 
 ##Usable by other users##
 #TODO: help command
 #TODO: sort (autosort) command
 
-##Disconnect possible##
-#TODO: save in file or storage
-
 ##Mandatory##
-#TODO: multiple classes on move command
+#Nothing
 
 ##LONG TERM##
 #TODO: set/addlist command (example: setlist cl sage reset ke dps tw yellow)
@@ -111,8 +109,24 @@ attributes = [
 ]
 
 userRaidLists = {
-
+    
 }
+
+def loadUserFile():
+    with open('ElswordTest.txt', "r") as f:
+        global userRaidLists
+        data = f.read()
+        data = json.loads(data)
+        userRaidLists = data
+
+def saveUserFile():
+    with open('ElswordTest.txt', "w+") as f:
+        data = json.dumps(userRaidLists)
+        f.seek(0)
+        f.write(data)
+        f.truncate()
+
+loadUserFile()
 
 def findElswordClass(elswordClass):
     for index, classTuple in enumerate(charArray):
@@ -145,7 +159,7 @@ def checkUserListHasChar(user, className):
     return -1
 
 async def doIfUserFoundInUserList(ctx, successFunction, failureFunction):
-    if not ctx.author in userRaidLists:
+    if not ctx.author.name in userRaidLists:
         await failureFunction(ctx)
     else:
         await successFunction(ctx)
@@ -160,7 +174,7 @@ async def doIfClassFoundInUserList(ctx, className, successFunction, failureFunct
     realName = realName["name"]
 
     async def userFound(ctx):
-        index = checkUserListHasChar(ctx.author, realName)
+        index = checkUserListHasChar(ctx.author.name, realName)
         if index == -1:
             await failureFunction(ctx, realName)
         else:
@@ -175,7 +189,10 @@ def userListToServerList(user, emojis = True):
     if not user in userRaidLists:
         return "You have no list yet"
 
-    userList = userRaidLists[user]
+    userList = userRaidLists[user].copy()
+    for classDef in userRaidLists[user]:
+        if not classDef['fresh'] and not classDef['reset'] and not classDef['farm']:
+            userList.remove(classDef)
 
     raidString = "" if emojis else "```"
     mustIncludeFlameMark = False
@@ -186,7 +203,7 @@ def userListToServerList(user, emojis = True):
                 raidString += findEmojiByAttributeName("dps") + ' ' if emojis else ':dps: '
             if (classDef['sage']):
                 raidString += findEmojiByAttributeName("sage") + ' ' if emojis else ':FullSage: '
-            if (classDef['stone'] != None):
+            if (classDef['stone'] != None and (classDef['fresh'] or classDef['reset'])):
                 raidString += findEmojiByAttributeName(classDef['stone']) + ' ' if emojis else ':' + classDef['stone'] + 'crystal: '
             if (index < len(userList) and (index == len(userList) - 1 or classDef['fresh'] != userList[index + 1]['fresh'] or classDef['reset'] != userList[index + 1]['reset'])):
                 if classDef['fresh']:
@@ -219,22 +236,23 @@ async def add(ctx, *args):
     async def classNotFound(ctx, realName):
         classDef = {"className": realName, "emoji": findEmojiByClassName(realName)}
         classDef.update(attributesArray)
-        userRaidLists[ctx.author] = userRaidLists[ctx.author] + [classDef]
+        userRaidLists[ctx.author.name] = userRaidLists[ctx.author.name] + [classDef]
 
     async def userNotFound(ctx, realName):
         classDef = {"className": realName, "emoji": findEmojiByClassName(realName)}
         classDef.update(attributesArray)
-        userRaidLists[ctx.author] = [classDef]
+        userRaidLists[ctx.author.name] = [classDef]
 
     for className in args:
         await doIfClassFoundInUserList(ctx, className, classFound, classNotFound, userNotFound)
 
-    await ctx.send(userListToServerList(ctx.author))
+    await ctx.send(userListToServerList(ctx.author.name))
+    saveUserFile()
 
 @client.command()
 async def remove(ctx, *args):
     async def successfullDelete(ctx, index, realName):
-        del userRaidLists[ctx.author][index]
+        del userRaidLists[ctx.author.name][index]
 
     async def failureDelete(ctx, realName):
         await ctx.send(realName + " was not fount in your list")
@@ -245,7 +263,8 @@ async def remove(ctx, *args):
     for className in args:
         await doIfClassFoundInUserList(ctx, className, successfullDelete, failureDelete, userNotFound)
 
-    await ctx.send(userListToServerList(ctx.author))
+    await ctx.send(userListToServerList(ctx.author.name))
+    saveUserFile()
 
 @client.command()
 async def set(ctx, className, *args):
@@ -297,10 +316,10 @@ async def set(ctx, className, *args):
         setObject = {attribute: not invert}
         for attributeCase in attributeCases:
             if attributeCase["attribute"] == attribute:
-                setObject = attributeCase["call"](userRaidLists[ctx.author][index], invert)
+                setObject = attributeCase["call"](userRaidLists[ctx.author.name][index], invert)
         
         for attributeName, attributeValue in setObject.items():
-            userRaidLists[ctx.author][index][attributeName] = attributeValue
+            userRaidLists[ctx.author.name][index][attributeName] = attributeValue
 
     async def classFound(ctx, index, realName):
         invertAttr = False
@@ -316,11 +335,12 @@ async def set(ctx, className, *args):
 
             invertAttr = False
 
-        await ctx.send(userListToServerList(ctx.author))
+        await ctx.send(userListToServerList(ctx.author.name))
+        saveUserFile()
 
     async def classNotFound(ctx, realName):
         await ctx.send(realName + " was not fount in your list")
-        await ctx.send(userListToServerList(ctx.author))
+        await ctx.send(userListToServerList(ctx.author.name))
 
     async def userNotFound(ctx, realName):
         await ctx.send("You have no list yet")
@@ -330,11 +350,11 @@ async def set(ctx, className, *args):
 @client.command()
 async def run(ctx, *args):
     async def classFound(ctx, index, realName):
-        if userRaidLists[ctx.author][index]["fresh"] == 0:
+        if userRaidLists[ctx.author.name][index]["fresh"] == 0:
             await ctx.send("You have already run rosso on " + className)
             return
 
-        userRaidLists[ctx.author][index]["fresh"] -= 1
+        userRaidLists[ctx.author.name][index]["fresh"] -= 1
 
     async def classNotFound(ctx, realName):
         await ctx.send(realName + " was not fount in your list")
@@ -345,55 +365,92 @@ async def run(ctx, *args):
     for className in args:
         await doIfClassFoundInUserList(ctx, className, classFound, classNotFound, userNotFound)
 
-    await ctx.send(userListToServerList(ctx.author))
+    await ctx.send(userListToServerList(ctx.author.name))
+    saveUserFile()
 
 @client.command()
 async def list(ctx):
+    listStr = ""
+
     async def userFound(ctx):
-        userList = userRaidLists[ctx.author].copy()
+        nonlocal listStr
+        charList = ""
+        userList = userRaidLists[ctx.author.name].copy()
         userList.sort(key = lambda charDef: findElswordClass(charDef["className"])["index"])
-        listStr = ""
         for classDef in userList:
-            listStr += classDef["emoji"] + " "
-        await ctx.send("Your Character(s): " + listStr)
+            charList += classDef["emoji"] + " "
+        listStr = "Your Character(s): " + charList + "\n"
 
     async def userNotFound(ctx):
         await ctx.send("You have no list yet")
 
     await doIfUserFoundInUserList(ctx, userFound, userNotFound)
-    await ctx.send("List: " + userListToServerList(ctx.author))
-    await ctx.send("Raid Server List: " + userListToServerList(ctx.author, False))
+    listStr += "List: " + userListToServerList(ctx.author.name) + "\n"
+    listStr += "Raid Server List: " + userListToServerList(ctx.author.name, False)
+    await ctx.send(listStr)
+
+def printUserList(user):
+    charList = ''
+    for classDef in userRaidLists[user]:
+        charList += classDef['className'] + ' '
+    print(charList)
 
 @client.command()
-async def move(ctx, className, indexMoveTo):
-    async def classFound(ctx, index, realName):
-        if (int(indexMoveTo) <= 0 or int(indexMoveTo) > len(userRaidLists[ctx.author])):
-            await ctx.send("This is index isn't in your list")
-            return
-        item = userRaidLists[ctx.author][index]
-        del(userRaidLists[ctx.author][index])
-        userRaidLists[ctx.author].insert(int(indexMoveTo) - 1, item)
+async def move(ctx, *args):
+    def getActualIndexMoveTo(indexMoveTo, user):
+        charList = userRaidLists[user]
+        for index, classDef in enumerate(charList):
+            if (index + 1 == indexMoveTo):
+                return indexMoveTo
+            if (not classDef['fresh'] and not classDef['reset']):
+                indexMoveTo += 1
+        return indexMoveTo
 
-    async def classNotFound(ctx, realName):
-        await ctx.send(realName + " was not fount in your list")
+    classNames = args[0::2]
+    positions = args[1::2]
 
-    async def userNotFound(ctx, realName):
-        await ctx.send("You have no list yet")
+    if (len(classNames) != len(classNames)):
+        await ctx.send("Bad syntax, check the help command")
+        return
 
-    await doIfClassFoundInUserList(ctx, className, classFound, classNotFound, userNotFound)
-    await ctx.send(userListToServerList(ctx.author))
+    await ctx.send(str(classNames))
+    await ctx.send(str(positions))
+
+    for index, className in enumerate(classNames):
+        indexMoveTo = int(positions[index])
+        async def classFound(ctx, index, realName):
+            nonlocal indexMoveTo
+            if (int(indexMoveTo) <= 0 or int(indexMoveTo) > len(userRaidLists[ctx.author.name])):
+                await ctx.send("Index " + str(indexMoveTo) + " isn't in your list")
+                return
+            indexMoveTo = getActualIndexMoveTo(indexMoveTo, ctx.author.name)
+            item = userRaidLists[ctx.author.name][index]
+            del(userRaidLists[ctx.author.name][index])
+            userRaidLists[ctx.author.name].insert(int(indexMoveTo) - 1, item)
+
+        async def classNotFound(ctx, realName):
+            await ctx.send(realName + " was not fount in your list")
+
+        async def userNotFound(ctx, realName):
+            await ctx.send("You have no list yet")
+
+        await doIfClassFoundInUserList(ctx, className, classFound, classNotFound, userNotFound)
+
+    await ctx.send(userListToServerList(ctx.author.name))
+    saveUserFile()
 
 @client.command()
 async def weeklyreset(ctx):
     async def userFound(ctx):
-        for index, whatever in enumerate(userRaidLists[ctx.author]):
-            userRaidLists[ctx.author][index]["fresh"] = True
-        await ctx.send(userListToServerList(ctx.author))
+        for index, whatever in enumerate(userRaidLists[ctx.author.name]):
+            userRaidLists[ctx.author.name][index]["fresh"] = True
+        await ctx.send(userListToServerList(ctx.author.name))
 
     async def userNotFound(ctx):
         await ctx.send("You have no list yet")
 
     await doIfUserFoundInUserList(ctx, userFound, userNotFound)
+    saveUserFile()
 
 @client.command()
 async def on_command_error(ctx, error):
@@ -402,4 +459,5 @@ async def on_command_error(ctx, error):
     if isinstance(error, discord.ext.commands.error.MissingRequiredArgument):
         await ctx.send("Missing required argument")
 
-client.run('ODI4Njc5OTQ2MDcwMjYxODIx.YGtGVw.5isgxBCdahm5poWSqBBy6ck8PMo')
+if __name__ == "__main__":
+    client.run('ODI4Njc5OTQ2MDcwMjYxODIx.YGtGVw.5isgxBCdahm5poWSqBBy6ck8PMo')
