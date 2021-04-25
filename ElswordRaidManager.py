@@ -413,9 +413,6 @@ async def move(ctx, *args):
         await ctx.send("Bad syntax, check the help command")
         return
 
-    await ctx.send(str(classNames))
-    await ctx.send(str(positions))
-
     for index, className in enumerate(classNames):
         indexMoveTo = int(positions[index])
         async def classFound(ctx, index, realName):
