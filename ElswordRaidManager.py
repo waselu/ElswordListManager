@@ -8,7 +8,7 @@ import json
 #TODO: sort (autosort) command
 
 ##Mandatory##
-#Nothing
+#Fix unexistant attributes still being set
 
 ##LONG TERM##
 #TODO: set/addlist command (example: setlist cl sage reset ke dps tw yellow)
@@ -110,7 +110,8 @@ attributes = [
     {"name": "nostone", "value": None, "canSet": True, "isDefault": False, "emoji": ""},
 
     #Internal attributes
-    {"name": "break", "value": False, "canSet": True, "isDefault": True, "emoji": ""}
+    {"name": "break", "value": False, "canSet": True, "isDefault": True, "emoji": ""},
+    {"name": "alias", "value": None, "canSet": True, "isDefault": True, "emoji": ""}
 ]
 
 userRaidLists = {
@@ -283,10 +284,10 @@ async def set(ctx, className, *args):
                 return attributeDef['canSet']
         return False
 
-    def callFresh(classDef, invert):
+    def callFresh(classDef, invert, args, indexArg):
         return {"fresh": True, "reset": False} if not invert else {"fresh": False, "reset": False}
 
-    def callReset(classDef, invert):
+    def callReset(classDef, invert, args, indexArg):
         return {"fresh": False, "reset": True} if not invert else {"reset": False}
 
     def callStone(classDef, invert, stoneColor):
@@ -296,20 +297,25 @@ async def set(ctx, className, *args):
             return {"stone": None} if classDef["stone"] == stoneColor else {}
         return {"stone": stoneColor}
 
-    def callStoneRed(classDef, invert):
+    def callStoneRed(classDef, invert, args, indexArg):
         return callStone(classDef, invert, "red")
 
-    def callStoneBlue(classDef, invert):
+    def callStoneBlue(classDef, invert, args, indexArg):
         return callStone(classDef, invert, "blue")
 
-    def callStoneYellow(classDef, invert):
+    def callStoneYellow(classDef, invert, args, indexArg):
         return callStone(classDef, invert, "yellow")
 
-    def callStoneGiant(classDef, invert):
+    def callStoneGiant(classDef, invert, args, indexArg):
         return callStone(classDef, invert, "giant")
 
-    def callStoneNostone(classDef, invert):
+    def callStoneNostone(classDef, invert, args, indexArg):
         return callStone(classDef, invert, "nostone")
+
+    def callAlias(classDef, invert, args, indexArg):
+        if (indexArg == len(args) - 1):
+            return {"error": "No alias specified"}
+        return {"alias": args[indexArg + 1], "skip": 1}
 
     attributeCases = [
         {"attribute": "fresh", "call": callFresh},
@@ -318,21 +324,36 @@ async def set(ctx, className, *args):
         {"attribute": "blue", "call": callStoneBlue},
         {"attribute": "yellow", "call": callStoneYellow},
         {"attribute": "giant", "call": callStoneGiant},
-        {"attribute": "nostone", "call": callStoneNostone}
+        {"attribute": "nostone", "call": callStoneNostone},
+        {"attribute": "alias", "call": callAlias}
     ]
 
-    async def setAttribute(ctx, index, attribute, invert):
+    async def setAttribute(ctx, index, attribute, invert, args, indexArg):
         setObject = {attribute: not invert}
+        skip = 0
         for attributeCase in attributeCases:
             if attributeCase["attribute"] == attribute:
-                setObject = attributeCase["call"](userRaidLists[ctx.author.name][index], invert)
+                setObject = attributeCase["call"](userRaidLists[ctx.author.name][index], invert, args, indexArg)
+                if 'skip' in setObject:
+                    skip = setObject['skip']
+                    del setObject['skip']
+                if 'error' in setObject:
+                    await ctx.send(setObject['error'])
+                    return -1
         
         for attributeName, attributeValue in setObject.items():
             userRaidLists[ctx.author.name][index][attributeName] = attributeValue
 
+        return skip
+
     async def classFound(ctx, index, realName):
         invertAttr = False
-        for attribute in args:
+        skip = 0
+        for indexArg, attribute in enumerate(args):
+            if (skip > 0):
+                skip -= 1
+                continue
+
             if attribute == 'not' or attribute == 'no':
                 invertAttr = True
                 continue
@@ -340,7 +361,9 @@ async def set(ctx, className, *args):
             if not canSetAttribute(attribute):
                 await ctx.send("Attribute '" + attribute + "' doesn't exist")
             
-            await setAttribute(ctx, index, attribute, invertAttr)
+            skip = await setAttribute(ctx, index, attribute, invertAttr, args, indexArg)
+            if skip == -1:
+                return
 
             invertAttr = False
 
