@@ -1,1 +1,1 @@
-{"Waselu": [{"className": "Devi", "emoji": "<:Devi:829692829151526953>", "dps": false, "sage": false, "farm": false, "speed": false, "fresh": true, "reset": false, "stone": null, "break": false, "alias": "Evaziael", "evaziael": true, "false": true}]}
+{"Waselu": [{"className": "Devi", "emoji": "<:Devi:829692829151526953>", "dps": false, "sage": false, "farm": false, "speed": false, "fresh": true, "reset": false, "stone": null, "break": false, "alias": null}]}

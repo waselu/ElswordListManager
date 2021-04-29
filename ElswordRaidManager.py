@@ -8,7 +8,8 @@ import json
 #TODO: sort (autosort) command
 
 ##Mandatory##
-#Fix unexistant attributes still being set
+#Adapt list method to display attributes and aliases
+#Fix inexistant attributes still being set
 
 ##LONG TERM##
 #TODO: set/addlist command (example: setlist cl sage reset ke dps tw yellow)
@@ -360,6 +361,7 @@ async def set(ctx, className, *args):
 
             if not canSetAttribute(attribute):
                 await ctx.send("Attribute '" + attribute + "' doesn't exist")
+                return
             
             skip = await setAttribute(ctx, index, attribute, invertAttr, args, indexArg)
             if skip == -1:
