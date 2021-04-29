@@ -90,6 +90,7 @@ charArray = [
 ]
 
 attributes = [
+    #Gear attributes
     {"name": "dps", "value": False, "canSet": True, "isDefault": True,  "emoji": "<:dps:828908669978673182>"},
     {"name": "sage", "value": False, "canSet": True, "isDefault": True, "emoji": "<:sage:828908664810373130>"},
     {"name": "farm", "value": False, "canSet": True, "isDefault": True, "emoji": ""},
@@ -106,7 +107,10 @@ attributes = [
     {"name": "blue", "value": None, "canSet": True, "isDefault": False, "emoji": "<:bluecrystal:830525860418551899>"},
     {"name": "yellow", "value": None, "canSet": True, "isDefault": False, "emoji": "<:yellowcrystal:830525869487161354>"},
     {"name": "giant", "value": None, "canSet": True, "isDefault": False, "emoji": "<:giantcrystal:830525874007965766>"},
-    {"name": "nostone", "value": None, "canSet": True, "isDefault": False, "emoji": ""}
+    {"name": "nostone", "value": None, "canSet": True, "isDefault": False, "emoji": ""},
+
+    #Internal attributes
+    {"name": "break", "value": False, "canSet": True, "isDefault": True, "emoji": ""}
 ]
 
 userRaidLists = {
@@ -208,13 +212,15 @@ def userListToServerList(user, emojis = True):
                 raidString += findEmojiByAttributeName("speed") + ' ' if emojis else ':SpdBot: '
             if (classDef['stone'] != None and (classDef['fresh'] or classDef['reset'])):
                 raidString += findEmojiByAttributeName(classDef['stone']) + ' ' if emojis else ':' + classDef['stone'] + 'crystal: '
-            if (index < len(userList) and (index == len(userList) - 1 or classDef['fresh'] != userList[index + 1]['fresh'] or classDef['reset'] != userList[index + 1]['reset'])):
+            if (index < len(userList) and (index == len(userList) - 1 or classDef['fresh'] != userList[index + 1]['fresh'] or classDef['reset'] != userList[index + 1]['reset'] or classDef['break'])):
                 if classDef['fresh']:
                     raidString += findEmojiByAttributeName("fresh") + ' ' if emojis else ':fresh: '
                 elif classDef['reset']:
                     raidString += findEmojiByAttributeName("reset") + ' ' if emojis else ':reset: '
                 else:
                     raidString += findEmojiByAttributeName("flamemark") + ' ' if emojis else ':flamemark: '
+            if (classDef['break']):
+                raidString += '\n'
 
     if (raidString == "```"):
         raidString += " "
