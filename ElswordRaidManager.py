@@ -160,7 +160,10 @@ def findEmojiByAttributeName(attribute):
 def checkUserListHasChar(user, className):
     userList = userRaidLists[user]
     for index, classDef in enumerate(userList):
-        if classDef["className"].lower() == className.lower():
+        if (classDef['alias'] is not None):
+            if (classDef['alias'].lower() == className.lower()):
+                return index
+        elif classDef["className"].lower() == className.lower():
             return index
     return -1
 
@@ -170,14 +173,16 @@ async def doIfUserFoundInUserList(ctx, successFunction, failureFunction):
     else:
         await successFunction(ctx)
 
-async def doIfClassFoundInUserList(ctx, className, successFunction, failureFunction, userNotFoundFunction):
+async def doIfClassFoundInUserList(ctx, className, successFunction, failureFunction, userNotFoundFunction, strictMode = False):
     realName = findElswordClass(className)
 
-    if not realName:
-        await ctx.send(className + ": class not found")
-        return
-
-    realName = realName["name"]
+    if (realName):
+        realName = realName["name"]
+    else:
+        if (strictMode):
+            await ctx.send(className + " was not found")
+            return
+        realName = className
 
     async def userFound(ctx):
         index = checkUserListHasChar(ctx.author.name, realName)
@@ -254,7 +259,7 @@ async def add(ctx, *args):
         userRaidLists[ctx.author.name] = [classDef]
 
     for className in args:
-        await doIfClassFoundInUserList(ctx, className, classFound, classNotFound, userNotFound)
+        await doIfClassFoundInUserList(ctx, className, classFound, classNotFound, userNotFound, True)
 
     await ctx.send(userListToServerList(ctx.author.name))
     saveUserFile()
@@ -284,37 +289,41 @@ async def set(ctx, className, *args):
                 return attributeDef['canSet']
         return False
 
-    def callFresh(classDef, invert, args, indexArg):
+    def callFresh(ctx, classDef, invert, args, indexArg):
         return {"fresh": True, "reset": False} if not invert else {"fresh": False, "reset": False}
 
-    def callReset(classDef, invert, args, indexArg):
+    def callReset(ctx, classDef, invert, args, indexArg):
         return {"fresh": False, "reset": True} if not invert else {"reset": False}
 
-    def callStone(classDef, invert, stoneColor):
+    def callStone(ctx, classDef, invert, stoneColor):
         if stoneColor == "nostone":
             return {"stone": None} if not invert else {}
         if invert:
             return {"stone": None} if classDef["stone"] == stoneColor else {}
         return {"stone": stoneColor}
 
-    def callStoneRed(classDef, invert, args, indexArg):
-        return callStone(classDef, invert, "red")
+    def callStoneRed(ctx, classDef, invert, args, indexArg):
+        return callStone(ctx, classDef, invert, "red")
 
-    def callStoneBlue(classDef, invert, args, indexArg):
-        return callStone(classDef, invert, "blue")
+    def callStoneBlue(ctx, classDef, invert, args, indexArg):
+        return callStone(ctx, classDef, invert, "blue")
 
-    def callStoneYellow(classDef, invert, args, indexArg):
-        return callStone(classDef, invert, "yellow")
+    def callStoneYellow(ctx, classDef, invert, args, indexArg):
+        return callStone(ctx, classDef, invert, "yellow")
 
-    def callStoneGiant(classDef, invert, args, indexArg):
-        return callStone(classDef, invert, "giant")
+    def callStoneGiant(ctx, classDef, invert, args, indexArg):
+        return callStone(ctx, classDef, invert, "giant")
 
-    def callStoneNostone(classDef, invert, args, indexArg):
-        return callStone(classDef, invert, "nostone")
+    def callStoneNostone(ctx, classDef, invert, args, indexArg):
+        return callStone(ctx, classDef, invert, "nostone")
 
-    def callAlias(classDef, invert, args, indexArg):
+    def callAlias(ctx, classDef, invert, args, indexArg):
+        if invert:
+            return {"alias": None}
         if (indexArg == len(args) - 1):
             return {"error": "No alias specified"}
+        if (checkUserListHasChar(ctx.author.name, args[indexArg + 1]) != -1):
+            return {"error": "You already have a character named " + args[indexArg + 1]}
         return {"alias": args[indexArg + 1], "skip": 1}
 
     attributeCases = [
@@ -333,7 +342,7 @@ async def set(ctx, className, *args):
         skip = 0
         for attributeCase in attributeCases:
             if attributeCase["attribute"] == attribute:
-                setObject = attributeCase["call"](userRaidLists[ctx.author.name][index], invert, args, indexArg)
+                setObject = attributeCase["call"](ctx, userRaidLists[ctx.author.name][index], invert, args, indexArg)
                 if 'skip' in setObject:
                     skip = setObject['skip']
                     del setObject['skip']
@@ -411,15 +420,15 @@ async def list(ctx):
         userList = userRaidLists[ctx.author.name].copy()
         userList.sort(key = lambda charDef: findElswordClass(charDef["className"])["index"])
         for classDef in userList:
-            charList += classDef["emoji"] + " "
+            charList += "\n" + classDef["emoji"] + " " + (classDef['alias'] if classDef['alias'] is not None else classDef['className'])
         listStr = "Your Character(s): " + charList + "\n"
 
     async def userNotFound(ctx):
         await ctx.send("You have no list yet")
 
     await doIfUserFoundInUserList(ctx, userFound, userNotFound)
-    listStr += "List: " + userListToServerList(ctx.author.name) + "\n"
-    listStr += "Raid Server List: " + userListToServerList(ctx.author.name, False)
+    listStr += "\nList:\n" + userListToServerList(ctx.author.name) + "\n"
+    listStr += "\nRaid Server List:\n" + userListToServerList(ctx.author.name, False)
     await ctx.send(listStr)
 
 @client.command()
