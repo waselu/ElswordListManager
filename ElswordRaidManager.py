@@ -9,7 +9,6 @@ import json
 
 ##Mandatory##
 #Adapt list method to display attributes and aliases
-#Fix inexistant attributes still being set
 
 ##LONG TERM##
 #TODO: set/addlist command (example: setlist cl sage reset ke dps tw yellow)
