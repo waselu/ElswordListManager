@@ -93,6 +93,7 @@ attributes = [
     {"name": "dps", "value": False, "canSet": True, "isDefault": True,  "emoji": "<:dps:828908669978673182>"},
     {"name": "sage", "value": False, "canSet": True, "isDefault": True, "emoji": "<:sage:828908664810373130>"},
     {"name": "farm", "value": False, "canSet": True, "isDefault": True, "emoji": ""},
+    {"name": "speed", "value": False, "canSet": True, "isDefault": True, "emoji": "<:SpdBot:837244319726436372>"},
 
     #Canrun attributes
     {"name": "fresh", "value": True, "canSet": True, "isDefault": True, "emoji": "<:fresh:828908656144678964>"},
@@ -203,6 +204,8 @@ def userListToServerList(user, emojis = True):
                 raidString += findEmojiByAttributeName("dps") + ' ' if emojis else ':dps: '
             if (classDef['sage']):
                 raidString += findEmojiByAttributeName("sage") + ' ' if emojis else ':FullSage: '
+            if (classDef['speed']):
+                raidString += findEmojiByAttributeName("speed") + ' ' if emojis else ':SpdBot: '
             if (classDef['stone'] != None and (classDef['fresh'] or classDef['reset'])):
                 raidString += findEmojiByAttributeName(classDef['stone']) + ' ' if emojis else ':' + classDef['stone'] + 'crystal: '
             if (index < len(userList) and (index == len(userList) - 1 or classDef['fresh'] != userList[index + 1]['fresh'] or classDef['reset'] != userList[index + 1]['reset'])):
@@ -324,7 +327,7 @@ async def set(ctx, className, *args):
     async def classFound(ctx, index, realName):
         invertAttr = False
         for attribute in args:
-            if attribute == 'not':
+            if attribute == 'not' or attribute == 'no':
                 invertAttr = True
                 continue
 
@@ -388,6 +391,16 @@ async def list(ctx):
     listStr += "List: " + userListToServerList(ctx.author.name) + "\n"
     listStr += "Raid Server List: " + userListToServerList(ctx.author.name, False)
     await ctx.send(listStr)
+
+@client.command()
+async def show(ctx):
+    async def userFound(ctx):
+        await ctx.send(userListToServerList(ctx.author.name))
+
+    async def userNotFound(ctx):
+        await ctx.send("You have no list yet")
+
+    await doIfUserFoundInUserList(ctx, userFound, userNotFound)
 
 def printUserList(user):
     charList = ''
