@@ -8,13 +8,12 @@ import json
 #TODO: sort (autosort) command
 
 ##Mandatory##
-#Adapt list method to display attributes and aliases
 
 ##LONG TERM##
 #TODO: set/addlist command (example: setlist cl sage reset ke dps tw yellow)
 
 ##Propreté du code##
-#TODO: implement get name in findEmojiByAttributeName (allow list(emoji = False) to use functions instead of plain strings in list)
+#TODO: rework set array
 
 charArray = [
     #Elsword
@@ -91,27 +90,27 @@ charArray = [
 
 attributes = [
     #Gear attributes
-    {"name": "dps", "value": False, "canSet": True, "isDefault": True,  "emoji": "<:dps:828908669978673182>"},
-    {"name": "sage", "value": False, "canSet": True, "isDefault": True, "emoji": "<:sage:828908664810373130>"},
-    {"name": "farm", "value": False, "canSet": True, "isDefault": True, "emoji": ""},
-    {"name": "speed", "value": False, "canSet": True, "isDefault": True, "emoji": "<:SpdBot:837244319726436372>"},
+    {"name": "dps", "value": False, "canSet": True, "isDefault": True,  "emoji": "<:dps:828908669978673182>", "serverEmoji": "dps"},
+    {"name": "sage", "value": False, "canSet": True, "isDefault": True, "emoji": "<:sage:828908664810373130>", "serverEmoji": "FullSage"},
+    {"name": "speed", "value": False, "canSet": True, "isDefault": True, "emoji": "<:SpdBot:837244319726436372>", "serverEmoji": "SpdBot"},
 
     #Canrun attributes
-    {"name": "fresh", "value": True, "canSet": True, "isDefault": True, "emoji": "<:fresh:828908656144678964>"},
-    {"name": "reset", "value": False, "canSet": True, "isDefault": True, "emoji": "<:reset:832571110906003496>"},
-    {"name": "flamemark", "value": False, "canSet": False, "isDefault": False, "emoji": "<:flamemark:828910673626923038>"},
+    {"name": "fresh", "value": True, "canSet": True, "isDefault": True, "emoji": "<:fresh:828908656144678964>", "serverEmoji": "fresh"},
+    {"name": "reset", "value": False, "canSet": True, "isDefault": True, "emoji": "<:reset:832571110906003496>", "serverEmoji": "reset"},
+    {"name": "flamemark", "value": False, "canSet": False, "isDefault": False, "emoji": "<:flamemark:828910673626923038>", "serverEmoji": "flamemark"},
 
     #Stone attributes
-    {"name": "stone", "value": None, "canSet": False, "isDefault": True, "emoji": ""}, #attribute
-    {"name": "red", "value": None, "canSet": True, "isDefault": False, "emoji": "<:redcrystal:830525849391464511>"},
-    {"name": "blue", "value": None, "canSet": True, "isDefault": False, "emoji": "<:bluecrystal:830525860418551899>"},
-    {"name": "yellow", "value": None, "canSet": True, "isDefault": False, "emoji": "<:yellowcrystal:830525869487161354>"},
-    {"name": "giant", "value": None, "canSet": True, "isDefault": False, "emoji": "<:giantcrystal:830525874007965766>"},
-    {"name": "nostone", "value": None, "canSet": True, "isDefault": False, "emoji": ""},
+    {"name": "stone", "value": None, "canSet": False, "isDefault": True, "emoji": "", "serverEmoji": ""}, #attribute
+    {"name": "red", "value": None, "canSet": True, "isDefault": False, "emoji": "<:redcrystal:830525849391464511>", "serverEmoji": "redcrystal"},
+    {"name": "blue", "value": None, "canSet": True, "isDefault": False, "emoji": "<:bluecrystal:830525860418551899>", "serverEmoji": "bluecrystal"},
+    {"name": "yellow", "value": None, "canSet": True, "isDefault": False, "emoji": "<:yellowcrystal:830525869487161354>", "serverEmoji": "yellowcrystal"},
+    {"name": "giant", "value": None, "canSet": True, "isDefault": False, "emoji": "<:giantcrystal:830525874007965766>", "serverEmoji": "giantcrystal"},
+    {"name": "nostone", "value": None, "canSet": True, "isDefault": False, "emoji": "", "serverEmoji": ""},
 
     #Internal attributes
-    {"name": "break", "value": False, "canSet": True, "isDefault": True, "emoji": ""},
-    {"name": "alias", "value": None, "canSet": True, "isDefault": True, "emoji": ""}
+    {"name": "farm", "value": False, "canSet": True, "isDefault": True, "emoji": "🌾", "serverEmoji": ""},
+    {"name": "break", "value": False, "canSet": True, "isDefault": True, "emoji": "⤵️", "serverEmoji": "break"},
+    {"name": "alias", "value": None, "canSet": True, "isDefault": True, "emoji": "", "serverEmoji": ""}
 ]
 
 userRaidLists = {
@@ -151,11 +150,23 @@ def findEmojiByClassName(elswordClass):
            return classTuple["emoji"]
     return None
 
-def findEmojiByAttributeName(attribute):
+def findEmojiByAttributeName(attribute, forServer = False):
     for attributeTuple in attributes:
         if attribute == attributeTuple["name"]:
-            return attributeTuple["emoji"]
+            return attributeTuple["emoji"] if not forServer else attributeTuple["serverEmoji"]
     return None
+
+def canSetAttribute(attribute):
+    for attributeDef in attributes:
+        if attributeDef['name'] == attribute:
+            return attributeDef['canSet']
+    return False
+
+def isDefaultAttribute(attribute):
+    for attributeDef in attributes:
+        if attributeDef['name'] == attribute:
+            return attributeDef['isDefault']
+    return False
 
 def checkUserListHasChar(user, className):
     userList = userRaidLists[user]
@@ -211,20 +222,20 @@ def userListToServerList(user, emojis = True):
         if (classDef['fresh'] or classDef['reset'] or classDef['farm']):
             raidString += classDef["emoji"] + ' ' if emojis else ':' + classDef["className"] + ': '
             if (classDef['dps']):
-                raidString += findEmojiByAttributeName("dps") + ' ' if emojis else ':dps: '
+                raidString += findEmojiByAttributeName("dps") + ' ' if emojis else ':' + findEmojiByAttributeName("dps", True) + ': '
             if (classDef['sage']):
-                raidString += findEmojiByAttributeName("sage") + ' ' if emojis else ':FullSage: '
+                raidString += findEmojiByAttributeName("sage") + ' ' if emojis else ':' + findEmojiByAttributeName("sage", True) + ': '
             if (classDef['speed']):
-                raidString += findEmojiByAttributeName("speed") + ' ' if emojis else ':SpdBot: '
+                raidString += findEmojiByAttributeName("speed") + ' ' if emojis else ':' + findEmojiByAttributeName("speed", True) + ': '
             if (classDef['stone'] != None and (classDef['fresh'] or classDef['reset'])):
-                raidString += findEmojiByAttributeName(classDef['stone']) + ' ' if emojis else ':' + classDef['stone'] + 'crystal: '
+                raidString += findEmojiByAttributeName(classDef['stone']) + ' ' if emojis else ':' + findEmojiByAttributeName(classDef["stone"], True) + ': '
             if (index < len(userList) and (index == len(userList) - 1 or classDef['fresh'] != userList[index + 1]['fresh'] or classDef['reset'] != userList[index + 1]['reset'] or classDef['break'])):
                 if classDef['fresh']:
-                    raidString += findEmojiByAttributeName("fresh") + ' ' if emojis else ':fresh: '
+                    raidString += findEmojiByAttributeName("fresh") + ' ' if emojis else ':' + findEmojiByAttributeName("fresh", True) + ': '
                 elif classDef['reset']:
-                    raidString += findEmojiByAttributeName("reset") + ' ' if emojis else ':reset: '
+                    raidString += findEmojiByAttributeName("reset") + ' ' if emojis else ':' + findEmojiByAttributeName("reset", True) + ': '
                 else:
-                    raidString += findEmojiByAttributeName("flamemark") + ' ' if emojis else ':flamemark: '
+                    raidString += findEmojiByAttributeName("flamemark") + ' ' if emojis else ':' + findEmojiByAttributeName("flamemark", True) + ': '
             if (classDef['break']):
                 raidString += '\n'
 
@@ -283,12 +294,6 @@ async def remove(ctx, *args):
 
 @client.command()
 async def set(ctx, className, *args):
-    def canSetAttribute(attribute):
-        for attributeDef in attributes:
-            if attributeDef['name'] == attribute:
-                return attributeDef['canSet']
-        return False
-
     def callFresh(ctx, classDef, invert, args, indexArg):
         return {"fresh": True, "reset": False} if not invert else {"fresh": False, "reset": False}
 
@@ -412,6 +417,22 @@ async def run(ctx, *args):
 
 @client.command()
 async def list(ctx):
+    def handleFresh(attrValue, classDef):
+        if (attrValue):
+            return findEmojiByAttributeName("fresh")
+        elif not classDef["reset"]:
+            return findEmojiByAttributeName("flamemark")
+        return None
+
+    def handleStone(attrValue, classDef):
+        if not attrValue:
+            return None
+        return findEmojiByAttributeName(attrValue)
+
+    specListCases = {
+        "fresh": handleFresh,
+        "stone": handleStone
+    }
     listStr = ""
 
     async def userFound(ctx):
@@ -420,7 +441,16 @@ async def list(ctx):
         userList = userRaidLists[ctx.author.name].copy()
         userList.sort(key = lambda charDef: findElswordClass(charDef["className"])["index"])
         for classDef in userList:
-            charList += "\n" + classDef["emoji"] + " " + (classDef['alias'] if classDef['alias'] is not None else classDef['className'])
+            charList += "\n" + classDef["emoji"]
+            for attribute in classDef:
+                attributeText = None
+                if (attribute in specListCases):
+                    attributeText = specListCases[attribute](classDef[attribute], classDef)
+                elif classDef[attribute]:
+                    attributeText = findEmojiByAttributeName(attribute)
+                if attributeText:
+                    charList += " " + attributeText
+            charList += " " + (classDef['alias'] if classDef['alias'] is not None else classDef['className'])
         listStr = "Your Character(s): " + charList + "\n"
 
     async def userNotFound(ctx):
