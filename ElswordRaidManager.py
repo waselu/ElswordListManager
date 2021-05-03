@@ -2,6 +2,7 @@ import discord
 from discord.ext import commands
 import sys
 import json
+import pyperclip
 
 ##Usable by other users##
 #TODO: help command
@@ -216,7 +217,7 @@ def userListToServerList(user, emojis = True):
         if not classDef['fresh'] and not classDef['reset'] and not classDef['farm']:
             userList.remove(classDef)
 
-    raidString = "" if emojis else "```"
+    raidString = ""
     mustIncludeFlameMark = False
     for index, classDef in enumerate(userList):
         if (classDef['fresh'] or classDef['reset'] or classDef['farm']):
@@ -241,7 +242,7 @@ def userListToServerList(user, emojis = True):
 
     if (raidString == "```"):
         raidString += " "
-    return (raidString if emojis else raidString + "```") if raidString else "Your list is empty"
+    return raidString if raidString else "Your list is empty"
 
 client = commands.Bot(command_prefix = "?", description = "Rosso raid list manager")
 
@@ -458,7 +459,8 @@ async def list(ctx):
 
     await doIfUserFoundInUserList(ctx, userFound, userNotFound)
     listStr += "\nList:\n" + userListToServerList(ctx.author.name) + "\n"
-    listStr += "\nRaid Server List:\n" + userListToServerList(ctx.author.name, False)
+    pyperclip.copy(userListToServerList(ctx.author.name, False))
+    listStr += "\nServer list was copied to clipboard"
     await ctx.send(listStr)
 
 @client.command()
@@ -484,7 +486,7 @@ async def move(ctx, *args):
         for index, classDef in enumerate(charList):
             if (index + 1 == indexMoveTo):
                 return indexMoveTo
-            if (not classDef['fresh'] and not classDef['reset']):
+            if (not classDef['fresh'] and not classDef['reset'] and not classDef['farm']):
                 indexMoveTo += 1
         return indexMoveTo
 
