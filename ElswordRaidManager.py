@@ -220,27 +220,6 @@ async def set(ctx, className, *args):
     await doIfClassFoundInUserList(ctx, className, classFound, classNotFound, userNotFound)
 
 @client.command()
-async def run(ctx, *args):
-    async def classFound(ctx, index, realName):
-        if userRaidLists[ctx.author.name][index]["fresh"] == 0:
-            await ctx.send("You have already run rosso on " + className)
-            return
-
-        userRaidLists[ctx.author.name][index]["fresh"] -= 1
-
-    async def classNotFound(ctx, realName):
-        await ctx.send(realName + " was not fount in your list")
-
-    async def userNotFound(ctx, realName):
-        await ctx.send("You have no list yet")
-
-    for className in args:
-        await doIfClassFoundInUserList(ctx, className, classFound, classNotFound, userNotFound)
-
-    await ctx.send(userListToServerList(ctx.author.name))
-    saveUserFile()
-
-@client.command()
 async def move(ctx, *args):
     def getActualIndexMoveTo(indexMoveTo, user):
         charList = userRaidLists[user]
@@ -280,23 +259,3 @@ async def move(ctx, *args):
 
     await ctx.send(userListToServerList(ctx.author.name))
     saveUserFile()
-
-@client.command()
-async def weeklyreset(ctx):
-    async def userFound(ctx):
-        for index, whatever in enumerate(userRaidLists[ctx.author.name]):
-            userRaidLists[ctx.author.name][index]["fresh"] = True
-        await ctx.send(userListToServerList(ctx.author.name))
-
-    async def userNotFound(ctx):
-        await ctx.send("You have no list yet")
-
-    await doIfUserFoundInUserList(ctx, userFound, userNotFound)
-    saveUserFile()
-
-@client.command()
-async def on_command_error(ctx, error):
-    if isinstance(error, discord.ext.commands.error.CommandNotFound):
-        await ctx.send("This command doesn't exist")
-    if isinstance(error, discord.ext.commands.error.MissingRequiredArgument):
-        await ctx.send("Missing required argument")

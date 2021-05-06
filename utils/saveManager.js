@@ -5,7 +5,10 @@ var list = {};
 
 function readSaveFile() {
 	try {
-		const data = fs.readFileSync('./ElswordTest.txt', 'utf8');
+		let data = fs.readFileSync('./ElswordTest.txt', {encoding:'utf8', flag:'a+'});
+		if (!data) {
+			data = '{}';
+		}
 		list = JSON.parse(data);
 	} catch (err) {
 		console.error(err);
@@ -14,7 +17,7 @@ function readSaveFile() {
 
 function writeSaveFile() {
 	try {
-		fs.writeFileSync('./ElswordTest.txt', JSON.stringify(list));
+		fs.writeFileSync('./ElswordTest.txt', JSON.stringify(list), {flag: 'w'});
 	} catch (err) {
 		console.error(err);
 	}
