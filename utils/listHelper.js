@@ -148,7 +148,7 @@ function copyList(username) {
 
 function sendBotMessage(message, sending) {
     message.channel.send(sending).then(function(discordMessage) {
-        discordMessage.delete({timeout: 3000});
+        discordMessage.delete({timeout: 120000});
     })
 }
 
