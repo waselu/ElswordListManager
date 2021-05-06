@@ -27,7 +27,7 @@ async function run(message, args) {
     }
 
     await message.channel.send(helper.userListToServerList(message.author.username));
-    //saveUserFile()
+    saveManager.setList(list);
 }
 
 module.exports = {
