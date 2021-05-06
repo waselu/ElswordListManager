@@ -11,6 +11,7 @@ async function show(message, args) {
     }
 
     await helper.doIfUserFoundInUserList(message, userFound, userNotFound);
+    helper.copyList(message.author.username);
 }
 
 module.exports = {

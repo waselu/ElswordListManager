@@ -66,9 +66,8 @@ async function list(message, args) {
 
     await helper.doIfUserFoundInUserList(message, userFound, userNotFound);
     listStr += "\nList:\n" + helper.userListToServerList(message.author.username) + "\n";
-    //pyperclip.copy(userListToServerList(message.author.username, False));
-    listStr += "\nServer list was copied to clipboard";
     message.channel.send(listStr);
+    helper.copyList(message.author.username);
 }
 
 module.exports = {

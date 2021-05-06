@@ -29,7 +29,8 @@ async function add(message, args) {
         await helper.doIfClassFoundInUserList(message, className, classFound, classNotFound, userNotFound, true)
     }
 
-    await message.channel.send(helper.userListToServerList(message.author.username))
+    message.channel.send(helper.userListToServerList(message.author.username))
+    helper.copyList(message.author.username);
     saveManager.setList(list);
 }
 

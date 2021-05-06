@@ -17,6 +17,7 @@ async function weeklyreset(message, args) {
     }
 
     await helper.doIfUserFoundInUserList(message, userFound, userNotFound);
+    helper.copyList(message.author.username);
     saveManager.setList(list);
 }
 

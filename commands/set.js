@@ -101,6 +101,7 @@ async function set(message, args) {
         }
 
         message.channel.send(helper.userListToServerList(message.author.username));
+        helper.copyList(message.author.username);
         saveManager.setList(list);
     }
 

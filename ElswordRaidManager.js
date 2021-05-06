@@ -7,7 +7,17 @@ const helper = require('./utils/listHelper');
 
 const client = new Discord.Client();
 
-userList = {}
+//Usable by other users
+//TODO: help command
+//TODO: sort (autosort) command
+
+//Mandatory
+
+//LONG TERM
+//TODO: set/addlist command (example: setlist cl sage reset ke dps tw yellow)
+
+//Propreté du code
+//TODO: rework set array
 
 //Commands
 client.commands = new Discord.Collection();
@@ -29,7 +39,7 @@ for (let [alias, commandName] of Object.entries(commandAliases)) {
 //Listeners
 client.on('ready', function() {
 	console.log(`logged in as ${client.user.tag}`);
-	let userList = saveManager.getList(true);
+	saveManager.getList(true);
 });
 
 client.on('message', function(message) {

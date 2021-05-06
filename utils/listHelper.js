@@ -1,4 +1,5 @@
 
+const copy = require('clipboardy');
 const { classes, attributes } = require('../config.json');
 const saveManager = require('./saveManager');
 
@@ -125,20 +126,24 @@ function userListToServerList(user, emojis = true) {
     for ([index, classDef] of userList.entries()) {
         if (classDef['fresh'] || classDef['reset'] || classDef['farm']) {
             raidString += emojis ? classDef["emoji"] + ' ' : ':' + classDef["className"] + ': '
-            if (classDef['dps']) { raidString += emojis ? findEmojiByAttributeName("dps") + ' ' : ':' + findEmojiByAttributeName("dps", True) + ': ' }
-            if (classDef['sage']) { raidString += emojis ? findEmojiByAttributeName("sage") + ' ' : ':' + findEmojiByAttributeName("sage", True) + ': ' }
-            if (classDef['speed']) { raidString += emojis ? findEmojiByAttributeName("speed") + ' ' : ':' + findEmojiByAttributeName("speed", True) + ': ' }
-            if (classDef['stone'] != null && (classDef['fresh'] || classDef['reset'])) { raidString += emojis ? findEmojiByAttributeName(classDef['stone']) + ' ' : ':' + findEmojiByAttributeName(classDef["stone"], True) + ': ' }
+            if (classDef['dps']) { raidString += emojis ? findEmojiByAttributeName("dps") + ' ' : ':' + findEmojiByAttributeName("dps", true) + ': ' }
+            if (classDef['sage']) { raidString += emojis ? findEmojiByAttributeName("sage") + ' ' : ':' + findEmojiByAttributeName("sage", true) + ': ' }
+            if (classDef['speed']) { raidString += emojis ? findEmojiByAttributeName("speed") + ' ' : ':' + findEmojiByAttributeName("speed", true) + ': ' }
+            if (classDef['stone'] != null && (classDef['fresh'] || classDef['reset'])) { raidString += emojis ? findEmojiByAttributeName(classDef['stone']) + ' ' : ':' + findEmojiByAttributeName(classDef["stone"], true) + ': ' }
             if (index < userList.length && (index == userList.length - 1 || classDef['fresh'] != userList[index + 1]['fresh'] || classDef['reset'] != userList[index + 1]['reset'] || classDef['break'])) {
-                if (classDef['fresh']) { raidString += emojis ? findEmojiByAttributeName("fresh") + ' ' : ':' + findEmojiByAttributeName("fresh", True) + ': ' }
-                else if (classDef['reset']) { raidString += emojis ? findEmojiByAttributeName("reset") + ' ' : ':' + findEmojiByAttributeName("reset", True) + ': ' }
-                else { raidString += emojis ? findEmojiByAttributeName("flamemark") + ' ' : ':' + findEmojiByAttributeName("flamemark", True) + ': '}
+                if (classDef['fresh']) { raidString += emojis ? findEmojiByAttributeName("fresh") + ' ' : ':' + findEmojiByAttributeName("fresh", true) + ': ' }
+                else if (classDef['reset']) { raidString += emojis ? findEmojiByAttributeName("reset") + ' ' : ':' + findEmojiByAttributeName("reset", true) + ': ' }
+                else { raidString += emojis ? findEmojiByAttributeName("flamemark") + ' ' : ':' + findEmojiByAttributeName("flamemark", true) + ': '}
             }
             if (classDef['break']) { raidString += '\n' }
         }
     }
 
     return raidString ? raidString : "Your list is empty"
+}
+
+function copyList(username) {
+    copy.writeSync(userListToServerList(username, false));
 }
 
 exports.findElswordClass = findElswordClass;
@@ -150,3 +155,4 @@ exports.checkUserListHasChar = checkUserListHasChar;
 exports.doIfUserFoundInUserList = doIfUserFoundInUserList;
 exports.doIfClassFoundInUserList = doIfClassFoundInUserList;
 exports.userListToServerList = userListToServerList;
+exports.copyList = copyList;
