@@ -88,7 +88,7 @@ async function set(message, args) {
             }
 
             if (!helper.canSetAttribute(attribute)) {
-                await message.channel.send("Attribute '" + attribute + "' doesn't exist");
+                message.channel.send("Attribute '" + attribute + "' doesn't exist");
                 return;
             }
             
@@ -100,12 +100,12 @@ async function set(message, args) {
             invertAttr = false;
         }
 
-        await message.channel.send(helper.userListToServerList(message.author.username))
+        message.channel.send(helper.userListToServerList(message.author.username));
         saveManager.setList(list);
     }
 
     async function classNotFound(message, realName) {
-        message.channel.send(realName + " was not fount in your list");
+        message.channel.send(realName + " was not found in your list");
         message.channel.send(userListToServerList(message.author.username));
     }
 
