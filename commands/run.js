@@ -34,7 +34,7 @@ async function run(message, args) {
 module.exports = {
 	name: 'run',
 	description: 'Run raid on a certain character',
-	execute(message, args) {
+	execute(message, args, client) {
 		run(message, args);
 	}
 }

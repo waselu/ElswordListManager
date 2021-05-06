@@ -1,6 +1,6 @@
 
 const Discord = require('discord.js');
-const fs = require('fs')
+const fs = require('fs');
 const { prefix } = require('./config.json');
 const saveManager = require('./utils/saveManager');
 const helper = require('./utils/listHelper');
@@ -52,7 +52,8 @@ client.on('message', function(message) {
 
 	const command = client.commands.get(commandName);
 
-	command.execute(message, args);
+	command.execute(message, args, client);
+	message.delete({timeout: 3000});
 })
 
 //Bot login

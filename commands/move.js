@@ -69,7 +69,7 @@ async function move(message, args) {
 module.exports = {
     name: 'move',
     description: 'Move a character somewhere else in your list',
-    execute(message, args) {
+    execute(message, args, client) {
         move(message, args);
     }
 }

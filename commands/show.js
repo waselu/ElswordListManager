@@ -17,7 +17,7 @@ async function show(message, args) {
 module.exports = {
 	name: 'show',
 	description: 'Show your current list',
-	execute(message, args) {
+	execute(message, args, client) {
 		show(message, args);
 	}
 }

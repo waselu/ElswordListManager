@@ -24,7 +24,7 @@ async function weeklyreset(message, args) {
 module.exports = {
 	name: 'weeklyreset',
 	description: 'Same effect as in-game weekly reset',
-	execute(message, args) {
+	execute(message, args, client) {
 		weeklyreset(message, args);
 	}
 }

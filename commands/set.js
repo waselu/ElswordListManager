@@ -120,7 +120,7 @@ async function set(message, args) {
 module.exports = {
 	name: 'set',
 	description: 'Set a property for one of your character',
-	execute(message, args) {
+	execute(message, args, client) {
 		set(message, args);
 	}
 }

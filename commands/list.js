@@ -72,8 +72,8 @@ async function list(message, args) {
 
 module.exports = {
 	name: 'list',
-	description: 'Show your current characters, list, and copy it to your clipboard',
-	execute(message, args) {
+	description: 'Show your current characters and list',
+	execute(message, args, client) {
 		list(message, args);
 	}
 }

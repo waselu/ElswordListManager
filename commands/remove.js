@@ -29,7 +29,7 @@ async function remove(message, args) {
 module.exports = {
 	name: 'remove',
 	description: 'Remove a class from your list',
-	execute(message, args) {
+	execute(message, args, client) {
 		remove(message, args);
 	}
 }
