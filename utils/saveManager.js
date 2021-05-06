@@ -34,5 +34,10 @@ function setList(data, saveFile = true) {
 	}
 }
 
+function setUserList(user, data, saveFile = true) {
+	//TODO: implement that
+}
+
 exports.getList = getList;
 exports.setList = setList;
+exports.setUserList = setUserList;
