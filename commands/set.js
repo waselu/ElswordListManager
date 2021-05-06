@@ -8,14 +8,8 @@ async function set(message, args) {
     let className = args[0];
     args.splice(0, 1);
 
-    function callFresh(message, classDef, invert, args, indexArg) {
-        return !invert ? {"fresh": true, "reset": false} : {"fresh": false, "reset": false};
-    }
-
-    function callReset(message, classDef, invert, args, indexArg) {
-        return !invert ? {"fresh": false, "reset": true} : {"reset": false};
-    }
-
+    function callFresh(message, classDef, invert, args, indexArg) {return !invert ? {"fresh": true, "reset": false} : {"fresh": false, "reset": false};}
+    function callReset(message, classDef, invert, args, indexArg) {return !invert ? {"fresh": false, "reset": true} : {"reset": false};}
     function callStone(message, classDef, invert, stoneColor) {
         if (stoneColor == "nostone") {
             return !invert ? {"stone": null} : {};
@@ -25,27 +19,11 @@ async function set(message, args) {
         }
         return {"stone": stoneColor};
     }
-
-    function callStoneRed(message, classDef, invert, args, indexArg) {
-        return callStone(message, classDef, invert, "red");
-    }
-
-    function callStoneBlue(message, classDef, invert, args, indexArg) {
-        return callStone(message, classDef, invert, "blue");
-    }
-
-    function callStoneYellow(message, classDef, invert, args, indexArg) {
-        return callStone(message, classDef, invert, "yellow");
-    }
-
-    function callStoneGiant(message, classDef, invert, args, indexArg) {
-        return callStone(message, classDef, invert, "giant");
-    }
-
-    function callStoneNostone(message, classDef, invert, args, indexArg) {
-        return callStone(message, classDef, invert, "nostone");
-    }
-
+    function callStoneRed(message, classDef, invert, args, indexArg) {return callStone(message, classDef, invert, "red");}
+    function callStoneBlue(message, classDef, invert, args, indexArg) {return callStone(message, classDef, invert, "blue");}
+    function callStoneYellow(message, classDef, invert, args, indexArg) {return callStone(message, classDef, invert, "yellow");}
+    function callStoneGiant(message, classDef, invert, args, indexArg) {return callStone(message, classDef, invert, "giant");}
+    function callStoneNostone(message, classDef, invert, args, indexArg) {return callStone(message, classDef, invert, "nostone");}
     function callAlias(message, classDef, invert, args, indexArg) {
         if (invert) {
             return {"alias": null};
