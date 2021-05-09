@@ -62,7 +62,7 @@
 	    {"name": "dps", "value": false, "canSet": true, "isDefault": true,  "emoji": "<:dps:828908669978673182>", "serverEmoji": "dps"},
 	    {"name": "sage", "value": false, "canSet": true, "isDefault": true, "emoji": "<:sage:828908664810373130>", "serverEmoji": "FullSage"},
 	    {"name": "speed", "value": false, "canSet": true, "isDefault": true, "emoji": "<:SpdBot:837244319726436372>", "serverEmoji": "SpdBot"},
-
+		{"name": "freeze", "value": false, "canSet": true, "isDefault": true, "emoji": "🧊", "serverEmoji": "icecube"},
 	   
 	    {"name": "fresh", "value": true, "canSet": true, "isDefault": true, "emoji": "<:fresh:828908656144678964>", "serverEmoji": "fresh"},
 	    {"name": "reset", "value": false, "canSet": true, "isDefault": true, "emoji": "<:reset:832571110906003496>", "serverEmoji": "reset"},
