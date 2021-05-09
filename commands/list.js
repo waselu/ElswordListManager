@@ -61,12 +61,12 @@ async function list(message, args) {
     }
 
     function userNotFound(message) {
-        message.channel.send("You have no list yet");
+        helper.sendBotMessage(message, "You have no list yet");
     }
 
     await helper.doIfUserFoundInUserList(message, userFound, userNotFound);
     listStr += "\nList:\n" + helper.userListToServerList(message.author.username) + "\n";
-    message.channel.send(listStr);
+    helper.sendBotMessage(message, listStr);
     helper.copyList(message.author.username);
 }
 

@@ -7,7 +7,7 @@ async function run(message, args) {
 
     async function classFound(message, index, realName) {
         if (list[message.author.username][index]["fresh"] == 0) {
-            message.channel.send("You have already run rosso on " + className);
+            helper.sendBotMessage(message, "You have already run rosso on " + className);
             return;
         }
 
@@ -15,18 +15,18 @@ async function run(message, args) {
     }
 
     async function classNotFound(message, realName) {
-        message.channel.send(realName + " was not fount in your list");
+        helper.sendBotMessage(message, realName + " was not fount in your list");
     }
 
     async function userNotFound(message, realName) {
-        message.channel.send("You have no list yet");
+        helper.sendBotMessage(message, "You have no list yet");
     }
 
     for (className of args) {
         await helper.doIfClassFoundInUserList(message, className, classFound, classNotFound, userNotFound);
     }
 
-    await message.channel.send(helper.userListToServerList(message.author.username));
+    await helper.sendBotMessage(message, helper.userListToServerList(message.author.username));
     helper.copyList(message.author.username);
     saveManager.setList(list);
 }

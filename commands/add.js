@@ -14,7 +14,7 @@ async function add(message, args) {
     }
 
     async function classFound(message, index, realName) {
-        message.channel.send("You already added " + realName + " to your list");
+        helper.sendBotMessage(message, "You already added " + realName + " to your list");
     }
     
     async function classNotFound(message, realName) {
@@ -29,7 +29,7 @@ async function add(message, args) {
         await helper.doIfClassFoundInUserList(message, className, classFound, classNotFound, userNotFound, true)
     }
 
-    message.channel.send(helper.userListToServerList(message.author.username))
+    helper.sendBotMessage(message, helper.userListToServerList(message.author.username))
     helper.copyList(message.author.username);
     saveManager.setList(list);
 }

@@ -9,11 +9,11 @@ async function weeklyreset(message, args) {
         for ([index, whatever] of list[message.author.username].entries()) {
             list[message.author.username][index]["fresh"] = true;
         }
-        message.channel.send(helper.userListToServerList(message.author.username));
+        helper.sendBotMessage(message, helper.userListToServerList(message.author.username));
     }
 
     async function userNotFound(message) {
-        message.channel.send("You have no list yet");
+        helper.sendBotMessage(message, "You have no list yet");
     }
 
     await helper.doIfUserFoundInUserList(message, userFound, userNotFound);

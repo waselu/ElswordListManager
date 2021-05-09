@@ -60,7 +60,7 @@ async function set(message, args) {
                     setObject['skip'] = 0;
                 }
                 if ('error' in setObject) {
-                    await message.channel.send(setObject['error']);
+                    await helper.sendBotMessage(message, setObject['error']);
                     return -1;
                 }
             }
@@ -88,7 +88,7 @@ async function set(message, args) {
             }
 
             if (!helper.canSetAttribute(attribute)) {
-                message.channel.send("Attribute '" + attribute + "' doesn't exist");
+                helper.sendBotMessage(message, "Attribute '" + attribute + "' doesn't exist");
                 return;
             }
             
@@ -100,18 +100,18 @@ async function set(message, args) {
             invertAttr = false;
         }
 
-        message.channel.send(helper.userListToServerList(message.author.username));
+        helper.sendBotMessage(message, helper.userListToServerList(message.author.username));
         helper.copyList(message.author.username);
         saveManager.setList(list);
     }
 
     async function classNotFound(message, realName) {
-        message.channel.send(realName + " was not found in your list");
-        message.channel.send(userListToServerList(message.author.username));
+        helper.sendBotMessage(message, realName + " was not found in your list");
+        helper.sendBotMessage(message, userListToServerList(message.author.username));
     }
 
     async function userNotFound(message, realName) {
-        message.channel.send("You have no list yet");
+        helper.sendBotMessage(message, "You have no list yet");
     }
 
     await helper.doIfClassFoundInUserList(message, className, classFound, classNotFound, userNotFound);

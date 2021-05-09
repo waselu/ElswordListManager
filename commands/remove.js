@@ -10,18 +10,18 @@ async function remove(message, args) {
     }
 
     async function failureDelete(message, realName) {
-        message.channel.send(realName + " was not fount in your list")
+        helper.sendBotMessage(message, realName + " was not fount in your list")
     }
 
     async function userNotFound(message, realName) {
-        message.channel.send("You have no list yet")
+        helper.sendBotMessage(message, "You have no list yet")
     }
 
     for (className of args) {
         await helper.doIfClassFoundInUserList(message, className, successfullDelete, failureDelete, userNotFound)
     }
 
-    message.channel.send(helper.userListToServerList(message.author.username))
+    helper.sendBotMessage(message, helper.userListToServerList(message.author.username))
     helper.copyList(message.author.username);
     saveManager.setList(list);
 }

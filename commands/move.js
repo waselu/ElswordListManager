@@ -33,7 +33,7 @@ async function move(message, args) {
     }
 
     if (classNames.length != classNames.length) {
-        message.channel.send("Bad syntax, check the help command");
+        helper.sendBotMessage(message, "Bad syntax, check the help command");
         return;
     }
 
@@ -41,7 +41,7 @@ async function move(message, args) {
         let indexMoveTo = positions[index];
         async function classFound(message, index, realName) {
             if (indexMoveTo <= 0 || indexMoveTo > list[message.author.username].length) {
-                message.channel.send("Index " + indexMoveTo + " isn't in your list");
+                helper.sendBotMessage(message, "Index " + indexMoveTo + " isn't in your list");
                 return;
             }
             indexMoveTo = getActualIndexMoveTo(indexMoveTo, message.author.username);
@@ -51,17 +51,17 @@ async function move(message, args) {
         }
 
         async function classNotFound(message, realName) {
-            message.channel.send(realName + " was not fount in your list");
+            helper.sendBotMessage(message, realName + " was not fount in your list");
         }
 
         async function userNotFound(message, realName) {
-            message.channel.send("You have no list yet");
+            helper.sendBotMessage(message, "You have no list yet");
         }
 
         await helper.doIfClassFoundInUserList(message, className, classFound, classNotFound, userNotFound);
     }
 
-    message.channel.send(helper.userListToServerList(message.author.username));
+    helper.sendBotMessage(message, helper.userListToServerList(message.author.username));
     helper.copyList(message.author.username);
     saveManager.setList(list);
 }
