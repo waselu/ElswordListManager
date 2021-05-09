@@ -53,7 +53,7 @@ client.on('message', function(message) {
 	const command = client.commands.get(commandName);
 
 	command.execute(message, args, client);
-	message.delete({timeout: 3000});
+	message.delete({timeout: 1000});
 })
 
 //Bot login
