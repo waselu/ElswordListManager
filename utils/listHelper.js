@@ -116,9 +116,15 @@ function userListToServerList(user, emojis = true) {
     }
 
     let userList = JSON.parse(JSON.stringify(list[user]));
-    for ([index, classDef] of userList.entries()) {
-        if (!(classDef['fresh']) && !(classDef['reset']) && !(classDef['farm'])) {
-            userList.splice(index, 1);
+    removed = true;
+    while (removed) {
+        removed = false;
+        for ([index, classDef] of userList.entries()) {
+            if (!(classDef['fresh']) && !(classDef['reset']) && !(classDef['farm'])) {
+                userList.splice(index, 1);
+                removed = true;
+                break;
+            }
         }
     }
 
