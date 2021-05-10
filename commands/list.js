@@ -72,6 +72,7 @@ async function list(message, args) {
 
 module.exports = {
 	name: 'list',
+    argNumber: '0',
 	description: 'Show your current characters and list',
 	execute(message, args, client) {
 		list(message, args);

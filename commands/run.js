@@ -33,6 +33,7 @@ async function run(message, args) {
 
 module.exports = {
 	name: 'run',
+    argNumber: '>0',
 	description: 'Run raid on a certain character',
 	execute(message, args, client) {
 		run(message, args);

@@ -68,6 +68,7 @@ async function move(message, args) {
 
 module.exports = {
     name: 'move',
+    argNumber: '>1',
     description: 'Move a character somewhere else in your list',
     execute(message, args, client) {
         move(message, args);

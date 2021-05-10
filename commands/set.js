@@ -119,6 +119,7 @@ async function set(message, args) {
 
 module.exports = {
 	name: 'set',
+    argNumber: '>1',
 	description: 'Set a property for one of your character',
 	execute(message, args, client) {
 		set(message, args);

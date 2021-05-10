@@ -36,6 +36,7 @@ async function add(message, args) {
 
 module.exports = {
 	name: 'add',
+    argNumber: '>0',
 	description: 'Add a class to your list',
 	execute(message, args, client) {
 		add(message, args);
