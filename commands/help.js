@@ -40,7 +40,7 @@ function help(message, args, client) {
 }
 
 module.exports = {
-	name: 'hel',
+	name: 'help',
 	argNumber: '<2',
 	description: 'Display this help',
 	example: '``' + prefix + 'help``\n``' + prefix + 'help add``',
