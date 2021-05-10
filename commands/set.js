@@ -1,5 +1,5 @@
 
-const { attributes, classes } = require('../config.json');
+const { prefix } = require('../config.json');
 const saveManager = require('../utils/saveManager');
 const helper = require('../utils/listHelper');
 
@@ -120,7 +120,15 @@ async function set(message, args) {
 module.exports = {
 	name: 'set',
     argNumber: '>1',
-	description: 'Set a property for one of your character',
+	description: 'Set one or many property(ies) for one of your character',
+    example: '``' + prefix + 'set NP sage freeze``\n``' + prefix + 'set devi dps not fresh farm``\n``' + prefix + 'set shakti alias Eva``\n``' + prefix + 'set shakti no alias``\n\n' +
+            'List of available attributes:\n' +
+            '``dps`` ``sage`` ``speed`` ``freeze``\n' +
+            '``fresh`` ``reset``\n'+
+            '``red`` ``blue`` ``yellow`` ``giant`` ``nostone``\n' +
+            '``farm`` ``linebreak``\n' +
+            '``alias [name]``',
+    additionalInfo: 'You can add no/not before a property to remove it',
 	execute(message, args, client) {
 		set(message, args);
 	}

@@ -1,4 +1,5 @@
 
+const { prefix } = require('../config.json');
 const saveManager = require('../utils/saveManager');
 const helper = require('../utils/listHelper');
 
@@ -29,7 +30,9 @@ async function remove(message, args) {
 module.exports = {
 	name: 'remove',
     argNumber: '>0',
-	description: 'Remove a class from your list',
+	description: 'Remove one or many character(s) from your list',
+    example: '``' + prefix + 'remove CL NP``\n``' + prefix + 'remove elsword1 laby3 ara2``\n``' + prefix + 'remove myAliasA myAliasB``',
+    additionalInfo: 'You must follow the add syntax, or use aliases if you set any',
 	execute(message, args, client) {
 		remove(message, args);
 	}

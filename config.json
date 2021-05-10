@@ -67,7 +67,6 @@
 	    {"name": "fresh", "value": true, "canSet": true, "isDefault": true, "emoji": "<:fresh:828908656144678964>", "serverEmoji": "fresh"},
 	    {"name": "reset", "value": false, "canSet": true, "isDefault": true, "emoji": "<:reset:832571110906003496>", "serverEmoji": "reset"},
 	    {"name": "flamemark", "value": false, "canSet": false, "isDefault": false, "emoji": "<:flamemark:828910673626923038>", "serverEmoji": "flamemark"},
-
 	   
 	    {"name": "stone", "value": null, "canSet": false, "isDefault": true, "emoji": "", "serverEmoji": ""},
 	    {"name": "red", "value": null, "canSet": true, "isDefault": false, "emoji": "<:redcrystal:830525849391464511>", "serverEmoji": "redcrystal"},
@@ -75,10 +74,9 @@
 	    {"name": "yellow", "value": null, "canSet": true, "isDefault": false, "emoji": "<:yellowcrystal:830525869487161354>", "serverEmoji": "yellowcrystal"},
 	    {"name": "giant", "value": null, "canSet": true, "isDefault": false, "emoji": "<:giantcrystal:830525874007965766>", "serverEmoji": "giantcrystal"},
 	    {"name": "nostone", "value": null, "canSet": true, "isDefault": false, "emoji": "", "serverEmoji": ""},
-
 	   
 	    {"name": "farm", "value": false, "canSet": true, "isDefault": true, "emoji": "🌾", "serverEmoji": ""},
-	    {"name": "break", "value": false, "canSet": true, "isDefault": true, "emoji": "⤵️", "serverEmoji": "break"},
+	    {"name": "linebreak", "value": false, "canSet": true, "isDefault": true, "emoji": "⤵️", "serverEmoji": "break"},
 	    {"name": "alias", "value": null, "canSet": true, "isDefault": true, "emoji": "", "serverEmoji": ""}
 	]
 }
