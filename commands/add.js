@@ -1,5 +1,5 @@
 
-const { attributes } = require('../config.json');
+const { attributes, prefix } = require('../config.json');
 const saveManager = require('../utils/saveManager');
 const helper = require('../utils/listHelper');
 
@@ -37,7 +37,9 @@ async function add(message, args) {
 module.exports = {
 	name: 'add',
     argNumber: '>0',
-	description: 'Add a class to your list',
+	description: 'Add one or many class(es) to your list',
+    example: '``' + prefix + 'add CL NP``\n``' + prefix + 'add elsword1 laby3 ara2``',
+    additionalInfo: 'You can refer to classes by either their acronym or character + class number',
 	execute(message, args, client) {
 		add(message, args);
 	}
