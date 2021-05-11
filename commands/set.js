@@ -127,7 +127,11 @@ module.exports = {
             '``fresh`` ``reset``\n'+
             '``red`` ``blue`` ``yellow`` ``giant`` ``nostone``\n' +
             '``farm`` ``linebreak``\n' +
-            '``alias [name]``',
+            '``alias [name]``\n\n' +
+            'Setting an alias will make you only able to reference that ' +
+            'character by its alias and no longer by its class name, ' +
+            'additionally it will make you able to add another character of that class to your list\n' +
+            '(The requirement being that you do not have 2 characters with the same name)',
     additionalInfo: 'You can add no/not before a property to remove it',
 	execute(message, args, client) {
 		set(message, args);

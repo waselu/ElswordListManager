@@ -31,7 +31,8 @@ function help(message, args, client) {
 		.setDescription('Type ``' + prefix + 'help [command]`` for more help eg. ``' + prefix + 'help add``')
 		.addField('Characters', '``add`` ``remove``\n``set`` ``run``\n``move``', true)
 		.addField('List', '``list`` ``show``\n``weeklyreset``', true)
-		.addField('Misc.', '``help``', true);
+		.addField('Misc.', '``help``', true)
+		.setFooter('All commands are case insensitive');
 
 	    helper.sendBotMessage(message, embed);
 	} else {
