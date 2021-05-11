@@ -1,4 +1,5 @@
 
+const { prefix } = require('../config.json');
 const saveManager = require('../utils/saveManager');
 const helper = require('../utils/listHelper');
 
@@ -73,7 +74,9 @@ async function list(message, args) {
 module.exports = {
 	name: 'list',
     argNumber: '0',
-	description: 'Show your current characters and list',
+	description: 'Show your current characters + attributes and list',
+    example: '``' + prefix + 'list``',
+    additionalInfo: '',
 	execute(message, args, client) {
 		list(message, args);
 	}

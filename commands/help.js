@@ -32,7 +32,7 @@ function help(message, args, client) {
 		.addField('Characters', '``add`` ``remove``\n``set`` ``run``\n``move``', true)
 		.addField('List', '``list`` ``show``\n``weeklyreset``', true)
 		.addField('Misc.', '``help``', true)
-		.setFooter('All commands are case insensitive');
+		.setFooter('All commands are case insensitive\nUsing any command will copy your list to your clipboard');
 
 	    helper.sendBotMessage(message, embed);
 	} else {
