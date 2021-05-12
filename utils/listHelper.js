@@ -154,13 +154,12 @@ function copyList(username) {
     copy.writeSync(userListToServerList(username, false));
 }
 
-function sendBotMessage(message, sending) {
-    message.channel.send(sending).then(function(discordMessage) {
-        discordMessage.delete({timeout: 600000});
-    })
+async function sendBotMessage(message, sending) {
+    discordMessage = await message.channel.send(sending);
+    discordMessage.delete({timeout: 600000});
 }
 
-function sendFormalBotMessage(message, sendingTitle = null, sending = null, title = null, description = null, footer = null, thumbnail = null) {
+async function sendFormalBotMessage(message, sendingTitle = null, sending = null, title = null, description = null, footer = null, thumbnail = null) {
     let embed = new MessageEmbed()
 	.setAuthor('Rosso raid manager', 'https://64.media.tumblr.com/4d56ac1bcd708c38392a6b37f98a68b8/tumblr_pozk3r9eiW1wsn58z_640.jpg')
 	.setThumbnail(thumbnail)
@@ -169,15 +168,15 @@ function sendFormalBotMessage(message, sendingTitle = null, sending = null, titl
 	.addField(sendingTitle, sending)
 	.setFooter(footer);
 
-    sendBotMessage(message, embed);
+    await sendBotMessage(message, embed);
 }
 
-function sendBasicBotEmbed(message, sendingTitle = null, sending = null, footer = null, thumbnail = null) {
-    sendFormalBotMessage(message, sendingTitle, sending, '', '', footer, thumbnail)
+async function sendBasicBotEmbed(message, sendingTitle = null, sending = null, footer = null, thumbnail = null) {
+    await sendFormalBotMessage(message, sendingTitle, sending, '', '', footer, thumbnail)
 }
 
-function sendUserList(message, list = null, copy = true) {
-    sendBasicBotEmbed(message, message.author.username + '\'s list', userListToServerList(message.author.username), 'Your list has been copied to your clipboard');
+async function sendUserList(message, list = null, copy = true) {
+    await sendBasicBotEmbed(message, message.author.username + '\'s list', userListToServerList(message.author.username), 'Your list has been copied to your clipboard');
     if (list) {
         saveManager.setList(list);
     }

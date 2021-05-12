@@ -1,7 +1,7 @@
 
 const Discord = require('discord.js');
 const fs = require('fs');
-const { prefix } = require('./config.json');
+const { prefix, aliases } = require('./config.json');
 const saveManager = require('./utils/saveManager');
 const helper = require('./utils/listHelper');
 const commandManager = require('./utils/commandManager');
@@ -23,18 +23,16 @@ const client = new Discord.Client();
 //Commands
 client.commands = new Discord.Collection();
 
-const commandAliases = {
-	
-}
-
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 for (const file of commandFiles) {
 	const command = require(`./commands/${file}`);
 	client.commands.set(command.name, command);
 }
 
-for (let [alias, commandName] of Object.entries(commandAliases)) {
-	client.commands.set(alias, client.commands.get(commandName))
+for (let [commandName, commandAliases] of Object.entries(aliases)) {
+	for (let alias of commandAliases) {
+		client.commands.set(alias, client.commands.get(commandName))
+	}
 }
 
 //Listeners

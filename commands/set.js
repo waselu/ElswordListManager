@@ -88,7 +88,7 @@ async function set(message, args, ignoreMessage) {
             }
 
             if (!helper.canSetAttribute(attribute)) {
-                helper.sendBotMessage(message, "Attribute '" + attribute + "' doesn't exist");
+                await helper.sendBotMessage(message, "Attribute '" + attribute + "' doesn't exist");
                 return;
             }
             
@@ -101,17 +101,17 @@ async function set(message, args, ignoreMessage) {
         }
 
         if (!ignoreMessage) {
-            helper.sendUserList(message, list);
+            await helper.sendUserList(message, list);
         }
     }
 
     async function classNotFound(message, realName) {
-        helper.sendBotMessage(message, realName + " was not found in your list");
-        helper.sendBotMessage(message, userListToServerList(message.author.username));
+        await helper.sendBotMessage(message, realName + " was not found in your list");
+        await helper.sendBotMessage(message, userListToServerList(message.author.username));
     }
 
     async function userNotFound(message, realName) {
-        helper.sendBotMessage(message, "You have no list yet");
+        await helper.sendBotMessage(message, "You have no list yet");
     }
 
     await helper.doIfClassFoundInUserList(message, className, classFound, classNotFound, userNotFound);
@@ -133,7 +133,7 @@ module.exports = {
             'additionally it will make you able to add another character of that class to your list\n' +
             '(The requirement being that you do not have 2 characters with the same name)',
     additionalInfo: 'You can add no/not before a property to remove it',
-	execute(message, args, client, ignoreMessage = false) {
-		set(message, args, ignoreMessage);
+	async execute(message, args, client, ignoreMessage = false) {
+		await set(message, args, ignoreMessage);
 	}
 }

@@ -34,7 +34,7 @@ async function move(message, args) {
     }
 
     if (classNames.length != classNames.length) {
-        helper.sendBotMessage(message, "Bad syntax, check the help command");
+        await helper.sendBotMessage(message, "Bad syntax, check the help command");
         return;
     }
 
@@ -42,7 +42,7 @@ async function move(message, args) {
         let indexMoveTo = positions[index];
         async function classFound(message, index, realName) {
             if (indexMoveTo <= 0 || indexMoveTo > list[message.author.username].length) {
-                helper.sendBotMessage(message, "Index " + indexMoveTo + " isn't in your list");
+                await helper.sendBotMessage(message, "Index " + indexMoveTo + " isn't in your list");
                 return;
             }
             indexMoveTo = getActualIndexMoveTo(indexMoveTo, message.author.username);
@@ -52,17 +52,17 @@ async function move(message, args) {
         }
 
         async function classNotFound(message, realName) {
-            helper.sendBotMessage(message, realName + " was not fount in your list");
+            await helper.sendBotMessage(message, realName + " was not fount in your list");
         }
 
         async function userNotFound(message, realName) {
-            helper.sendBotMessage(message, "You have no list yet");
+            await helper.sendBotMessage(message, "You have no list yet");
         }
 
         await helper.doIfClassFoundInUserList(message, className, classFound, classNotFound, userNotFound);
     }
 
-    helper.sendUserList(message, list);
+    await helper.sendUserList(message, list);
 }
 
 module.exports = {
@@ -71,7 +71,7 @@ module.exports = {
     description: 'Move one or many character(s) somewhere else in your list',
     example: '``' + prefix + 'move KE 3``\n``' + prefix + 'move Devi 5 RaS 1 NP 3``',
     additionalInfo: 'Characters will always be moved after those who aren\'t displayed',
-    execute(message, args, client) {
-        move(message, args);
+    async execute(message, args, client) {
+        await move(message, args);
     }
 }

@@ -10,11 +10,11 @@ async function weeklyreset(message, args) {
         for ([index, whatever] of list[message.author.username].entries()) {
             list[message.author.username][index]["fresh"] = true;
         }
-        helper.sendUserList(message, list);
+        await helper.sendUserList(message, list);
     }
 
     async function userNotFound(message) {
-        helper.sendBotMessage(message, "You have no list yet");
+       await helper.sendBotMessage(message, "You have no list yet");
     }
 
     await helper.doIfUserFoundInUserList(message, userFound, userNotFound);
@@ -24,9 +24,9 @@ module.exports = {
 	name: 'weeklyreset',
     argNumber: '0',
 	description: 'Shortcut for calling ``' + prefix + 'set [CharacterName] fresh`` on every character',
-    examples: '``' + prefix + 'weeklyreset``',
+    example: '``' + prefix + 'weeklyreset``',
     additionalInfo: '',
-	execute(message, args, client) {
-		weeklyreset(message, args);
+	async execute(message, args, client) {
+		await weeklyreset(message, args);
 	}
 }

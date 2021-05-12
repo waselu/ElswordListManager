@@ -8,7 +8,7 @@ async function run(message, args) {
 
     async function classFound(message, index, realName) {
         if (list[message.author.username][index]["fresh"] == 0) {
-            helper.sendBotMessage(message, "You have already run rosso on " + className);
+            await helper.sendBotMessage(message, "You have already run rosso on " + className);
             return;
         }
 
@@ -16,18 +16,18 @@ async function run(message, args) {
     }
 
     async function classNotFound(message, realName) {
-        helper.sendBotMessage(message, realName + " was not fount in your list");
+        await helper.sendBotMessage(message, realName + " was not fount in your list");
     }
 
     async function userNotFound(message, realName) {
-        helper.sendBotMessage(message, "You have no list yet");
+        await helper.sendBotMessage(message, "You have no list yet");
     }
 
     for (className of args) {
         await helper.doIfClassFoundInUserList(message, className, classFound, classNotFound, userNotFound);
     }
 
-    helper.sendUserList(message, list);
+    await helper.sendUserList(message, list);
 }
 
 module.exports = {
@@ -37,7 +37,7 @@ module.exports = {
     example: '``' + prefix + 'run NP``\n' +
         '``' + prefix + 'run CL Devi KE``',
     additionalInfo: 'this command has the same effect as setting "not fresh" on a character',
-	execute(message, args, client) {
-		run(message, args);
+	async execute(message, args, client) {
+		await run(message, args);
 	}
 }

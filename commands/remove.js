@@ -11,18 +11,18 @@ async function remove(message, args) {
     }
 
     async function failureDelete(message, realName) {
-        helper.sendBotMessage(message, realName + " was not fount in your list")
+        await helper.sendBotMessage(message, realName + " was not fount in your list")
     }
 
     async function userNotFound(message, realName) {
-        helper.sendBotMessage(message, "You have no list yet")
+        await helper.sendBotMessage(message, "You have no list yet")
     }
 
     for (className of args) {
         await helper.doIfClassFoundInUserList(message, className, successfullDelete, failureDelete, userNotFound)
     }
 
-    helper.sendUserList(message, list);
+    await helper.sendUserList(message, list);
 }
 
 module.exports = {
@@ -31,7 +31,7 @@ module.exports = {
 	description: 'Remove one or many character(s) from your list',
     example: '``' + prefix + 'remove CL NP``\n``' + prefix + 'remove elsword1 laby3 ara2``\n``' + prefix + 'remove myAliasA myAliasB``',
     additionalInfo: 'You must follow the add syntax, or use aliases if you set any',
-	execute(message, args, client) {
-		remove(message, args);
+	async execute(message, args, client) {
+		await remove(message, args);
 	}
 }

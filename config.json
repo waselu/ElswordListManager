@@ -1,5 +1,5 @@
 {
-	"prefix": "?",
+	"prefix": "??",
 	"classes": [
 	    {"classNaming": ["KE", "KnightEmperor", "Elsword1"], "emoji": "<:KE:828899757359366166>"},
 	    {"classNaming": ["RM", "RuneMaster", "Elsword2"], "emoji": "<:RM:828906428584296470>"},
@@ -78,5 +78,15 @@
 	    {"name": "farm", "value": false, "canSet": true, "isDefault": true, "emoji": "🌾", "serverEmoji": ""},
 	    {"name": "linebreak", "value": false, "canSet": true, "isDefault": true, "emoji": "⤵️", "serverEmoji": "break"},
 	    {"name": "alias", "value": null, "canSet": true, "isDefault": true, "emoji": "", "serverEmoji": ""}
-	]
+	],
+	"aliases": {
+		"add": ["a"],
+		"addlist": ["al"],
+		"help": ["h"],
+		"list": ["show", "l"],
+		"move": ["m", "mv"],
+		"remove": ["r", "rm"],
+		"set": ["s"],
+		"weeklyreset": ["wr"]
+	}
 }

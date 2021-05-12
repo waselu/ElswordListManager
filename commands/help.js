@@ -1,13 +1,21 @@
 
 const { MessageEmbed } = require('discord.js');
 const helper = require('../utils/listHelper');
-const { prefix } = require('../config.json');
+const { prefix, aliases } = require('../config.json');
 
-function specHelp(message, commandName, client) {
+async function specHelp(message, commandName, client) {
 	commandName = commandName.trim().toLowerCase();
 	if (!client.commands.has(commandName)) {
 		message.channel.send('No command named "' + commandName + '"');
 		return;
+	}
+
+	let aliasString = '';
+	for (let [index, alias] of aliases[commandName].entries()) {
+		if (index > 0) {
+			aliasString += '\n'
+		}
+		aliasString += '``' + prefix + alias + '``';
 	}
 
 	let command = client.commands.get(commandName);
@@ -17,12 +25,13 @@ function specHelp(message, commandName, client) {
 	.setTitle('Command help -> ' + commandName)
 	.setDescription(command.description)
 	.addField('Examples', command.example)
+	.addField('Aliases', aliasString)
 	.setFooter(command.additionalInfo);
 
-	helper.sendBotMessage(message, embed);
+	await helper.sendBotMessage(message, embed);
 }
 
-function help(message, args, client) {
+async function help(message, args, client) {
 	if (args.length === 0) {
 		let embed = new MessageEmbed()
 		.setAuthor('Rosso raid manager', 'https://64.media.tumblr.com/4d56ac1bcd708c38392a6b37f98a68b8/tumblr_pozk3r9eiW1wsn58z_640.jpg')
@@ -34,9 +43,9 @@ function help(message, args, client) {
 		.addField('Misc.', '``help``', true)
 		.setFooter('All commands are case insensitive\nUsing any command besides help will copy your list to your clipboard');
 
-	    helper.sendBotMessage(message, embed);
+	    await helper.sendBotMessage(message, embed);
 	} else {
-		specHelp(message, args[0], client);
+		await specHelp(message, args[0], client);
 	}
 }
 
@@ -46,7 +55,7 @@ module.exports = {
 	description: 'Display this help',
 	example: '``' + prefix + 'help``\n``' + prefix + 'help add``',
 	additionalInfo: '',
-	execute(message, args, client) {
-		help(message, args, client);
+	async execute(message, args, client) {
+		await help(message, args, client);
 	}
 }
