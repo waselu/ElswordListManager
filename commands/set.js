@@ -3,7 +3,7 @@ const { prefix } = require('../config.json');
 const saveManager = require('../utils/saveManager');
 const helper = require('../utils/listHelper');
 
-async function set(message, args) {
+async function set(message, args, ignoreMessage) {
     let list = saveManager.getList();
     let className = args[0];
     args.splice(0, 1);
@@ -100,7 +100,9 @@ async function set(message, args) {
             invertAttr = false;
         }
 
-        helper.sendUserList(message, list);
+        if (!ignoreMessage) {
+            helper.sendUserList(message, list);
+        }
     }
 
     async function classNotFound(message, realName) {
@@ -131,7 +133,7 @@ module.exports = {
             'additionally it will make you able to add another character of that class to your list\n' +
             '(The requirement being that you do not have 2 characters with the same name)',
     additionalInfo: 'You can add no/not before a property to remove it',
-	execute(message, args, client) {
-		set(message, args);
+	execute(message, args, client, ignoreMessage = false) {
+		set(message, args, ignoreMessage);
 	}
 }

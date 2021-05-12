@@ -3,7 +3,7 @@ const { attributes, prefix } = require('../config.json');
 const saveManager = require('../utils/saveManager');
 const helper = require('../utils/listHelper');
 
-async function add(message, args) {
+async function add(message, args, ignoreMessage) {
     let attributesArray = {};
     let list = saveManager.getList();
 
@@ -29,7 +29,9 @@ async function add(message, args) {
         await helper.doIfClassFoundInUserList(message, className, classFound, classNotFound, userNotFound, true)
     }
 
-    helper.sendUserList(message, list);
+    if (!ignoreMessage) {
+        helper.sendUserList(message, list);
+    }
 }
 
 module.exports = {
@@ -38,7 +40,7 @@ module.exports = {
 	description: 'Add one or many class(es) to your list',
     example: '``' + prefix + 'add CL NP``\n``' + prefix + 'add elsword1 laby3 ara2``',
     additionalInfo: 'You can refer to classes by either their acronym, full class name or character + class number (KE, KnightEmperor, Elsword1)',
-	execute(message, args, client) {
-		add(message, args);
+	execute(message, args, client, ignoreMessage = false) {
+		add(message, args, ignoreMessage);
 	}
 }
