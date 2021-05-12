@@ -1,4 +1,5 @@
 
+const { prefix } = require('../config.json');
 const saveManager = require('../utils/saveManager');
 const helper = require('../utils/listHelper');
 
@@ -26,15 +27,16 @@ async function run(message, args) {
         await helper.doIfClassFoundInUserList(message, className, classFound, classNotFound, userNotFound);
     }
 
-    await helper.sendBotMessage(message, helper.userListToServerList(message.author.username));
-    helper.copyList(message.author.username);
-    saveManager.setList(list);
+    helper.sendUserList(message, list);
 }
 
 module.exports = {
 	name: 'run',
     argNumber: '>0',
-	description: 'Run raid on a certain character',
+	description: 'Run raid on one or many character',
+    example: '``' + prefix + 'run NP``\n' +
+        '``' + prefix + 'run CL Devi KE``',
+    additionalInfo: 'this command has the same effect as setting "not fresh" on a character',
 	execute(message, args, client) {
 		run(message, args);
 	}

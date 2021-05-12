@@ -22,9 +22,7 @@ async function remove(message, args) {
         await helper.doIfClassFoundInUserList(message, className, successfullDelete, failureDelete, userNotFound)
     }
 
-    helper.sendBotMessage(message, helper.userListToServerList(message.author.username))
-    helper.copyList(message.author.username);
-    saveManager.setList(list);
+    helper.sendUserList(message, list);
 }
 
 module.exports = {

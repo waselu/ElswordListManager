@@ -29,9 +29,7 @@ async function add(message, args) {
         await helper.doIfClassFoundInUserList(message, className, classFound, classNotFound, userNotFound, true)
     }
 
-    helper.sendBotMessage(message, helper.userListToServerList(message.author.username))
-    helper.copyList(message.author.username);
-    saveManager.setList(list);
+    helper.sendUserList(message, list);
 }
 
 module.exports = {

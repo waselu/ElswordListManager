@@ -59,6 +59,7 @@ async function list(message, args) {
             charList += " " + (classDef['alias'] != null ? classDef['alias'] : classDef['className']);
         }
         listStr = "Your Character(s): " + charList + "\n";
+        helper.copyList(message.author.username);
     }
 
     function userNotFound(message) {
@@ -67,8 +68,7 @@ async function list(message, args) {
 
     await helper.doIfUserFoundInUserList(message, userFound, userNotFound);
     listStr += "\nList:\n" + helper.userListToServerList(message.author.username) + "\n";
-    helper.sendBotMessage(message, listStr);
-    helper.copyList(message.author.username);
+    helper.sendBasicBotEmbed(message, message.author.username, listStr, '');
 }
 
 module.exports = {
@@ -76,7 +76,7 @@ module.exports = {
     argNumber: '0',
 	description: 'Show your current characters + attributes and list',
     example: '``' + prefix + 'list``',
-    additionalInfo: '',
+    additionalInfo: 'Unlike the show command, list allows you to see every character and their attributes',
 	execute(message, args, client) {
 		list(message, args);
 	}

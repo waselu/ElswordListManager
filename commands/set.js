@@ -100,9 +100,7 @@ async function set(message, args) {
             invertAttr = false;
         }
 
-        helper.sendBotMessage(message, helper.userListToServerList(message.author.username));
-        helper.copyList(message.author.username);
-        saveManager.setList(list);
+        helper.sendUserList(message, list);
     }
 
     async function classNotFound(message, realName) {

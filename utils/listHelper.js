@@ -1,5 +1,6 @@
 
 const copy = require('clipboardy');
+const { MessageEmbed } = require('discord.js');
 const { classes, attributes } = require('../config.json');
 const saveManager = require('./saveManager');
 
@@ -159,6 +160,32 @@ function sendBotMessage(message, sending) {
     })
 }
 
+function sendFormalBotMessage(message, sendingTitle = null, sending = null, title = null, description = null, footer = null, thumbnail = null) {
+    let embed = new MessageEmbed()
+	.setAuthor('Rosso raid manager', 'https://64.media.tumblr.com/4d56ac1bcd708c38392a6b37f98a68b8/tumblr_pozk3r9eiW1wsn58z_640.jpg')
+	.setThumbnail(thumbnail)
+	.setTitle(title)
+	.setDescription(description)
+	.addField(sendingTitle, sending)
+	.setFooter(footer);
+
+    sendBotMessage(message, embed);
+}
+
+function sendBasicBotEmbed(message, sendingTitle = null, sending = null, footer = null, thumbnail = null) {
+    sendFormalBotMessage(message, sendingTitle, sending, '', '', footer, thumbnail)
+}
+
+function sendUserList(message, list = null, copy = true) {
+    sendBasicBotEmbed(message, message.author.username + '\'s list', userListToServerList(message.author.username), 'Your list has been copied to your clipboard');
+    if (list) {
+        saveManager.setList(list);
+    }
+    if (copy) {
+        copyList(message.author.username);
+    }
+}
+
 exports.findElswordClass = findElswordClass;
 exports.findEmojiByClassName = findEmojiByClassName;
 exports.findEmojiByAttributeName = findEmojiByAttributeName;
@@ -170,3 +197,5 @@ exports.doIfClassFoundInUserList = doIfClassFoundInUserList;
 exports.userListToServerList = userListToServerList;
 exports.copyList = copyList;
 exports.sendBotMessage = sendBotMessage;
+exports.sendBasicBotEmbed = sendBasicBotEmbed;
+exports.sendUserList = sendUserList;

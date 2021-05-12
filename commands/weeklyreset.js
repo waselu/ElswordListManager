@@ -1,4 +1,5 @@
 
+const { prefix } = require('../config.json');
 const saveManager = require('../utils/saveManager');
 const helper = require('../utils/listHelper');
 
@@ -9,7 +10,7 @@ async function weeklyreset(message, args) {
         for ([index, whatever] of list[message.author.username].entries()) {
             list[message.author.username][index]["fresh"] = true;
         }
-        helper.sendBotMessage(message, helper.userListToServerList(message.author.username));
+        helper.sendUserList(message, list);
     }
 
     async function userNotFound(message) {
@@ -17,14 +18,14 @@ async function weeklyreset(message, args) {
     }
 
     await helper.doIfUserFoundInUserList(message, userFound, userNotFound);
-    helper.copyList(message.author.username);
-    saveManager.setList(list);
 }
 
 module.exports = {
 	name: 'weeklyreset',
     argNumber: '0',
-	description: 'Same effect as in-game weekly reset',
+	description: 'Shortcut for calling ``' + prefix + 'set [CharacterName] fresh`` on every character',
+    examples: '``' + prefix + 'weeklyreset``',
+    additionalInfo: '',
 	execute(message, args, client) {
 		weeklyreset(message, args);
 	}
