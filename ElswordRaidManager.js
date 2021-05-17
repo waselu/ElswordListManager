@@ -9,13 +9,13 @@ const commandManager = require('./utils/commandManager');
 const client = new Discord.Client();
 
 //Usable by other users
-//TODO: help command
-//TODO: sort (autosort) command
 
 //Mandatory
+//Add 'add' command examples (no set)
+//Fix/improve help
+//Add new list type properties + list behavior
 
 //LONG TERM
-//TODO: set/addlist command (example: setlist cl sage reset ke dps tw yellow)
 
 //Propreté du code
 //TODO: rework set array

@@ -65,6 +65,7 @@
 		{"name": "freeze", "value": false, "canSet": ["rosso"], "isDefault": ["rosso"], "emoji": "🧊", "serverEmoji": "icecube"},
 	   
 	    {"name": "fresh", "value": true, "canSet": ["rosso"], "isDefault": ["rosso"], "emoji": "<:fresh:828908656144678964>", "serverEmoji": "fresh"},
+		{"name": "fullfresh", "value": false, "canSet": ["rosso"], "isDefault": [], "emoji": "", "serverEmoji": ""},
 	    {"name": "reset", "value": false, "canSet": ["rosso"], "isDefault": ["rosso"], "emoji": "<:reset:832571110906003496>", "serverEmoji": "reset"},
 	    {"name": "flamemark", "value": false, "canSet": [], "isDefault": [], "emoji": "<:flamemark:828910673626923038>", "serverEmoji": "flamemark"},
 	   
@@ -81,14 +82,17 @@
 	],
 	"typelists": ["rosso"],
 	"aliases": {
-		"add": ["a"],
-		"newlist": ["nl", "addlist"],
-		"help": ["h"],
-		"list": ["show", "l"],
-		"move": ["m", "mv"],
-		"remove": ["r", "rm"],
-		"set": ["s"],
-		"weeklyreset": ["wr"],
+		"add": [],
+		"newlist": ["addlist"],
+		"removelist": [],
+		"swaplist": [],
+		"showlist": ["showlists"],
+		"help": [],
+		"list": ["show"],
+		"move": ["mv"],
+		"remove": ["rm"],
+		"set": [],
+		"reset": [],
 
 		"loglist": ["ll"],
 		"clear": ["c"]

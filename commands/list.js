@@ -63,7 +63,7 @@ async function list(message, args) {
         listStr = "Your Character(s): " + charList + "\n";
         helper.copyList(message.author.username);
         listStr += "\nList:\n" + helper.userListToServerList(message.author.username) + "\n";
-        await helper.sendBasicBotEmbed(message, message.author.username, listStr, '');
+        await helper.sendBasicBotEmbed(message, message.author.username + '\'s list: ' + saveManager.getList()[message.author.username]['active'], listStr, '');
     }
 
     async function userNotFound(message) {

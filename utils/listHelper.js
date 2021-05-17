@@ -177,7 +177,8 @@ async function sendBasicBotEmbed(message, sendingTitle = null, sending = null, f
 }
 
 async function sendUserList(message, list = null, copy = true) {
-    await sendBasicBotEmbed(message, message.author.username + '\'s list', userListToServerList(message.author.username), 'Your list has been copied to your clipboard');
+    let getTypeList = saveManager.getList();
+    await sendBasicBotEmbed(message, message.author.username + '\'s list: ' + getTypeList[message.author.username]['active'], userListToServerList(message.author.username), 'Your list has been copied to your clipboard');
     if (list) {
         saveManager.setList(list);
     }
@@ -197,5 +198,6 @@ exports.doIfClassFoundInUserList = doIfClassFoundInUserList;
 exports.userListToServerList = userListToServerList;
 exports.copyList = copyList;
 exports.sendBotMessage = sendBotMessage;
+exports.sendFormalBotMessage = sendFormalBotMessage;
 exports.sendBasicBotEmbed = sendBasicBotEmbed;
 exports.sendUserList = sendUserList;

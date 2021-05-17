@@ -7,16 +7,26 @@ async function run(message, args) {
     let list = saveManager.getList();
 
     async function classFound(message, index, realName) {
-        if (list[message.author.username][index]["fresh"] == 0) {
-            await helper.sendBotMessage(message, "You have already run rosso on " + className);
-            return;
+        switch (list[message.author.username]['lists'][list[message.author.username]['active']]['type']) {
+            case 'rosso':
+                if (!list[message.author.username]['lists'][list[message.author.username]['active']]['list'][index]["fresh"]) {
+                    if (list[message.author.username]['lists'][list[message.author.username]['active']]['list'][index]["reset"]) {
+                        list[message.author.username]['lists'][list[message.author.username]['active']]['list'][index]["reset"] = false;
+                    } else {
+                        await helper.sendBotMessage(message, realName + " is not fresh nor has a reset");
+                    }
+                } else {
+                    list[message.author.username]['lists'][list[message.author.username]['active']]['list'][index]["fresh"] = false;
+                    list[message.author.username]['lists'][list[message.author.username]['active']]['list'][index]["reset"] = true;
+                }
+                break;
+            default:
+                break;
         }
-
-        list[message.author.username][index]["fresh"] = false;
     }
 
     async function classNotFound(message, realName) {
-        await helper.sendBotMessage(message, realName + " was not fount in your list");
+        await helper.sendBotMessage(message, realName + " was not found in your list");
     }
 
     async function userNotFound(message, realName) {

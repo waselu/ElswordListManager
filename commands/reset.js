@@ -7,8 +7,15 @@ async function reset(message, args) {
     list = saveManager.getList();
 
     async function userFound(message) {
-        for ([index, whatever] of list[message.author.username].entries()) {
-            list[message.author.username][index]["fresh"] = true;
+        for ([index, whatever] of list[message.author.username]['lists'][list[message.author.username]['active']]['list'].entries()) {
+            switch (list[message.author.username]['lists'][list[message.author.username]['active']]['type']) {
+                case 'rosso':
+                    list[message.author.username]['lists'][list[message.author.username]['active']]['list'][index]["fresh"] = true;
+                    list[message.author.username]['lists'][list[message.author.username]['active']]['list'][index]["reset"] = false;
+                    break;
+                default:
+                    break;
+            }
         }
         await helper.sendUserList(message, list);
     }
