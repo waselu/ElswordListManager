@@ -12,6 +12,7 @@ async function logList(message, args, client) {
 
 module.exports = {
 	name: 'loglist',
+    helpGroup: 'Debug',
 	description: '',
     example: '',
     additionalInfo: '',

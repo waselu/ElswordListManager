@@ -7,6 +7,7 @@ async function clear(message, args, client) {
 module.exports = {
 	name: 'clear',
     argNumber: '0',
+	helpGroup: 'Debug',
 	description: '',
     example: '',
     additionalInfo: '',

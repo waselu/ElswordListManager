@@ -35,6 +35,7 @@ async function newList(message, args, client) {
 module.exports = {
 	name: 'newlist',
     argNumber: '>1',
+    helpGroup: 'List',
 	description: 'Add a new list and an alias for it, then swap to it',
     example: '``' + prefix + 'newlist rosso myRaidList``',
     additionalInfo: '',

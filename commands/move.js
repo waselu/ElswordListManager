@@ -68,6 +68,7 @@ async function move(message, args) {
 module.exports = {
     name: 'move',
     argNumber: '>1',
+    helpGroup: 'Characters',
     description: 'Move one or many character(s) somewhere else in your list',
     example: '``' + prefix + 'move KE 3``\n``' + prefix + 'move Devi 5 RaS 1 NP 3``',
     additionalInfo: 'Characters will always be moved after those who aren\'t displayed',

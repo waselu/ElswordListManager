@@ -43,7 +43,8 @@ async function run(message, args) {
 module.exports = {
 	name: 'run',
     argNumber: '>0',
-	description: 'Run raid on one or many character',
+    helpGroup: 'Characters',
+	description: 'Run dungeon on a specific char, depends on the list\'s type',
     example: '``' + prefix + 'run NP``\n' +
         '``' + prefix + 'run CL Devi KE``',
     additionalInfo: 'this command has the same effect as setting "not fresh" on a character',

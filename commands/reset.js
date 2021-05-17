@@ -30,8 +30,9 @@ async function reset(message, args) {
 module.exports = {
 	name: 'reset',
     argNumber: '0',
-	description: 'Shortcut for calling ``' + prefix + 'set [CharacterName] fresh`` on every character',
-    example: '``' + prefix + 'weeklyreset``',
+    helpGroup: 'List',
+	description: 'Reset the whole list depending on the type of it (fresh for rosso, 3 run for heroics, etc.)',
+    example: '``' + prefix + 'reset``',
     additionalInfo: '',
 	async execute(message, args, client) {
 		await reset(message, args);

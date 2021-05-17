@@ -3,7 +3,7 @@ const { prefix } = require('../config.json');
 const saveManager = require('../utils/saveManager');
 const helper = require('../utils/listHelper');
 
-async function list(message, args) {
+async function show(message, args) {
     function handleFresh(attrValue, classDef) {
         if (attrValue) {
             return helper.findEmojiByAttributeName("fresh");
@@ -74,12 +74,13 @@ async function list(message, args) {
 }
 
 module.exports = {
-	name: 'list',
+	name: 'show',
     argNumber: '0',
-	description: 'Show your current characters + attributes and list',
-    example: '``' + prefix + 'list``',
-    additionalInfo: 'Unlike the show command, list allows you to see every character and their attributes',
+    helpGroup: 'List',
+	description: 'Show the state of the selectionned list',
+    example: '``' + prefix + 'show``',
+    additionalInfo: '',
 	async execute(message, args, client) {
-		await list(message, args);
+		await show(message, args);
 	}
 }

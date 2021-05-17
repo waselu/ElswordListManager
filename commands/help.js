@@ -38,10 +38,32 @@ async function help(message, args, client) {
 		.setThumbnail('https://cdn.discordapp.com/attachments/736163626934861845/742671714386968576/help_animated_x4_1.gif')
 		.setTitle('Command help')
 		.setDescription('Type ``' + prefix + 'help [command]`` for more help eg. ``' + prefix + 'help add``')
-		.addField('Characters', '``add`` ``remove``\n``set`` ``run``\n``move``', true)
-		.addField('List', '``list`` ``show``\n``reset``', true)
-		.addField('Misc.', '``help``', true)
 		.setFooter('All commands are case insensitive\nUsing any command besides help will copy your list to your clipboard');
+
+		let groups = {};
+		for ([key, command] of client.commands.entries()) {
+			if (!(key === command.name)) {
+				continue;
+			}
+			if (!groups[command.helpGroup]) {
+				groups[command.helpGroup] = [];
+			}
+			groups[command.helpGroup].push('``' + command.name + '``');
+		}
+		
+		for ([group, commands] of Object.entries(groups)) {
+			if (group === 'Debug') {
+				continue;
+			}
+			let groupStr = '';
+			for ([index, command] of commands.entries()) {
+				groupStr += command + ' ';
+				if (index % 2 == 1 && index + 1 != commands.length) {
+					groupStr += '\n';
+				}
+			}
+			embed.addField(group, groupStr, true);
+		}
 
 	    await helper.sendBotMessage(message, embed);
 	} else {
@@ -52,6 +74,7 @@ async function help(message, args, client) {
 module.exports = {
 	name: 'help',
 	argNumber: '<2',
+	helpGroup: 'Misc.',
 	description: 'Display this help',
 	example: '``' + prefix + 'help``\n``' + prefix + 'help add``',
 	additionalInfo: '',

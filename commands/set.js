@@ -120,6 +120,7 @@ async function set(message, args, ignoreMessage) {
 module.exports = {
 	name: 'set',
     argNumber: '>1',
+    helpGroup: 'Characters',
 	description: 'Set one or many property(ies) for one of your character',
     example: '``' + prefix + 'set NP sage freeze``\n``' + prefix + 'set devi dps not fresh farm``\n``' + prefix + 'set shakti alias Eva``\n``' + prefix + 'set shakti no alias``\n\n' +
             'List of available attributes:\n' +

@@ -2,7 +2,7 @@ const { prefix } = require('../config.json');
 const saveManager = require('../utils/saveManager');
 const helper = require('../utils/listHelper');
 
-async function swapList(message, args, client) {
+async function changeList(message, args, client) {
     list = saveManager.getList();
 
     async function userFound() {
@@ -24,12 +24,13 @@ async function swapList(message, args, client) {
 }
 
 module.exports = {
-	name: 'swaplist',
+	name: 'changelist',
     argNumber: '1',
+    helpGroup: 'List',
 	description: 'Swap to one of your other lists',
-    example: '``' + prefix + 'swaplist myRossoList``',
+    example: '``' + prefix + 'changelist myRossoList``',
     additionalInfo: '',
 	async execute(message, args, client) {
-		await swapList(message, args, client);
+		await changeList(message, args, client);
 	}
 }

@@ -12,7 +12,6 @@ const client = new Discord.Client();
 
 //Mandatory
 //Add 'add' command examples (no set)
-//Fix/improve help
 //Add new list type properties + list behavior
 
 //LONG TERM

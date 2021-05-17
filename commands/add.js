@@ -65,13 +65,14 @@ async function addList(message, args, client) {
         }
     }
 
-    await client.commands.get('list').execute(message, [], client);
+    await client.commands.get('show').execute(message, [], client);
     saveManager.setList(saveManager.getList());
 }
 
 module.exports = {
 	name: 'add',
     argNumber: '>0',
+    helpGroup: 'Characters',
 	description: 'Add characters and properties to your list',
     example: '``' + prefix + 'addlist CL sage not fresh farm NP not fresh freeze KE dps farm IN speed DiA``',
     additionalInfo: '',
