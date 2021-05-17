@@ -82,13 +82,15 @@
 	"typelists": ["rosso"],
 	"aliases": {
 		"add": ["a"],
-		"addlist": ["al"],
-		"newlist": ["nl"],
+		"newlist": ["nl", "addlist"],
 		"help": ["h"],
 		"list": ["show", "l"],
 		"move": ["m", "mv"],
 		"remove": ["r", "rm"],
 		"set": ["s"],
-		"weeklyreset": ["wr"]
+		"weeklyreset": ["wr"],
+
+		"loglist": ["ll"],
+		"clear": ["c"]
 	}
 }
