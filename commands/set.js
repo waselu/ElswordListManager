@@ -67,7 +67,7 @@ async function set(message, args, ignoreMessage) {
         }
 
         for (attributeName in setObject) {
-            list[message.author.username][index][attributeName] = setObject[attributeName];
+            list[message.author.username]['lists'][list[message.author.username]['active']]['list'][index][attributeName] = setObject[attributeName];
         }
 
         return skip;
@@ -87,8 +87,8 @@ async function set(message, args, ignoreMessage) {
                 continue;
             }
 
-            if (!helper.canSetAttribute(attribute)) {
-                await helper.sendBotMessage(message, "Attribute '" + attribute + "' doesn't exist");
+            if (!helper.canSetAttribute(attribute, list[message.author.username]['lists'][list[message.author.username]['active']]['type'])) {
+                await helper.sendBotMessage(message, "Attribute '" + attribute + "' is not available for this list");
                 return;
             }
             
@@ -107,7 +107,7 @@ async function set(message, args, ignoreMessage) {
 
     async function classNotFound(message, realName) {
         await helper.sendBotMessage(message, realName + " was not found in your list");
-        await helper.sendBotMessage(message, userListToServerList(message.author.username));
+        await helper.sendBotMessage(message, helper.userListToServerList(message.author.username));
     }
 
     async function userNotFound(message, realName) {

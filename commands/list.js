@@ -29,7 +29,9 @@ async function list(message, args) {
 
     async function userFound(message) {
         let charList = "";
-        let userList = JSON.parse(JSON.stringify(saveManager.getList()[message.author.username]));
+        let userList = saveManager.getList()[message.author.username];
+        userList = userList['lists'][userList['active']]['list'];
+        userList = JSON.parse(JSON.stringify(userList));
         userList.sort(function(elem1, elem2) { 
             elem1Index = helper.findElswordClass(elem1["className"])["index"];
             elem2Index = helper.findElswordClass(elem2["className"])["index"];
@@ -60,6 +62,8 @@ async function list(message, args) {
         }
         listStr = "Your Character(s): " + charList + "\n";
         helper.copyList(message.author.username);
+        listStr += "\nList:\n" + helper.userListToServerList(message.author.username) + "\n";
+        await helper.sendBasicBotEmbed(message, message.author.username, listStr, '');
     }
 
     async function userNotFound(message) {
@@ -67,8 +71,6 @@ async function list(message, args) {
     }
 
     await helper.doIfUserFoundInUserList(message, userFound, userNotFound);
-    listStr += "\nList:\n" + helper.userListToServerList(message.author.username) + "\n";
-    await helper.sendBasicBotEmbed(message, message.author.username, listStr, '');
 }
 
 module.exports = {

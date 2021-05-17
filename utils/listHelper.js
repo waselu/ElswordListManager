@@ -38,19 +38,19 @@ function findEmojiByAttributeName(attribute, forServer = false) {
     return null;
 }
 
-function canSetAttribute(attribute) {
+function canSetAttribute(attribute, type = "rosso") {
 	for (attributeDef of attributes) {
         if (attributeDef['name'] == attribute) {
-            return attributeDef['canSet'];
+            return attributeDef['canSet'].includes(type);
         }
 	}
     return false;
 }
 
-function isDefaultAttribute(attribute) {
+function isDefaultAttribute(attribute, type = "rosso") {
     for (attributeDef of attributes) {
         if (attributeDef['name'] == attribute) {
-            return attributeDef['isDefault'];
+            return attributeDef['isDefault'].includes(type);
         }
     }
     return false;
@@ -58,6 +58,7 @@ function isDefaultAttribute(attribute) {
 
 function checkUserListHasChar(user, className) {
     let userList = saveManager.getList()[user];
+    userList = userList['lists'][userList['active']]['list'];
     for ([index, classDef] of userList.entries()) {
         if (classDef['alias'] != null) {
             if (classDef['alias'].toLowerCase() == className.toLowerCase()) {
@@ -116,7 +117,7 @@ function userListToServerList(user, emojis = true) {
         return "You have no list yet";
     }
 
-    let userList = JSON.parse(JSON.stringify(list[user]));
+    let userList = JSON.parse(JSON.stringify(list[user]['lists'][list[user]['active']]['list']));
     removed = true;
     while (removed) {
         removed = false;

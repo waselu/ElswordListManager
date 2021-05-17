@@ -51,7 +51,7 @@ client.on('message', function(message) {
 
 	const command = client.commands.get(commandName);
 
-	message.delete({timeout: 1000});
+	//message.delete({timeout: 1000});
 	commandManager.commandManager(command, message, args, client);
 })
 

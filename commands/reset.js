@@ -3,7 +3,7 @@ const { prefix } = require('../config.json');
 const saveManager = require('../utils/saveManager');
 const helper = require('../utils/listHelper');
 
-async function weeklyreset(message, args) {
+async function reset(message, args) {
     list = saveManager.getList();
 
     async function userFound(message) {
@@ -21,12 +21,12 @@ async function weeklyreset(message, args) {
 }
 
 module.exports = {
-	name: 'weeklyreset',
+	name: 'reset',
     argNumber: '0',
 	description: 'Shortcut for calling ``' + prefix + 'set [CharacterName] fresh`` on every character',
     example: '``' + prefix + 'weeklyreset``',
     additionalInfo: '',
 	async execute(message, args, client) {
-		await weeklyreset(message, args);
+		await reset(message, args);
 	}
 }

@@ -39,7 +39,7 @@ async function help(message, args, client) {
 		.setTitle('Command help')
 		.setDescription('Type ``' + prefix + 'help [command]`` for more help eg. ``' + prefix + 'help add``')
 		.addField('Characters', '``add`` ``remove``\n``set`` ``run``\n``move``', true)
-		.addField('List', '``list`` ``show``\n``weeklyreset``', true)
+		.addField('List', '``list`` ``show``\n``reset``', true)
 		.addField('Misc.', '``help``', true)
 		.setFooter('All commands are case insensitive\nUsing any command besides help will copy your list to your clipboard');
 

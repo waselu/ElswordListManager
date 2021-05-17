@@ -1,5 +1,5 @@
 {
-	"prefix": "?",
+	"prefix": "??",
 	"classes": [
 	    {"classNaming": ["KE", "KnightEmperor", "Elsword1"], "emoji": "<:KE:828899757359366166>"},
 	    {"classNaming": ["RM", "RuneMaster", "Elsword2"], "emoji": "<:RM:828906428584296470>"},
@@ -59,29 +59,31 @@
 	    {"classNaming": ["NP", "NyxPieta", "Noah3"], "emoji": "<:NP:829693142995435582>"}
 	],
 	"attributes": [
-	    {"name": "dps", "value": false, "canSet": true, "isDefault": true,  "emoji": "<:dps:828908669978673182>", "serverEmoji": "dps"},
-	    {"name": "sage", "value": false, "canSet": true, "isDefault": true, "emoji": "<:sage:828908664810373130>", "serverEmoji": "FullSage"},
-	    {"name": "speed", "value": false, "canSet": true, "isDefault": true, "emoji": "<:SpdBot:837244319726436372>", "serverEmoji": "SpdBot"},
-		{"name": "freeze", "value": false, "canSet": true, "isDefault": true, "emoji": "🧊", "serverEmoji": "icecube"},
+	    {"name": "dps", "value": false, "canSet": ["rosso"], "isDefault": ["rosso"],  "emoji": "<:dps:828908669978673182>", "serverEmoji": "dps"},
+	    {"name": "sage", "value": false, "canSet": ["rosso"], "isDefault": ["rosso"], "emoji": "<:sage:828908664810373130>", "serverEmoji": "FullSage"},
+	    {"name": "speed", "value": false, "canSet": ["rosso"], "isDefault": ["rosso"], "emoji": "<:SpdBot:837244319726436372>", "serverEmoji": "SpdBot"},
+		{"name": "freeze", "value": false, "canSet": ["rosso"], "isDefault": ["rosso"], "emoji": "🧊", "serverEmoji": "icecube"},
 	   
-	    {"name": "fresh", "value": true, "canSet": true, "isDefault": true, "emoji": "<:fresh:828908656144678964>", "serverEmoji": "fresh"},
-	    {"name": "reset", "value": false, "canSet": true, "isDefault": true, "emoji": "<:reset:832571110906003496>", "serverEmoji": "reset"},
-	    {"name": "flamemark", "value": false, "canSet": false, "isDefault": false, "emoji": "<:flamemark:828910673626923038>", "serverEmoji": "flamemark"},
+	    {"name": "fresh", "value": true, "canSet": ["rosso"], "isDefault": ["rosso"], "emoji": "<:fresh:828908656144678964>", "serverEmoji": "fresh"},
+	    {"name": "reset", "value": false, "canSet": ["rosso"], "isDefault": ["rosso"], "emoji": "<:reset:832571110906003496>", "serverEmoji": "reset"},
+	    {"name": "flamemark", "value": false, "canSet": [], "isDefault": [], "emoji": "<:flamemark:828910673626923038>", "serverEmoji": "flamemark"},
 	   
-	    {"name": "stone", "value": null, "canSet": false, "isDefault": true, "emoji": "", "serverEmoji": ""},
-	    {"name": "red", "value": null, "canSet": true, "isDefault": false, "emoji": "<:redcrystal:830525849391464511>", "serverEmoji": "redcrystal"},
-	    {"name": "blue", "value": null, "canSet": true, "isDefault": false, "emoji": "<:bluecrystal:830525860418551899>", "serverEmoji": "bluecrystal"},
-	    {"name": "yellow", "value": null, "canSet": true, "isDefault": false, "emoji": "<:yellowcrystal:830525869487161354>", "serverEmoji": "yellowcrystal"},
-	    {"name": "giant", "value": null, "canSet": true, "isDefault": false, "emoji": "<:giantcrystal:830525874007965766>", "serverEmoji": "giantcrystal"},
-	    {"name": "nostone", "value": null, "canSet": true, "isDefault": false, "emoji": "", "serverEmoji": ""},
+	    {"name": "stone", "value": null, "canSet": [], "isDefault": ["rosso"], "emoji": "", "serverEmoji": ""},
+	    {"name": "red", "value": null, "canSet": ["rosso"], "isDefault": [], "emoji": "<:redcrystal:830525849391464511>", "serverEmoji": "redcrystal"},
+	    {"name": "blue", "value": null, "canSet": ["rosso"], "isDefault": [], "emoji": "<:bluecrystal:830525860418551899>", "serverEmoji": "bluecrystal"},
+	    {"name": "yellow", "value": null, "canSet": ["rosso"], "isDefault": [], "emoji": "<:yellowcrystal:830525869487161354>", "serverEmoji": "yellowcrystal"},
+	    {"name": "giant", "value": null, "canSet": ["rosso"], "isDefault": [], "emoji": "<:giantcrystal:830525874007965766>", "serverEmoji": "giantcrystal"},
+	    {"name": "nostone", "value": null, "canSet": ["rosso"], "isDefault": [], "emoji": "", "serverEmoji": ""},
 	   
-	    {"name": "farm", "value": false, "canSet": true, "isDefault": true, "emoji": "🌾", "serverEmoji": ""},
-	    {"name": "linebreak", "value": false, "canSet": true, "isDefault": true, "emoji": "⤵️", "serverEmoji": "break"},
-	    {"name": "alias", "value": null, "canSet": true, "isDefault": true, "emoji": "", "serverEmoji": ""}
+	    {"name": "farm", "value": false, "canSet": ["rosso"], "isDefault": ["rosso"], "emoji": "🌾", "serverEmoji": ""},
+	    {"name": "linebreak", "value": false, "canSet": ["rosso"], "isDefault": ["rosso"], "emoji": "⤵️", "serverEmoji": "break"},
+	    {"name": "alias", "value": null, "canSet": ["rosso"], "isDefault": ["rosso"], "emoji": "", "serverEmoji": ""}
 	],
+	"typelists": ["rosso"],
 	"aliases": {
 		"add": ["a"],
 		"addlist": ["al"],
+		"newlist": ["nl"],
 		"help": ["h"],
 		"list": ["show", "l"],
 		"move": ["m", "mv"],
