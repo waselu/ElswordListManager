@@ -13,6 +13,8 @@ const client = new Discord.Client();
 //Mandatory
 //Add 'add' command examples (no set)
 //Add new list type properties + list behavior
+//Add available list types in 'addlist' command help
+//Automate set attributes help through config (like 'help' command) (maybe put nbArgs (rework set skip return) or specHelp in config)
 
 //LONG TERM
 
