@@ -11,9 +11,7 @@ const client = new Discord.Client();
 //Usable by other users
 
 //Mandatory
-//Add 'add' command examples (no set)
 //Add new list type properties + list behavior
-//Add available list types in 'addlist' command help
 //Rework helper.userListToRaidList so there is a switch for list types, and rename it
 
 //LONG TERM
