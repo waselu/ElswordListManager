@@ -38,19 +38,19 @@ function findEmojiByAttributeName(attribute, forServer = false) {
     return null;
 }
 
-function canSetAttribute(attribute, type = "rosso") {
+function canSetAttribute(attribute, type = null) {
 	for (attributeDef of attributes) {
         if (attributeDef['name'] == attribute) {
-            return attributeDef['canSet'].includes(type);
+            return type ? attributeDef['canSet'].includes(type) : (attributeDef['canSet'].length > 0);
         }
 	}
     return false;
 }
 
-function isDefaultAttribute(attribute, type = "rosso") {
+function isDefaultAttribute(attribute, type = null) {
     for (attributeDef of attributes) {
         if (attributeDef['name'] == attribute) {
-            return attributeDef['isDefault'].includes(type);
+            return type ? attributeDef['isDefault'].includes(type) : (attributeDef['isDefault'].length > 0);
         }
     }
     return false;

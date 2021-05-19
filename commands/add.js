@@ -17,7 +17,7 @@ async function add(message, args) {
         let attributesArray = {};
 
         for ([index, attributeDef] of attributes.entries()) {
-            if (attributeDef["isDefault"]) {
+            if (attributeDef["isDefault"].includes(list[message.author.username]['lists'][list[message.author.username]['active']]['type'])) {
                 attributesArray[attributeDef["name"]] = attributeDef["value"];
             }
         }
@@ -75,7 +75,7 @@ module.exports = {
     helpGroup: 'Characters',
 	description: 'Add characters and attributes to your list\ntype ``' + prefix + 'helpattribute [attribute]`` for more help eg. ``' + prefix + 'helpattribute dps``',
     example: '``' + prefix + 'add Devi CL RaS``\n``' + prefix + 'add CL sage not fresh farm NP not fresh freeze KE dps``\n\n' +
-            'List of available attributes:\n' +
+            '**List of available attributes**\n' +
             helper.generateSetExample() + '\n',
     additionalInfo: 'You can add no/not before an attribute to remove it',
 	async execute(message, args, client) {

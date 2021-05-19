@@ -123,7 +123,7 @@ module.exports = {
     helpGroup: 'Characters',
 	description: 'Set one or many attribute(s) for one of your character\ntype ``' + prefix + 'helpattribute [attribute]`` for more help eg. ``' + prefix + 'helpattribute dps``',
     example: '``' + prefix + 'set NP sage freeze``\n``' + prefix + 'set devi dps not fresh farm``\n``' + prefix + 'set shakti alias Eva``\n``' + prefix + 'set shakti no alias``\n\n' +
-            'List of available attributes:\n' +
+            '**List of available attributes**\n' +
             helper.generateSetExample() + '\n',
     additionalInfo: 'You can add no/not before an attribute to remove it',
 	async execute(message, args, client, ignoreMessage = false) {

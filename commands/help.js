@@ -11,11 +11,13 @@ async function specHelp(message, commandName, client) {
 	}
 
 	let aliasString = '';
-	for (let [index, alias] of aliases[commandName].entries()) {
-		if (index > 0) {
-			aliasString += '\n'
+	if (aliases[commandName]) {
+		for (let [index, alias] of aliases[commandName].entries()) {
+			if (index > 0) {
+				aliasString += '\n'
+			}
+			aliasString += '``' + prefix + alias + '``';
 		}
-		aliasString += '``' + prefix + alias + '``';
 	}
 
 	let command = client.commands.get(commandName);
@@ -41,7 +43,7 @@ async function help(message, args, client) {
 		.setThumbnail('https://cdn.discordapp.com/attachments/736163626934861845/742671714386968576/help_animated_x4_1.gif')
 		.setTitle('Command help')
 		.setDescription('Type ``' + prefix + 'help [command]`` for more help eg. ``' + prefix + 'help add``')
-		.setFooter('All commands are case insensitive\nUsing any command besides help will copy your list to your clipboard');
+		.setFooter('All commands are case insensitive\nUsing any command besides help on a raid list will copy your list to your clipboard');
 
 		let groups = {};
 		for ([key, command] of client.commands.entries()) {
