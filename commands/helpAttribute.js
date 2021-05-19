@@ -16,7 +16,7 @@ async function helpAttribute(message, args, client) {
         }
     }
 
-    await helper.sendBasicBotEmbed(message, 'Attribute: ' + args[0], attr['help'] ?? 'No help provided for this attribute', 'Available lists: ' + attr['canSet'].join(', '));
+    await helper.sendBasicBotEmbed(message, 'Attribute: ' + args[0], attr['help'] || 'No help provided for this attribute', 'Available lists: ' + attr['canSet'].join(', '));
 }
 
 module.exports = {

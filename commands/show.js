@@ -31,19 +31,6 @@ async function show(message, args) {
         let charList = "";
         let userList = saveManager.getList()[message.author.username];
         userList = userList['lists'][userList['active']]['list'];
-        userList = JSON.parse(JSON.stringify(userList));
-        userList.sort(function(elem1, elem2) { 
-            elem1Index = helper.findElswordClass(elem1["className"])["index"];
-            elem2Index = helper.findElswordClass(elem2["className"])["index"];
-
-            if (elem1Index < elem2Index) {
-                return -1;
-            }
-            if (elem1Index < elem2Index) {
-                return 1;
-            }
-            return 0;
-        })
         for ([index, classDef] of userList.entries()) {
             charList += "\n" + classDef["emoji"];
             for (attribute in classDef) {

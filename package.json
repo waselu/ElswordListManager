@@ -1,0 +1,25 @@
+{
+  "name": "elsword-list-manager",
+  "version": "1.0.0",
+  "description": "Discord bot to manager your weeklies/dailies on Elsword",
+  "main": "ElswordRaidManager.js",
+  "dependencies": {
+    "clipboardy": "^2.3.0",
+    "discord.js": "^12.5.3",
+    "node-schedule": "^2.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "node ./ElswordRaidManager.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/waselu/ElswordRaidManager.git"
+  },
+  "author": "Nicolas Ferlet",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/waselu/ElswordRaidManager/issues"
+  },
+  "homepage": "https://github.com/waselu/ElswordRaidManager#readme"
+}
