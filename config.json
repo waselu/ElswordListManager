@@ -81,17 +81,10 @@
 	],
 	"typelists": ["rosso"],
 	"aliases": {
-		"add": [],
 		"newlist": ["addlist"],
-		"removelist": [],
-		"changelist": [],
 		"showlist": ["showlists"],
-		"help": [],
-		"show": [""],
 		"move": ["mv"],
 		"remove": ["rm"],
-		"set": [],
-		"reset": [],
 
 		"loglist": ["ll"],
 		"clear": ["c"]
