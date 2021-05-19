@@ -52,7 +52,7 @@ async function move(message, args) {
         }
 
         async function classNotFound(message, realName) {
-            await helper.sendBotMessage(message, realName + " was not fount in your list");
+            await helper.sendBotMessage(message, realName + " was not found in your list");
         }
 
         async function userNotFound(message, realName) {

@@ -11,7 +11,7 @@ async function remove(message, args) {
     }
 
     async function failureDelete(message, realName) {
-        await helper.sendBotMessage(message, realName + " was not fount in your list")
+        await helper.sendBotMessage(message, realName + " was not found in your list")
     }
 
     async function userNotFound(message, realName) {
