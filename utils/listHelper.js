@@ -200,6 +200,36 @@ function generateSetExample() {
     return helpStr;
 }
 
+function specResetWeekly(list) {
+    for ([index, classDef] of list['list'].entries()) {
+        switch (list['type']) {
+            case 'rosso':
+                list['list'][index]['fresh'] = true;
+                list['list'][index]['reset'] = false;
+                break;
+            default:
+                break;
+        }
+    }
+
+    return list;
+}
+
+function resetWeekly() {
+    let list = saveManager.getList(true);
+
+    for ([user, listsSpec] of Object.entries(list)) {
+        for ([listName, listSpec] of Object.entries(listsSpec['lists'])) {
+            list[user]['lists'][listName] = specResetWeekly(list[user]['lists'][listName]);
+        }
+    }
+    saveManager.setList(list);
+}
+
+function resetDaily() {
+    //Implement when heroic is running
+}
+
 exports.findElswordClass = findElswordClass;
 exports.findEmojiByClassName = findEmojiByClassName;
 exports.findEmojiByAttributeName = findEmojiByAttributeName;
@@ -215,3 +245,5 @@ exports.sendFormalBotMessage = sendFormalBotMessage;
 exports.sendBasicBotEmbed = sendBasicBotEmbed;
 exports.sendUserList = sendUserList;
 exports.generateSetExample = generateSetExample;
+exports.resetWeekly = resetWeekly;
+exports.resetDaily = resetDaily;

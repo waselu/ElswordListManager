@@ -1,6 +1,7 @@
 
 const Discord = require('discord.js');
 const fs = require('fs');
+const schedule = require('node-schedule');
 const { prefix, aliases } = require('./config.json');
 const saveManager = require('./utils/saveManager');
 const helper = require('./utils/listHelper');
@@ -53,6 +54,9 @@ client.on('message', function(message) {
 	//message.delete({timeout: 1000});
 	commandManager.commandManager(command, message, args, client);
 })
+
+//Auto resets
+const jobWeekly = schedule.scheduleJob('0 9 * * 3', helper.resetWeekly);
 
 //Bot login
 client.login('ODI4Njc5OTQ2MDcwMjYxODIx.YGtGVw.5isgxBCdahm5poWSqBBy6ck8PMo');
