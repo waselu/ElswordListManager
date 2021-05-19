@@ -25,8 +25,11 @@ async function specHelp(message, commandName, client) {
 	.setTitle('Command help -> ' + commandName)
 	.setDescription(command.description)
 	.addField('Examples', command.example)
-	.addField('Aliases', aliasString)
 	.setFooter(command.additionalInfo);
+
+	if (aliasString != '') {
+		embed.addField('Aliases', aliasString)
+	}
 
 	await helper.sendBotMessage(message, embed);
 }

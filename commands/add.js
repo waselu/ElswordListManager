@@ -73,9 +73,11 @@ module.exports = {
 	name: 'add',
     argNumber: '>0',
     helpGroup: 'Characters',
-	description: 'Add characters and properties to your list',
-    example: '``' + prefix + 'addlist CL sage not fresh farm NP not fresh freeze KE dps farm IN speed DiA``',
-    additionalInfo: '',
+	description: 'Add characters and attributes to your list\ntype ``' + prefix + 'helpattribute [attribute]`` for more help eg. ``' + prefix + 'helpattribute dps``',
+    example: '``' + prefix + 'add Devi CL RaS``\n``' + prefix + 'add CL sage not fresh farm NP not fresh freeze KE dps``\n\n' +
+            'List of available attributes:\n' +
+            helper.generateSetExample() + '\n',
+    additionalInfo: 'You can add no/not before an attribute to remove it',
 	async execute(message, args, client) {
 		await addList(message, args, client);
 	}

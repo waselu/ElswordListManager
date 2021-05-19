@@ -65,7 +65,6 @@
 		{"name": "freeze", "value": false, "canSet": ["rosso"], "isDefault": ["rosso"], "emoji": "🧊", "serverEmoji": "icecube"},
 	   
 	    {"name": "fresh", "value": true, "canSet": ["rosso"], "isDefault": ["rosso"], "emoji": "<:fresh:828908656144678964>", "serverEmoji": "fresh"},
-		{"name": "fullfresh", "value": false, "canSet": ["rosso"], "isDefault": [], "emoji": "", "serverEmoji": ""},
 	    {"name": "reset", "value": false, "canSet": ["rosso"], "isDefault": ["rosso"], "emoji": "<:reset:832571110906003496>", "serverEmoji": "reset"},
 	    {"name": "flamemark", "value": false, "canSet": [], "isDefault": [], "emoji": "<:flamemark:828910673626923038>", "serverEmoji": "flamemark"},
 	   
@@ -78,7 +77,7 @@
 	   
 	    {"name": "farm", "value": false, "canSet": ["rosso"], "isDefault": ["rosso"], "emoji": "🌾", "serverEmoji": ""},
 	    {"name": "linebreak", "value": false, "canSet": ["rosso"], "isDefault": ["rosso"], "emoji": "⤵️", "serverEmoji": "break"},
-	    {"name": "alias", "value": null, "canSet": ["rosso"], "isDefault": ["rosso"], "emoji": "", "serverEmoji": ""}
+	    {"name": "alias", "value": null, "canSet": ["rosso"], "isDefault": ["rosso"], "emoji": "", "serverEmoji": "", "additionalHelp": " [name]"}
 	],
 	"typelists": ["rosso"],
 	"aliases": {

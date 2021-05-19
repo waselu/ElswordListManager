@@ -187,6 +187,19 @@ async function sendUserList(message, list = null, copy = true) {
     }
 }
 
+function generateSetExample() {
+    helpStr = '';
+    filteredAttributes = attributes.filter(function(attribute) { return attribute.canSet.length != 0; });
+    for ([index, attribute] of filteredAttributes.entries()) {
+        helpStr += '``' + attribute.name + (attribute.additionalHelp || '') + '`` ';
+        if (index % 3 == 2) {
+            helpStr += '\n';
+        }
+    }
+
+    return helpStr;
+}
+
 exports.findElswordClass = findElswordClass;
 exports.findEmojiByClassName = findEmojiByClassName;
 exports.findEmojiByAttributeName = findEmojiByAttributeName;
@@ -201,3 +214,4 @@ exports.sendBotMessage = sendBotMessage;
 exports.sendFormalBotMessage = sendFormalBotMessage;
 exports.sendBasicBotEmbed = sendBasicBotEmbed;
 exports.sendUserList = sendUserList;
+exports.generateSetExample = generateSetExample;

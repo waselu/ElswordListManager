@@ -1,5 +1,5 @@
 
-const { prefix } = require('../config.json');
+const { prefix, attributes } = require('../config.json');
 const saveManager = require('../utils/saveManager');
 const helper = require('../utils/listHelper');
 
@@ -121,19 +121,11 @@ module.exports = {
 	name: 'set',
     argNumber: '>1',
     helpGroup: 'Characters',
-	description: 'Set one or many property(ies) for one of your character',
+	description: 'Set one or many attribute(s) for one of your character\ntype ``' + prefix + 'helpattribute [attribute]`` for more help eg. ``' + prefix + 'helpattribute dps``',
     example: '``' + prefix + 'set NP sage freeze``\n``' + prefix + 'set devi dps not fresh farm``\n``' + prefix + 'set shakti alias Eva``\n``' + prefix + 'set shakti no alias``\n\n' +
             'List of available attributes:\n' +
-            '``dps`` ``sage`` ``speed`` ``freeze``\n' +
-            '``fresh`` ``reset``\n'+
-            '``red`` ``blue`` ``yellow`` ``giant`` ``nostone``\n' +
-            '``farm`` ``linebreak``\n' +
-            '``alias [name]``\n\n' +
-            'Setting an alias will make you only able to reference that ' +
-            'character by its alias and no longer by its class name, ' +
-            'additionally it will make you able to add another character of that class to your list\n' +
-            '(The requirement being that you do not have 2 characters with the same name)',
-    additionalInfo: 'You can add no/not before a property to remove it',
+            helper.generateSetExample() + '\n',
+    additionalInfo: 'You can add no/not before an attribute to remove it',
 	async execute(message, args, client, ignoreMessage = false) {
 		await set(message, args, ignoreMessage);
 	}
