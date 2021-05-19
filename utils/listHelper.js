@@ -110,6 +110,28 @@ async function doIfClassFoundInUserList(message, className, successFunction, fai
     await doIfUserFoundInUserList(message, userFound, userNotFound);
 }
 
+function rossoList(userList, emojis = true) {
+    let listString = '';
+    for ([index, classDef] of userList.entries()) {
+        if (classDef['fresh'] || classDef['reset'] || classDef['farm']) {
+            listString += emojis ? classDef["emoji"] + ' ' : ':' + classDef["className"] + ': '
+            if (classDef['dps']) { listString += emojis ? findEmojiByAttributeName("dps") + ' ' : ':' + findEmojiByAttributeName("dps", true) + ': '; }
+            if (classDef['sage']) { listString += emojis ? findEmojiByAttributeName("sage") + ' ' : ':' + findEmojiByAttributeName("sage", true) + ': '; }
+            if (classDef['speed']) { listString += emojis ? findEmojiByAttributeName("speed") + ' ' : ':' + findEmojiByAttributeName("speed", true) + ': '; }
+            if (classDef['stone'] != null && (classDef['fresh'] || classDef['reset'])) { listString += emojis ? findEmojiByAttributeName(classDef['stone']) + ' ' : ':' + findEmojiByAttributeName(classDef["stone"], true) + ': '; }
+            if (classDef['freeze']) { listString += ':ice_cube: '; }
+            if (index < userList.length && (index == userList.length - 1 || classDef['fresh'] != userList[index + 1]['fresh'] || classDef['reset'] != userList[index + 1]['reset'] || classDef['break'])) {
+                if (classDef['fresh']) { listString += emojis ? findEmojiByAttributeName("fresh") + ' ' : ':' + findEmojiByAttributeName("fresh", true) + ': '; }
+                else if (classDef['reset']) { listString += emojis ? findEmojiByAttributeName("reset") + ' ' : ':' + findEmojiByAttributeName("reset", true) + ': '; }
+                else { listString += emojis ? findEmojiByAttributeName("flamemark") + ' ' : ':' + findEmojiByAttributeName("flamemark", true) + ': '; }
+            }
+            if (classDef['break']) { listString += '\n' }
+        }
+    }
+
+    return listString;
+}
+
 function userListToServerList(user, emojis = true) {
 	let list = saveManager.getList();
 
@@ -117,7 +139,8 @@ function userListToServerList(user, emojis = true) {
         return "You have no list yet";
     }
 
-    let userList = JSON.parse(JSON.stringify(list[user]['lists'][list[user]['active']]['list']));
+    let activeListType = list[user]['lists'][list[user]['active']]['type'];
+    let userList = list[user]['lists'][list[user]['active']]['list'];
     removed = true;
     while (removed) {
         removed = false;
@@ -130,25 +153,16 @@ function userListToServerList(user, emojis = true) {
         }
     }
 
-    let raidString = "";
-    for ([index, classDef] of userList.entries()) {
-        if (classDef['fresh'] || classDef['reset'] || classDef['farm']) {
-            raidString += emojis ? classDef["emoji"] + ' ' : ':' + classDef["className"] + ': '
-            if (classDef['dps']) { raidString += emojis ? findEmojiByAttributeName("dps") + ' ' : ':' + findEmojiByAttributeName("dps", true) + ': '; }
-            if (classDef['sage']) { raidString += emojis ? findEmojiByAttributeName("sage") + ' ' : ':' + findEmojiByAttributeName("sage", true) + ': '; }
-            if (classDef['speed']) { raidString += emojis ? findEmojiByAttributeName("speed") + ' ' : ':' + findEmojiByAttributeName("speed", true) + ': '; }
-            if (classDef['stone'] != null && (classDef['fresh'] || classDef['reset'])) { raidString += emojis ? findEmojiByAttributeName(classDef['stone']) + ' ' : ':' + findEmojiByAttributeName(classDef["stone"], true) + ': '; }
-            if (classDef['freeze']) { raidString += ':ice_cube: '; }
-            if (index < userList.length && (index == userList.length - 1 || classDef['fresh'] != userList[index + 1]['fresh'] || classDef['reset'] != userList[index + 1]['reset'] || classDef['break'])) {
-                if (classDef['fresh']) { raidString += emojis ? findEmojiByAttributeName("fresh") + ' ' : ':' + findEmojiByAttributeName("fresh", true) + ': '; }
-                else if (classDef['reset']) { raidString += emojis ? findEmojiByAttributeName("reset") + ' ' : ':' + findEmojiByAttributeName("reset", true) + ': '; }
-                else { raidString += emojis ? findEmojiByAttributeName("flamemark") + ' ' : ':' + findEmojiByAttributeName("flamemark", true) + ': '; }
-            }
-            if (classDef['break']) { raidString += '\n' }
-        }
+    let listString = '';
+    switch (activeListType) {
+        case 'rosso':
+            listString = rossoList(userList, emojis);
+            break;
+        default:
+            break;
     }
 
-    return raidString ? raidString : "Your list is empty"
+    return listString ? listString : 'Your list is empty'
 }
 
 function copyList(username) {

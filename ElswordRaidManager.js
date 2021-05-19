@@ -9,18 +9,10 @@ const commandManager = require('./utils/commandManager');
 
 const client = new Discord.Client();
 
-//Usable by other users
-
 //Mandatory
-//Add new list type properties + list behavior
-//Rework helper.userListToRaidList so there is a switch for list types, and rename it
+//Add new list type properties + implement their list behavior + implement their reset behavior (and resetDaily if they need it)
+//Rename helper.userListToRaidList
 
-//LONG TERM
-
-//Propreté du code
-//TODO: rework set array
-
-//Commands
 client.commands = new Discord.Collection();
 
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
