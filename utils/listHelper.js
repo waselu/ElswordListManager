@@ -111,6 +111,18 @@ async function doIfClassFoundInUserList(message, className, successFunction, fai
 }
 
 function rossoList(userList, emojis = true) {
+    removed = true;
+    while (removed) {
+        removed = false;
+        for ([index, classDef] of userList.entries()) {
+            if (!(classDef['fresh']) && !(classDef['reset']) && !(classDef['farm'])) {
+                userList.splice(index, 1);
+                removed = true;
+                break;
+            }
+        }
+    }
+
     let listString = '';
     for ([index, classDef] of userList.entries()) {
         if (classDef['fresh'] || classDef['reset'] || classDef['farm']) {
@@ -132,7 +144,7 @@ function rossoList(userList, emojis = true) {
     return listString;
 }
 
-function userListToServerList(user, emojis = true) {
+function userListToEmojiList(user, emojis = true) {
 	let list = saveManager.getList();
 
     if (!(user in list)) {
@@ -141,17 +153,6 @@ function userListToServerList(user, emojis = true) {
 
     let activeListType = list[user]['lists'][list[user]['active']]['type'];
     let userList = list[user]['lists'][list[user]['active']]['list'];
-    removed = true;
-    while (removed) {
-        removed = false;
-        for ([index, classDef] of userList.entries()) {
-            if (!(classDef['fresh']) && !(classDef['reset']) && !(classDef['farm'])) {
-                userList.splice(index, 1);
-                removed = true;
-                break;
-            }
-        }
-    }
 
     let listString = '';
     switch (activeListType) {
@@ -166,7 +167,7 @@ function userListToServerList(user, emojis = true) {
 }
 
 function copyList(username) {
-    copy.writeSync(userListToServerList(username, false));
+    copy.writeSync(userListToEmojiList(username, false));
 }
 
 async function sendBotMessage(message, sending) {
@@ -192,7 +193,7 @@ async function sendBasicBotEmbed(message, sendingTitle = null, sending = null, f
 
 async function sendUserList(message, list = null, copy = true) {
     let getTypeList = saveManager.getList();
-    await sendBasicBotEmbed(message, message.author.username + '\'s list: ' + getTypeList[message.author.username]['active'], userListToServerList(message.author.username), 'Your list has been copied to your clipboard');
+    await sendBasicBotEmbed(message, message.author.username + '\'s list: ' + getTypeList[message.author.username]['active'], userListToEmojiList(message.author.username), 'Your list has been copied to your clipboard');
     if (list) {
         saveManager.setList(list);
     }
@@ -252,7 +253,7 @@ exports.isDefaultAttribute = isDefaultAttribute;
 exports.checkUserListHasChar = checkUserListHasChar;
 exports.doIfUserFoundInUserList = doIfUserFoundInUserList;
 exports.doIfClassFoundInUserList = doIfClassFoundInUserList;
-exports.userListToServerList = userListToServerList;
+exports.userListToEmojiList = userListToEmojiList;
 exports.copyList = copyList;
 exports.sendBotMessage = sendBotMessage;
 exports.sendFormalBotMessage = sendFormalBotMessage;

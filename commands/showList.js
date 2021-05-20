@@ -19,7 +19,7 @@ async function showList(message, args, client) {
                 messageStr += '\n\n';
             }
             list[message.author.username]['active'] = key;
-            embed.addField('**' + key + ' - ' + list[message.author.username]['lists'][key]['type'] + '**', helper.userListToServerList(message.author.username));
+            embed.addField('**' + key + ' - ' + list[message.author.username]['lists'][key]['type'] + '**', helper.userListToEmojiList(message.author.username));
         }
 
         list[message.author.username]['active'] = active;

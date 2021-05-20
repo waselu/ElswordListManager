@@ -49,7 +49,7 @@ async function show(message, args) {
         }
         listStr = "Your Character(s): " + charList + "\n";
         helper.copyList(message.author.username);
-        listStr += "\nList:\n" + helper.userListToServerList(message.author.username) + "\n";
+        listStr += "\nList:\n" + helper.userListToEmojiList(message.author.username) + "\n";
         await helper.sendBasicBotEmbed(message, message.author.username + '\'s list: ' + saveManager.getList()[message.author.username]['active'], listStr, '');
     }
 

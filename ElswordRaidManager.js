@@ -11,7 +11,6 @@ const client = new Discord.Client();
 
 //Mandatory
 //Add new list type properties + implement their list behavior + implement their reset behavior (and resetDaily if they need it)
-//Rename helper.userListToRaidList
 
 client.commands = new Discord.Collection();
 
