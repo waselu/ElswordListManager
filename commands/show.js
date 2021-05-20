@@ -29,7 +29,7 @@ async function show(message, args) {
 
     async function userFound(message) {
         let charList = "";
-        let userList = saveManager.getList()[message.author.username];
+        let userList = saveManager.getList()[message.author.id];
         userList = userList['lists'][userList['active']]['list'];
         for ([index, classDef] of userList.entries()) {
             charList += "\n" + classDef["emoji"];
@@ -48,9 +48,9 @@ async function show(message, args) {
             charList += " " + (classDef['alias'] != null ? classDef['alias'] : classDef['className']);
         }
         listStr = "Your Character(s): " + charList + "\n";
-        helper.copyList(message.author.username);
-        listStr += "\nList:\n" + helper.userListToEmojiList(message.author.username) + "\n";
-        await helper.sendBasicBotEmbed(message, message.author.username + '\'s list: ' + saveManager.getList()[message.author.username]['active'], listStr, '');
+        helper.copyList(message.author.id);
+        listStr += "\nList:\n" + helper.userListToEmojiList(message.author.id) + "\n";
+        await helper.sendBasicBotEmbed(message, message.author.username + '\'s list: ' + saveManager.getList()[message.author.id]['active'], listStr, '');
     }
 
     async function userNotFound(message) {

@@ -6,16 +6,16 @@ async function removeList(message, args, client) {
     list = saveManager.getList();
 
     async function userFound() {
-        if (args[0] in list[message.author.username]['lists']) {
-            delete list[message.author.username]['lists'][args[0]];
+        if (args[0] in list[message.author.id]['lists']) {
+            delete list[message.author.id]['lists'][args[0]];
             await helper.sendBotMessage(message, 'Successfully removed ' + args[0] + ' list');
-            if (Object.keys(list[message.author.username]['lists']).length == 0) {
-                delete list[message.author.username];
+            if (Object.keys(list[message.author.id]['lists']).length == 0) {
+                delete list[message.author.id];
                 await helper.sendBotMessage(message, 'You deleted your last list');
             } else {
-                if (list[message.author.username]['active'] == args[0]) {
-                    list[message.author.username]['active'] = Object.keys(list[message.author.username]['lists'])[0];
-                    await helper.sendBotMessage(message, 'You deleted your active list, swapped to ' + list[message.author.username]['active'] + ' list');
+                if (list[message.author.id]['active'] == args[0]) {
+                    list[message.author.id]['active'] = Object.keys(list[message.author.id]['lists'])[0];
+                    await helper.sendBotMessage(message, 'You deleted your active list, swapped to ' + list[message.author.id]['active'] + ' list');
                 }
             }
         } else {

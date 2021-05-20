@@ -6,8 +6,8 @@ async function changeList(message, args, client) {
     list = saveManager.getList();
 
     async function userFound() {
-        if (args[0] in list[message.author.username]['lists']) {
-            list[message.author.username]['active'] = args[0];
+        if (args[0] in list[message.author.id]['lists']) {
+            list[message.author.id]['active'] = args[0];
         } else {
             await helper.sendBotMessage(message, 'You have no list named ' + args[0]);
             return;

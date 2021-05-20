@@ -31,7 +31,7 @@ async function set(message, args, ignoreMessage) {
         if (indexArg == args.length - 1) {
             return {"error": "No alias specified"};
         }
-        if (helper.checkUserListHasChar(message.author.username, args[indexArg + 1]) != -1) {
+        if (helper.checkUserListHasChar(message.author.id, args[indexArg + 1]) != -1) {
             return {"error": "You already have a character named " + args[indexArg + 1]};
         }
         return {"alias": args[indexArg + 1], "skip": 1};
@@ -94,7 +94,7 @@ async function set(message, args, ignoreMessage) {
         let skip = 0;
         for (attributeCase of attributeCases) {
             if (attributeCase["attribute"] == attribute) {
-                setObject = attributeCase["call"](message, list[message.author.username][index], invert, args, indexArg);
+                setObject = attributeCase["call"](message, list[message.author.id][index], invert, args, indexArg);
                 if ('skip' in setObject && setObject['skip']) {
                     skip = setObject['skip'];
                     setObject['skip'] = 0;
@@ -107,7 +107,7 @@ async function set(message, args, ignoreMessage) {
         }
 
         for (attributeName in setObject) {
-            list[message.author.username]['lists'][list[message.author.username]['active']]['list'][index][attributeName] = setObject[attributeName];
+            list[message.author.id]['lists'][list[message.author.id]['active']]['list'][index][attributeName] = setObject[attributeName];
         }
 
         return skip;
@@ -127,7 +127,7 @@ async function set(message, args, ignoreMessage) {
                 continue;
             }
 
-            if (!helper.canSetAttribute(attribute, list[message.author.username]['lists'][list[message.author.username]['active']]['type'])) {
+            if (!helper.canSetAttribute(attribute, list[message.author.id]['lists'][list[message.author.id]['active']]['type'])) {
                 await helper.sendBotMessage(message, "Attribute '" + attribute + "' is not available for this list");
                 return;
             }

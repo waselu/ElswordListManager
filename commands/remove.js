@@ -7,7 +7,7 @@ async function remove(message, args) {
     let list = saveManager.getList();
 
     async function successfullDelete(message, index, realName) {
-        list[message.author.username]['lists'][list[message.author.username]['active']]['list'].splice(index, 1);
+        list[message.author.id]['lists'][list[message.author.id]['active']]['list'].splice(index, 1);
     }
 
     async function failureDelete(message, realName) {

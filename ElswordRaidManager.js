@@ -10,7 +10,6 @@ const commandManager = require('./utils/commandManager');
 const client = new Discord.Client();
 
 //Mandatory
-//Change list access to use id instead of username
 //auto sort lists by fresh/daily/weekly, add list config (nosort, etc...)
 
 //Debug

@@ -17,12 +17,12 @@ async function add(message, args) {
         let attributesArray = {};
 
         for ([index, attributeDef] of attributes.entries()) {
-            if (attributeDef["isDefault"].includes(list[message.author.username]['lists'][list[message.author.username]['active']]['type'])) {
+            if (attributeDef["isDefault"].includes(list[message.author.id]['lists'][list[message.author.id]['active']]['type'])) {
                 attributesArray[attributeDef["name"]] = attributeDef["value"];
             }
         }
 
-        list[message.author.username]['lists'][list[message.author.username]['active']]['list'].push({...{"className": realName, "emoji": helper.findEmojiByClassName(realName)}, ...attributesArray});
+        list[message.author.id]['lists'][list[message.author.id]['active']]['list'].push({...{"className": realName, "emoji": helper.findEmojiByClassName(realName)}, ...attributesArray});
 
         ret = 0;
     }

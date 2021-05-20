@@ -5,9 +5,9 @@ const helper = require('../utils/listHelper');
 async function newList(message, args, client) {
     list = saveManager.getList();
     async function addNewList() {
-        list[message.author.username]['active'] = args[1];
-        if (!(args[1] in list[message.author.username]['lists'])) {
-            list[message.author.username]['lists'][args[1]] = {'type': args[0], 'list': []};
+        list[message.author.id]['active'] = args[1];
+        if (!(args[1] in list[message.author.id]['lists'])) {
+            list[message.author.id]['lists'][args[1]] = {'type': args[0], 'list': []};
             saveManager.setList(list);
             await helper.sendBotMessage(message, args[1] + " list created, swapped to it");
         } else {
@@ -20,8 +20,9 @@ async function newList(message, args, client) {
     }
 
     async function userNotFound(message) {
-        list[message.author.username] = {
+        list[message.author.id] = {
             'active': args[1],
+            'config': {},
             'lists': {
 
             }

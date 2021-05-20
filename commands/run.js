@@ -7,38 +7,38 @@ async function run(message, args) {
     let list = saveManager.getList();
 
     async function classFound(message, index, realName) {
-        switch (list[message.author.username]['lists'][list[message.author.username]['active']]['type']) {
+        switch (list[message.author.id]['lists'][list[message.author.id]['active']]['type']) {
             case 'rosso':
-                if (!list[message.author.username]['lists'][list[message.author.username]['active']]['list'][index]["fresh"]) {
-                    if (list[message.author.username]['lists'][list[message.author.username]['active']]['list'][index]["reset"]) {
-                        list[message.author.username]['lists'][list[message.author.username]['active']]['list'][index]["reset"] = false;
+                if (!list[message.author.id]['lists'][list[message.author.id]['active']]['list'][index]["fresh"]) {
+                    if (list[message.author.id]['lists'][list[message.author.id]['active']]['list'][index]["reset"]) {
+                        list[message.author.id]['lists'][list[message.author.id]['active']]['list'][index]["reset"] = false;
                     } else {
                         await helper.sendBotMessage(message, realName + " is not fresh nor has a reset");
                     }
                 } else {
-                    list[message.author.username]['lists'][list[message.author.username]['active']]['list'][index]["fresh"] = false;
-                    list[message.author.username]['lists'][list[message.author.username]['active']]['list'][index]["reset"] = true;
+                    list[message.author.id]['lists'][list[message.author.id]['active']]['list'][index]["fresh"] = false;
+                    list[message.author.id]['lists'][list[message.author.id]['active']]['list'][index]["reset"] = true;
                 }
                 break;
             case 'henir':
-                if (!list[message.author.username]['lists'][list[message.author.username]['active']]['list'][index]["henirnormal"]) {
-                    if (list[message.author.username]['lists'][list[message.author.username]['active']]['list'][index]["henirchallenge"]) {
-                        list[message.author.username]['lists'][list[message.author.username]['active']]['list'][index]["henirchallenge"] = false;
+                if (!list[message.author.id]['lists'][list[message.author.id]['active']]['list'][index]["henirnormal"]) {
+                    if (list[message.author.id]['lists'][list[message.author.id]['active']]['list'][index]["henirchallenge"]) {
+                        list[message.author.id]['lists'][list[message.author.id]['active']]['list'][index]["henirchallenge"] = false;
                     } else {
                         await helper.sendBotMessage(message, realName + " has fully cleared henir already");
                     }
                 } else {
-                    list[message.author.username]['lists'][list[message.author.username]['active']]['list'][index]["henirnormal"] = false;
+                    list[message.author.id]['lists'][list[message.author.id]['active']]['list'][index]["henirnormal"] = false;
                 }
                 break;
             case 'heroic':
-                if (!list[message.author.username]['lists'][list[message.author.username]['active']]['list'][index]["heroicdaily"]) {
+                if (!list[message.author.id]['lists'][list[message.author.id]['active']]['list'][index]["heroicdaily"]) {
                     await helper.sendBotMessage(message, realName + " has already cleared heroic dailies");
                 } else {
-                    list[message.author.username]['lists'][list[message.author.username]['active']]['list'][index]["heroicweekly"] -= list[message.author.username]['lists'][list[message.author.username]['active']]['list'][index]["heroicdaily"];
-                    list[message.author.username]['lists'][list[message.author.username]['active']]['list'][index]["heroicdaily"] = 0;
-                    if (list[message.author.username]['lists'][list[message.author.username]['active']]['list'][index]["heroicweekly"] < 0) {
-                        list[message.author.username]['lists'][list[message.author.username]['active']]['list'][index]["heroicweekly"] = 0;
+                    list[message.author.id]['lists'][list[message.author.id]['active']]['list'][index]["heroicweekly"] -= list[message.author.id]['lists'][list[message.author.id]['active']]['list'][index]["heroicdaily"];
+                    list[message.author.id]['lists'][list[message.author.id]['active']]['list'][index]["heroicdaily"] = 0;
+                    if (list[message.author.id]['lists'][list[message.author.id]['active']]['list'][index]["heroicweekly"] < 0) {
+                        list[message.author.id]['lists'][list[message.author.id]['active']]['list'][index]["heroicweekly"] = 0;
                     }
                 }
                 break;

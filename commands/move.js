@@ -41,14 +41,14 @@ async function move(message, args) {
     for ([index, className] of classNames.entries()) {
         let indexMoveTo = positions[index];
         async function classFound(message, index, realName) {
-            if (indexMoveTo <= 0 || indexMoveTo > list[message.author.username]['lists'][list[message.author.username]['active']]['list'].length) {
+            if (indexMoveTo <= 0 || indexMoveTo > list[message.author.id]['lists'][list[message.author.id]['active']]['list'].length) {
                 await helper.sendBotMessage(message, "Index " + indexMoveTo + " isn't in your list");
                 return;
             }
-            indexMoveTo = getActualIndexMoveTo(indexMoveTo, message.author.username);
-            let item = list[message.author.username]['lists'][list[message.author.username]['active']]['list'][index];
-            list[message.author.username]['lists'][list[message.author.username]['active']]['list'].splice(index, 1);
-            list[message.author.username]['lists'][list[message.author.username]['active']]['list'].splice(indexMoveTo - 1, 0, item);
+            indexMoveTo = getActualIndexMoveTo(indexMoveTo, message.author.id);
+            let item = list[message.author.id]['lists'][list[message.author.id]['active']]['list'][index];
+            list[message.author.id]['lists'][list[message.author.id]['active']]['list'].splice(index, 1);
+            list[message.author.id]['lists'][list[message.author.id]['active']]['list'].splice(indexMoveTo - 1, 0, item);
         }
 
         async function classNotFound(message, realName) {

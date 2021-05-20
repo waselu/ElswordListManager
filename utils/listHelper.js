@@ -73,7 +73,7 @@ function checkUserListHasChar(user, className) {
 
 async function doIfUserFoundInUserList(message, successFunction, failureFunction) {
 	let list = saveManager.getList();
-    if (!(message.author.username in list)) {
+    if (!(message.author.id in list)) {
         await failureFunction(message);
     }
     else {
@@ -95,7 +95,7 @@ async function doIfClassFoundInUserList(message, className, successFunction, fai
     }
 
     async function userFound(message) {
-        let index = checkUserListHasChar(message.author.username, realName);
+        let index = checkUserListHasChar(message.author.id, realName);
         if (index == -1) {
             await failureFunction(message, realName);
         } else {
@@ -216,8 +216,8 @@ function userListToEmojiList(user, emojis = true) {
     return listString ? listString : 'Your list is empty'
 }
 
-function copyList(username) {
-    copy.writeSync(userListToEmojiList(username, false));
+function copyList(userId) {
+    copy.writeSync(userListToEmojiList(userId, false));
 }
 
 async function sendBotMessage(message, sending) {
@@ -243,12 +243,12 @@ async function sendBasicBotEmbed(message, sendingTitle = null, sending = null, f
 
 async function sendUserList(message, list = null, copy = true) {
     let getTypeList = saveManager.getList();
-    await sendBasicBotEmbed(message, message.author.username + '\'s list: ' + getTypeList[message.author.username]['active'], userListToEmojiList(message.author.username), 'Your list has been copied to your clipboard');
+    await sendBasicBotEmbed(message, message.author.username + '\'s list: ' + getTypeList[message.author.id]['active'], userListToEmojiList(message.author.id), 'Your list has been copied to your clipboard');
     if (list) {
         saveManager.setList(list);
     }
     if (copy) {
-        copyList(message.author.username);
+        copyList(message.author.id);
     }
 }
 
