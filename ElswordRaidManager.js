@@ -10,10 +10,10 @@ const commandManager = require('./utils/commandManager');
 const client = new Discord.Client();
 
 //Mandatory
-//auto sort lists by fresh/daily/weekly, add list config (nosort, etc...)
+//auto sort lists by fresh/daily/weekly
+//add list config (nosort, etc...)
 
 //Debug
-//Add a check to limit access to debug functions based on user (Waselu's user id)
 //Add a function to impersonate another user (impersonate userid)
 
 //Fixes
@@ -48,6 +48,10 @@ client.on('message', function(message) {
 	if (!client.commands.has(commandName)) return;
 
 	const command = client.commands.get(commandName);
+
+	if (command.helpGroup == 'Debug' && message.author.id != '204486578482053120') {
+		return;
+	}
 
 	//message.delete({timeout: 1000});
 	commandManager.commandManager(command, message, args, client);
