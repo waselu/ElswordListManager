@@ -110,18 +110,26 @@ async function doIfClassFoundInUserList(message, className, successFunction, fai
     await doIfUserFoundInUserList(message, userFound, userNotFound);
 }
 
-function rossoList(userList, emojis = true) {
+function removeDoneCharacters(userList, removeIfFunction) {
     removed = true;
     while (removed) {
         removed = false;
         for ([index, classDef] of userList.entries()) {
-            if (!(classDef['fresh']) && !(classDef['reset']) && !(classDef['farm'])) {
+            if (removeIfFunction(classDef)) {
                 userList.splice(index, 1);
                 removed = true;
                 break;
             }
         }
     }
+
+    return userList;
+}
+
+function rossoList(userList, emojis = true) {
+    userList = removeDoneCharacters(userList, function(classDef) {
+        return !(classDef['fresh']) && !(classDef['reset']) && !(classDef['farm']);
+    });
 
     let listString = '';
     for ([index, classDef] of userList.entries()) {
@@ -145,17 +153,9 @@ function rossoList(userList, emojis = true) {
 }
 
 function henirList(userList) {
-    removed = true;
-    while (removed) {
-        removed = false;
-        for ([index, classDef] of userList.entries()) {
-            if (!(classDef['henirnormal']) && !(classDef['henirchallenge'])) {
-                userList.splice(index, 1);
-                removed = true;
-                break;
-            }
-        }
-    }
+    userList = removeDoneCharacters(userList, function(classDef) {
+        return !(classDef['henirnormal']) && !(classDef['henirchallenge']);
+    });
 
     let listString = '';
     for ([index, classDef] of userList.entries()) {
@@ -171,18 +171,10 @@ function henirList(userList) {
 }
 
 function heroicList(userList) {
-    removed = true;
-    while (removed) {
-        removed = false;
-        for ([index, classDef] of userList.entries()) {
-            if (!(classDef['heroicdaily']) && !(classDef['heroicweekly'])) {
-                userList.splice(index, 1);
-                removed = true;
-                break;
-            }
-        }
-    }
-
+    userList = removeDoneCharacters(userList, function(classDef) {
+        return !(classDef['heroicdaily']) && !(classDef['heroicweekly']);
+    });
+    
     let listString = '';
     for ([index, classDef] of userList.entries()) {
         listString += classDef["emoji"] + ' ';

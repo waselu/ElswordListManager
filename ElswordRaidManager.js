@@ -10,7 +10,6 @@ const commandManager = require('./utils/commandManager');
 const client = new Discord.Client();
 
 //Mandatory
-//Add function to simplify element removal in userListToEmojiList
 //Change list access to use id instead of username
 //auto sort lists by fresh/daily/weekly, add list config (nosort, etc...)
 
