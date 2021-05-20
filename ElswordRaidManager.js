@@ -10,8 +10,9 @@ const commandManager = require('./utils/commandManager');
 const client = new Discord.Client();
 
 //Mandatory
-//auto sort lists by fresh/daily/weekly
 //add list config (nosort, etc...)
+//replace list display at end of commands by an execution of the show command (replace in sendUserList maybe? but beware of raw usage of userListToEmojiList)
+//Handle move with autosorting lists
 
 //Debug
 //Add a function to impersonate another user (impersonate userid)

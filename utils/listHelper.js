@@ -131,6 +131,16 @@ function rossoList(userList, emojis = true) {
         return !(classDef['fresh']) && !(classDef['reset']) && !(classDef['farm']);
     });
 
+    userList = userList.sort(function(classDefA, classDefB) {
+        scoreA = (classDefA['fresh'] === true ? 1 : 0) * 1 + (classDefA['reset'] === true ? 1 : 0) * 2;
+        scoreB = (classDefB['fresh'] === true ? 1 : 0) * 1 + (classDefB['reset'] === true ? 1 : 0) * 2;
+
+        scoreA = !scoreA ? 4 : scoreA;
+        scoreB = !scoreB ? 4 : scoreB;
+
+        return scoreA - scoreB;
+    });
+
     let listString = '';
     for ([index, classDef] of userList.entries()) {
         if (classDef['fresh'] || classDef['reset'] || classDef['farm']) {
@@ -157,6 +167,13 @@ function henirList(userList) {
         return !(classDef['henirnormal']) && !(classDef['henirchallenge']);
     });
 
+    userList = userList.sort(function(classDefA, classDefB) {
+        scoreA = ((classDefA['henirnormal'] > 0) === true ? 1 : 0) * 1 + ((classDefA['henirchallenge'] > 0) === true ? 1 : 0) * 2;
+        scoreB = ((classDefB['henirnormal'] > 0) === true ? 1 : 0) * 1 + ((classDefB['henirchallenge'] > 0) === true ? 1 : 0) * 2;
+
+        return scoreA - scoreB;
+    });
+
     let listString = '';
     for ([index, classDef] of userList.entries()) {
         listString += classDef["emoji"] + ' ';
@@ -173,6 +190,13 @@ function henirList(userList) {
 function heroicList(userList) {
     userList = removeDoneCharacters(userList, function(classDef) {
         return !(classDef['heroicdaily']) && !(classDef['heroicweekly']);
+    });
+
+    userList = userList.sort(function(classDefA, classDefB) {
+        scoreA = ((classDefA['heroicdaily'] > 0) === true ? 1 : 0) * 1 + ((classDefA['heroicweekly'] > 0) === true ? 1 : 0) * 2;
+        scoreB = ((classDefB['heroicdaily'] > 0) === true ? 1 : 0) * 1 + ((classDefB['heroicweekly'] > 0) === true ? 1 : 0) * 2;
+
+        return scoreA - scoreB;
     });
     
     let listString = '';
