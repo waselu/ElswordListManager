@@ -15,7 +15,7 @@ const client = new Discord.Client();
 //Copy to clipboard only if raid list type (3rd sendUserList param)
 
 //Debug
-//Add a function to impersonate another user (impersonate userid)
+//Add a function to impersonate another user (impersonate user tag)
 
 //Fixes
 //Add JSON.parse(JSON.stringify)
