@@ -11,9 +11,7 @@ const client = new Discord.Client();
 
 //Mandatory
 //Add function to simplify element removal in userListToEmojiList
-//Add other lists emoji
 //Change list access to use id instead of username
-//rename helpattribute -> helpattr
 //auto sort lists by fresh/daily/weekly, add list config (nosort, etc...)
 
 //Debug

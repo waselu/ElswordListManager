@@ -160,7 +160,7 @@ module.exports = {
 	name: 'set',
     argNumber: '>1',
     helpGroup: 'Characters',
-	description: 'Set one or many attribute(s) for one of your character\ntype ``' + prefix + 'helpattribute [attribute]`` for more help eg. ``' + prefix + 'helpattribute dps``',
+	description: 'Set one or many attribute(s) for one of your character\ntype ``' + prefix + 'helpattr [attribute]`` for more help eg. ``' + prefix + 'helpattr dps``',
     example: '``' + prefix + 'set NP sage freeze``\n``' + prefix + 'set devi dps not fresh farm``\n``' + prefix + 'set shakti alias Eva``\n``' + prefix + 'set shakti no alias``\n\n' +
             '**List of available attributes**\n' +
             helper.generateSetExample() + '\n',

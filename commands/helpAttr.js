@@ -1,9 +1,8 @@
 
-const { MessageEmbed } = require('discord.js');
 const helper = require('../utils/listHelper');
 const { prefix, attributes } = require('../config.json');
 
-async function helpAttribute(message, args, client) {
+async function helpAttr(message, args, client) {
     if (!helper.canSetAttribute(args[0])) {
         await helper.sendBotMessage(message, 'Attribute ' + args[0] + ' doesn\'t exist');
         return;
@@ -20,13 +19,13 @@ async function helpAttribute(message, args, client) {
 }
 
 module.exports = {
-	name: 'helpattribute',
+	name: 'helpattr',
 	argNumber: '>0',
 	helpGroup: 'Misc.',
 	description: 'Show the help for a specific attribute',  
 	example: '``' + prefix + 'helpattribute dps``',
 	additionalInfo: '',
 	async execute(message, args, client) {
-		await helpAttribute(message, args, client);
+		await helpAttr(message, args, client);
 	}
 }
