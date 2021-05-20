@@ -137,8 +137,34 @@ function rossoList(userList, emojis = true) {
                 else if (classDef['reset']) { listString += emojis ? findEmojiByAttributeName("reset") + ' ' : ':' + findEmojiByAttributeName("reset", true) + ': '; }
                 else { listString += emojis ? findEmojiByAttributeName("flamemark") + ' ' : ':' + findEmojiByAttributeName("flamemark", true) + ': '; }
             }
-            if (classDef['break']) { listString += '\n' }
+            if (classDef['linebreak']) { listString += '\n' }
         }
+    }
+
+    return listString;
+}
+
+function henirList(userList) {
+    removed = true;
+    while (removed) {
+        removed = false;
+        for ([index, classDef] of userList.entries()) {
+            if (!(classDef['henirnormal']) && !(classDef['henirchallenge'])) {
+                userList.splice(index, 1);
+                removed = true;
+                break;
+            }
+        }
+    }
+
+    let listString = '';
+    for ([index, classDef] of userList.entries()) {
+        listString += classDef["emoji"] + ' ';
+        if (index < userList.length && (index == userList.length - 1 || classDef['henirnormal'] != userList[index + 1]['henirnormal'] || classDef['henirchallenge'] != userList[index + 1]['henirchallenge'] || classDef['break'])) {
+            if (classDef['henirnormal']) { listString += findEmojiByAttributeName('henirnormal') + ' '; }
+            if (classDef['henirchallenge']) { listString += findEmojiByAttributeName('henirchallenge') + ' '; }
+        }
+        if (classDef['linebreak']) { listString += '\n' }
     }
 
     return listString;
@@ -152,12 +178,15 @@ function userListToEmojiList(user, emojis = true) {
     }
 
     let activeListType = list[user]['lists'][list[user]['active']]['type'];
-    let userList = list[user]['lists'][list[user]['active']]['list'];
+    let userList = JSON.parse(JSON.stringify(list[user]['lists'][list[user]['active']]['list'])); //JSON used to copy DO NOT DELETE
 
     let listString = '';
     switch (activeListType) {
         case 'rosso':
             listString = rossoList(userList, emojis);
+            break;
+        case 'henir':
+            listString = henirList(userList);
             break;
         default:
             break;
@@ -221,6 +250,10 @@ function specResetWeekly(list) {
             case 'rosso':
                 list['list'][index]['fresh'] = true;
                 list['list'][index]['reset'] = false;
+                break;
+            case 'henir':
+                list['list'][index]['henirnormal'] = true;
+                list['list'][index]['henirchallenge'] = true;
                 break;
             default:
                 break;

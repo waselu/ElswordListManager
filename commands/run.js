@@ -20,6 +20,17 @@ async function run(message, args) {
                     list[message.author.username]['lists'][list[message.author.username]['active']]['list'][index]["reset"] = true;
                 }
                 break;
+            case 'henir':
+                if (!list[message.author.username]['lists'][list[message.author.username]['active']]['list'][index]["henirnormal"]) {
+                    if (list[message.author.username]['lists'][list[message.author.username]['active']]['list'][index]["henirchallenge"]) {
+                        list[message.author.username]['lists'][list[message.author.username]['active']]['list'][index]["henirchallenge"] = false;
+                    } else {
+                        await helper.sendBotMessage(message, realName + " has fully cleared henir already");
+                    }
+                } else {
+                    list[message.author.username]['lists'][list[message.author.username]['active']]['list'][index]["henirnormal"] = false;
+                }
+                break;
             default:
                 break;
         }

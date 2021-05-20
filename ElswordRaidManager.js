@@ -10,7 +10,15 @@ const commandManager = require('./utils/commandManager');
 const client = new Discord.Client();
 
 //Mandatory
-//Add new list type properties + implement their list behavior + implement their reset behavior (and resetDaily if they need it)
+//Add function to simplify element removal in userListToEmojiList
+//Add other lists emoji
+
+//Debug
+//Add a check for debug functions based on user (Waselu's user id)
+//Add a function to impersonate another user (impersonate userid)
+
+//Fixes
+//Add JSON.parse(JSON.stringify)
 
 client.commands = new Discord.Collection();
 

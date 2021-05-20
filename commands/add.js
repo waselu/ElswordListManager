@@ -23,6 +23,7 @@ async function add(message, args) {
         }
 
         list[message.author.username]['lists'][list[message.author.username]['active']]['list'].push({...{"className": realName, "emoji": helper.findEmojiByClassName(realName)}, ...attributesArray});
+
         ret = 0;
     }
 
@@ -42,7 +43,7 @@ async function addOneCharacter(message, args, client, index) {
     let added = await add(message, [args[index]]);
 
     if (added == -1) {
-        return -1;   
+        return -1;
     }
 
     index = index + 1;

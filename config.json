@@ -1,5 +1,5 @@
 {
-	"prefix": "?",
+	"prefix": "??",
 	"classes": [
 	    {"classNaming": ["KE", "KnightEmperor", "Elsword1"], "emoji": "<:KE:828899757359366166>"},
 	    {"classNaming": ["RM", "RuneMaster", "Elsword2"], "emoji": "<:RM:828906428584296470>"},
@@ -76,10 +76,13 @@
 	    {"name": "nostone", "value": null, "canSet": ["rosso"], "isDefault": [], "emoji": "", "serverEmoji": "", "help": "Shortcut for ``not red/blue/yellow/giant``"},
 	   
 	    {"name": "farm", "value": false, "canSet": ["rosso"], "isDefault": ["rosso"], "emoji": "🌾", "serverEmoji": "", "help": "Set a character as a farm character, he will still appear on your list even if not fresh"},
-	    {"name": "linebreak", "value": false, "canSet": ["rosso"], "isDefault": ["rosso"], "emoji": "⤵️", "serverEmoji": "break", "help": "Add a line break after this character"},
-	    {"name": "alias", "value": null, "canSet": ["rosso"], "isDefault": ["rosso"], "emoji": "", "serverEmoji": "", "additionalHelp": " [name]", "help": "Replace this character name by the given alias\nAfter doing this you will only be able to reference this character by its alias and no longer his class name\nAdditionaly it allows you to add another character of the same class\nThe only restriction being that you do not have 2 characters with the same name"}
+	    {"name": "linebreak", "value": false, "canSet": ["rosso", "henir"], "isDefault": ["rosso", "henir"], "emoji": "⤵️", "serverEmoji": "break", "help": "Add a line break after this character"},
+	    {"name": "alias", "value": null, "canSet": ["rosso"], "isDefault": ["rosso"], "emoji": "", "serverEmoji": "", "additionalHelp": " [name]", "help": "Replace this character name by the given alias\nAfter doing this you will only be able to reference this character by its alias and no longer his class name\nAdditionaly it allows you to add another character of the same class\nThe only restriction being that you do not have 2 characters with the same name"},
+
+		{"name": "henirnormal", "value": true, "canSet": ["henir"], "isDefault": ["henir"], "emoji": ":one:", "serverEmoji": "", "help": "Set that a character has not cleared henir normal mode yet"},
+		{"name": "henirchallenge", "value": true, "canSet": ["henir"], "isDefault": ["henir"], "emoji": ":two:", "serverEmoji": "", "help": "Set that a character has not cleared henir challenge mode yet"}
 	],
-	"typelists": ["rosso"],
+	"typelists": ["rosso", "henir"],
 	"aliases": {
 		"newlist": ["addlist"],
 		"showlist": ["showlists"],
