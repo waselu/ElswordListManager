@@ -3,7 +3,7 @@ const { prefix } = require('../config.json');
 const saveManager = require('../utils/saveManager');
 const helper = require('../utils/listHelper');
 
-async function remove(message, args) {
+async function remove(message, args, client) {
     let list = saveManager.getList();
 
     async function successfullDelete(message, index, realName) {
@@ -22,7 +22,7 @@ async function remove(message, args) {
         await helper.doIfClassFoundInUserList(message, className, successfullDelete, failureDelete, userNotFound)
     }
 
-    await helper.sendUserList(message, list);
+    await helper.sendUserList(message, list, true, client);
 }
 
 module.exports = {
@@ -33,6 +33,6 @@ module.exports = {
     example: '``' + prefix + 'remove CL NP``\n``' + prefix + 'remove elsword1 laby3 ara2``\n``' + prefix + 'remove myAliasA myAliasB``',
     additionalInfo: 'You must follow the add syntax, or use aliases if you set any',
 	async execute(message, args, client) {
-		await remove(message, args);
+		await remove(message, args, client);
 	}
 }

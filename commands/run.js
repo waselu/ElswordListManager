@@ -3,7 +3,7 @@ const { prefix } = require('../config.json');
 const saveManager = require('../utils/saveManager');
 const helper = require('../utils/listHelper');
 
-async function run(message, args) {
+async function run(message, args, client) {
     let list = saveManager.getList();
 
     async function classFound(message, index, realName) {
@@ -59,7 +59,7 @@ async function run(message, args) {
         await helper.doIfClassFoundInUserList(message, className, classFound, classNotFound, userNotFound);
     }
 
-    await helper.sendUserList(message, list);
+    await helper.sendUserList(message, list, true, client);
 }
 
 module.exports = {
@@ -71,6 +71,6 @@ module.exports = {
         '``' + prefix + 'run CL Devi KE``',
     additionalInfo: 'this command has the same effect as setting "not fresh" on a character',
 	async execute(message, args, client) {
-		await run(message, args);
+		await run(message, args, client);
 	}
 }

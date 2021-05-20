@@ -265,9 +265,9 @@ async function sendBasicBotEmbed(message, sendingTitle = null, sending = null, f
     await sendFormalBotMessage(message, sendingTitle, sending, '', '', footer, thumbnail)
 }
 
-async function sendUserList(message, list = null, copy = true) {
+async function sendUserList(message, list = null, copy = true, client) {
     let getTypeList = saveManager.getList();
-    await sendBasicBotEmbed(message, message.author.username + '\'s list: ' + getTypeList[message.author.id]['active'], userListToEmojiList(message.author.id), 'Your list has been copied to your clipboard');
+    await client.commands.get('show').execute(message, [], client);
     if (list) {
         saveManager.setList(list);
     }

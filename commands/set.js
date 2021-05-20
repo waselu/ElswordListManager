@@ -3,7 +3,7 @@ const { prefix, attributes } = require('../config.json');
 const saveManager = require('../utils/saveManager');
 const helper = require('../utils/listHelper');
 
-async function set(message, args, ignoreMessage) {
+async function set(message, args, client, ignoreMessage) {
     let list = saveManager.getList();
     let className = args[0];
     args.splice(0, 1);
@@ -141,7 +141,7 @@ async function set(message, args, ignoreMessage) {
         }
 
         if (!ignoreMessage) {
-            await helper.sendUserList(message, list);
+            await helper.sendUserList(message, list, true, client);
         }
     }
 
@@ -166,6 +166,6 @@ module.exports = {
             helper.generateSetExample() + '\n',
     additionalInfo: 'You can add no/not before an attribute to remove it',
 	async execute(message, args, client, ignoreMessage = false) {
-		await set(message, args, ignoreMessage);
+		await set(message, args, client, ignoreMessage);
 	}
 }

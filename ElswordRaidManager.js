@@ -11,8 +11,8 @@ const client = new Discord.Client();
 
 //Mandatory
 //add list config (nosort, etc...)
-//replace list display at end of commands by an execution of the show command (replace in sendUserList maybe? but beware of raw usage of userListToEmojiList)
 //Handle move with autosorting lists
+//Copy to clipboard only if raid list type (3rd sendUserList param)
 
 //Debug
 //Add a function to impersonate another user (impersonate userid)

@@ -13,7 +13,7 @@ async function showList(message, args, client) {
         let embed = new MessageEmbed()
             .setAuthor('Rosso raid manager', 'https://64.media.tumblr.com/4d56ac1bcd708c38392a6b37f98a68b8/tumblr_pozk3r9eiW1wsn58z_640.jpg')
             .setTitle(message.author.username + '\'s lists')
-            .setDescription('');
+            .setDescription('Current list: ' + list[message.author.id]['active']);
         for (key in list[message.author.id]['lists']) {
             if (messageStr != '') {
                 messageStr += '\n\n';

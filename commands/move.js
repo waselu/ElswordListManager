@@ -3,7 +3,7 @@ const { prefix } = require('../config.json');
 const saveManager = require('../utils/saveManager');
 const helper = require('../utils/listHelper');
 
-async function move(message, args) {
+async function move(message, args, client) {
     let list = saveManager.getList();
 
     function getActualIndexMoveTo(indexMoveTo, user) {
@@ -62,7 +62,7 @@ async function move(message, args) {
         await helper.doIfClassFoundInUserList(message, className, classFound, classNotFound, userNotFound);
     }
 
-    await helper.sendUserList(message, list);
+    await helper.sendUserList(message, list, true, client);
 }
 
 module.exports = {
@@ -73,6 +73,6 @@ module.exports = {
     example: '``' + prefix + 'move KE 3``\n``' + prefix + 'move Devi 5 RaS 1 NP 3``',
     additionalInfo: 'Characters will always be moved after those who aren\'t displayed',
     async execute(message, args, client) {
-        await move(message, args);
+        await move(message, args, client);
     }
 }
