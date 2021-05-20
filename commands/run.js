@@ -31,6 +31,17 @@ async function run(message, args) {
                     list[message.author.username]['lists'][list[message.author.username]['active']]['list'][index]["henirnormal"] = false;
                 }
                 break;
+            case 'heroic':
+                if (!list[message.author.username]['lists'][list[message.author.username]['active']]['list'][index]["heroicdaily"]) {
+                    await helper.sendBotMessage(message, realName + " has already cleared heroic dailies");
+                } else {
+                    list[message.author.username]['lists'][list[message.author.username]['active']]['list'][index]["heroicweekly"] -= list[message.author.username]['lists'][list[message.author.username]['active']]['list'][index]["heroicdaily"];
+                    list[message.author.username]['lists'][list[message.author.username]['active']]['list'][index]["heroicdaily"] = 0;
+                    if (list[message.author.username]['lists'][list[message.author.username]['active']]['list'][index]["heroicweekly"] < 0) {
+                        list[message.author.username]['lists'][list[message.author.username]['active']]['list'][index]["heroicweekly"] = 0;
+                    }
+                }
+                break;
             default:
                 break;
         }

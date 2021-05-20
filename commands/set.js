@@ -36,16 +36,56 @@ async function set(message, args, ignoreMessage) {
         }
         return {"alias": args[indexArg + 1], "skip": 1};
     }
+    function callHeroicDaily(message, classDef, invert, args, indexArg) {
+        if (invert) {
+            return {'heroicdaily': 0};
+        }
+        if (indexArg == args.length - 1) {
+            return {'error': 'No run number specified'};
+        }
+        let nbRun = parseInt(args[indexArg + 1]);
+        if (nbRun < 0) {
+            nbRun = 0;
+        }
+        if (nbRun > 3) {
+            nbRun = 3;
+        }
+        if (isNaN(nbRun)) {
+            return {'error': 'Bad run number specified'}
+        }
+        return {'heroicdaily': nbRun, 'skip' : 1};
+    }
+    function callHeroicWeekly(message, classDef, invert, args, indexArg) {
+        if (invert) {
+            return {'heroicweekly': 0};
+        }
+        if (indexArg == args.length - 1) {
+            return {'error': 'No run number specified'};
+        }
+        let nbRun = parseInt(args[indexArg + 1]);
+        if (nbRun < 0) {
+            nbRun = 0;
+        }
+        if (nbRun > 10) {
+            nbRun = 10;
+        }
+        if (isNaN(nbRun)) {
+            return {'error': 'Bad run number specified'}
+        }
+        return {'heroicweekly': nbRun, 'skip' : 1};
+    }
 
     let attributeCases = [
-        {"attribute": "fresh", "call": callFresh},
-        {"attribute": "reset", "call": callReset},
-        {"attribute": "red", "call": callStoneRed},
-        {"attribute": "blue", "call": callStoneBlue},
-        {"attribute": "yellow", "call": callStoneYellow},
-        {"attribute": "giant", "call": callStoneGiant},
-        {"attribute": "nostone", "call": callStoneNostone},
-        {"attribute": "alias", "call": callAlias}
+        {'attribute': 'fresh', 'call': callFresh},
+        {'attribute': 'reset', 'call': callReset},
+        {'attribute': 'red', 'call': callStoneRed},
+        {'attribute': 'blue', 'call': callStoneBlue},
+        {'attribute': 'yellow', 'call': callStoneYellow},
+        {'attribute': 'giant', 'call': callStoneGiant},
+        {'attribute': 'nostone', 'call': callStoneNostone},
+        {'attribute': 'alias', 'call': callAlias},
+        {'attribute': 'heroicdaily', 'call': callHeroicDaily},
+        {'attribute': 'heroicweekly', 'call': callHeroicWeekly}
     ]
 
     async function setAttribute(message, index, attribute, invert, args, indexArg) {

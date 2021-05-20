@@ -170,6 +170,32 @@ function henirList(userList) {
     return listString;
 }
 
+function heroicList(userList) {
+    removed = true;
+    while (removed) {
+        removed = false;
+        for ([index, classDef] of userList.entries()) {
+            if (!(classDef['heroicdaily']) && !(classDef['heroicweekly'])) {
+                userList.splice(index, 1);
+                removed = true;
+                break;
+            }
+        }
+    }
+
+    let listString = '';
+    for ([index, classDef] of userList.entries()) {
+        listString += classDef["emoji"] + ' ';
+        if (index < userList.length && (index == userList.length - 1 || (classDef['heroicdaily'] > 0) != (userList[index + 1]['heroicdaily'] > 0) || (classDef['heroicweekly'] > 0) != (userList[index + 1]['heroicweekly'] > 0) || classDef['break'])) {
+            if (classDef['heroicdaily']) { listString += findEmojiByAttributeName('heroicdaily') + ' '; }
+            if (classDef['heroicweekly']) { listString += findEmojiByAttributeName('heroicweekly') + ' '; }
+        }
+        if (classDef['linebreak']) { listString += '\n' }
+    }
+
+    return listString;
+}
+
 function userListToEmojiList(user, emojis = true) {
 	let list = saveManager.getList();
 
@@ -187,6 +213,9 @@ function userListToEmojiList(user, emojis = true) {
             break;
         case 'henir':
             listString = henirList(userList);
+            break;
+        case 'heroic':
+            listString = heroicList(userList);
             break;
         default:
             break;
@@ -255,6 +284,9 @@ function specResetWeekly(list) {
                 list['list'][index]['henirnormal'] = true;
                 list['list'][index]['henirchallenge'] = true;
                 break;
+            case 'heroic':
+                list['list'][index]['heroicweekly'] = 10;
+                break;
             default:
                 break;
         }
@@ -274,8 +306,29 @@ function resetWeekly() {
     saveManager.setList(list);
 }
 
+function specResetDaily(list) {
+    for ([index, classDef] of list['list'].entries()) {
+        switch (list['type']) {
+            case 'heroic':
+                list['list'][index]['heroicdaily'] = 3;
+                break;
+            default:
+                break;
+        }
+    }
+
+    return list;
+}
+
 function resetDaily() {
-    //Implement when heroic is running
+    let list = saveManager.getList(true);
+
+    for ([user, listsSpec] of Object.entries(list)) {
+        for ([listName, listSpec] of Object.entries(listsSpec['lists'])) {
+            list[user]['lists'][listName] = specResetDaily(list[user]['lists'][listName]);
+        }
+    }
+    saveManager.setList(list);
 }
 
 exports.findElswordClass = findElswordClass;

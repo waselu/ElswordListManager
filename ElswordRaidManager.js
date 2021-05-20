@@ -12,9 +12,11 @@ const client = new Discord.Client();
 //Mandatory
 //Add function to simplify element removal in userListToEmojiList
 //Add other lists emoji
+//Change list access to use id instead of username
+//rename helpattribute -> helpattr
 
 //Debug
-//Add a check for debug functions based on user (Waselu's user id)
+//Add a check to limit access to debug functions based on user (Waselu's user id)
 //Add a function to impersonate another user (impersonate userid)
 
 //Fixes
@@ -55,6 +57,7 @@ client.on('message', function(message) {
 })
 
 //Auto resets
+const jobDaily = schedule.scheduleJob('0 9 * * *', helper.resetDaily);
 const jobWeekly = schedule.scheduleJob('0 9 * * 3', helper.resetWeekly);
 
 //Bot login
