@@ -14,6 +14,7 @@ const client = new Discord.Client();
 //Add other lists emoji
 //Change list access to use id instead of username
 //rename helpattribute -> helpattr
+//auto sort lists by fresh/daily/weekly, add list config (nosort, etc...)
 
 //Debug
 //Add a check to limit access to debug functions based on user (Waselu's user id)
