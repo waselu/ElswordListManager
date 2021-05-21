@@ -20,7 +20,8 @@ async function helpAttr(message, args, client) {
 
 module.exports = {
 	name: 'helpattr',
-	argNumber: '>0',
+    nbArgsMin: 1,
+    nbArgsMax: 1,
 	helpGroup: 'Misc.',
 	description: 'Show the help for a specific attribute',  
 	example: '``' + prefix + 'helpattribute dps``',

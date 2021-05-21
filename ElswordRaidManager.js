@@ -13,7 +13,6 @@ const client = new Discord.Client();
 //add list config (nosort, etc...)
 //Handle move with autosorting lists
 //Copy to clipboard only if raid list type (3rd sendUserList param)
-//Rework commandManager parameter handling
 
 //Debug
 //Add a function to impersonate another user (impersonate user tag)

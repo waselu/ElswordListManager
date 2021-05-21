@@ -35,7 +35,8 @@ async function showList(message, args, client) {
 
 module.exports = {
 	name: 'showlist',
-    argNumber: '0',
+    nbArgsMin: 0,
+    nbArgsMax: 0,
     helpGroup: 'List',
 	description: 'Show all your created lists',
     example: '``' + prefix + 'showlist``',

@@ -78,7 +78,7 @@ async function help(message, args, client) {
 
 module.exports = {
 	name: 'help',
-	argNumber: '<2',
+    nbArgsMax: 1,
 	helpGroup: 'Misc.',
 	description: 'Display this help',
 	example: '``' + prefix + 'help``\n``' + prefix + 'help add``',

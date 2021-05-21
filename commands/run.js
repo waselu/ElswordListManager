@@ -64,7 +64,7 @@ async function run(message, args, client) {
 
 module.exports = {
 	name: 'run',
-    argNumber: '>0',
+    nbArgsMin: 1,
     helpGroup: 'Characters',
 	description: 'Run dungeon on a specific char, depends on the list\'s type',
     example: '``' + prefix + 'run NP``\n' +

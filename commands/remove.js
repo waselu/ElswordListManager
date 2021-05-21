@@ -27,7 +27,7 @@ async function remove(message, args, client) {
 
 module.exports = {
 	name: 'remove',
-    argNumber: '>0',
+    nbArgsMin: 1,
     helpGroup: 'Characters',
 	description: 'Remove one or many character(s) from your list',
     example: '``' + prefix + 'remove CL NP``\n``' + prefix + 'remove elsword1 laby3 ara2``\n``' + prefix + 'remove myAliasA myAliasB``',

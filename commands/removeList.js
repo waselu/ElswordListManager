@@ -35,7 +35,8 @@ async function removeList(message, args, client) {
 
 module.exports = {
 	name: 'removelist',
-    argNumber: '1',
+    nbArgsMin: 1,
+    nbArgsMax: 1,
     helpGroup: 'List',
 	description: 'Remove one of your lists',
     example: '``' + prefix + 'removelist myRossoList``',

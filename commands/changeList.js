@@ -25,7 +25,8 @@ async function changeList(message, args, client) {
 
 module.exports = {
 	name: 'changelist',
-    argNumber: '1',
+    nbArgsMin: 1,
+    nbArgsMax: 1,
     helpGroup: 'List',
 	description: 'Swap to one of your other lists',
     example: '``' + prefix + 'changelist myRossoList``',

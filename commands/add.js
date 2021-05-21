@@ -72,7 +72,7 @@ async function addList(message, args, client) {
 
 module.exports = {
 	name: 'add',
-    argNumber: '>0',
+    nbArgsMin: 1,
     helpGroup: 'Characters',
 	description: 'Add characters and attributes to your list\ntype ``' + prefix + 'helpattr [attribute]`` for more help eg. ``' + prefix + 'helpattr dps``',
     example: '``' + prefix + 'add Devi CL RaS``\n``' + prefix + 'add CL sage not fresh farm NP not fresh freeze KE dps``\n\n' +

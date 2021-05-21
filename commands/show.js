@@ -62,7 +62,8 @@ async function show(message, args) {
 
 module.exports = {
 	name: 'show',
-    argNumber: '0',
+    nbArgsMin: 0,
+    nbArgsMax: 0,
     helpGroup: 'List',
 	description: 'Show the state of the selectionned list',
     example: '``' + prefix + 'show``',
