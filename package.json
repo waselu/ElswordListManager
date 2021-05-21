@@ -5,6 +5,7 @@
   "main": "ElswordRaidManager.js",
   "dependencies": {
     "clipboardy": "^2.3.0",
+    "discord-reply": "^0.1.2",
     "discord.js": "^12.5.3",
     "node-schedule": "^2.0.0"
   },

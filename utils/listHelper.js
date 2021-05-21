@@ -106,7 +106,7 @@ async function doIfClassFoundInUserList(message, className, successFunction, fai
         realName = realName["name"];
     } else {
         if (strictMode) {
-            await message.channel.send(className + " was not found");
+            await message.lineReply(className + " was not found");
             return;
         }
         realName = className;
@@ -263,7 +263,7 @@ function copyList(userId) {
 }
 
 async function sendBotMessage(message, sending) {
-    discordMessage = await message.channel.send(sending);
+    discordMessage = await message.lineReply(sending);
     //discordMessage.delete({timeout: 600000});
 }
 

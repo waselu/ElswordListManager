@@ -6,12 +6,14 @@ const { prefix, aliases } = require('./config.json');
 const saveManager = require('./utils/saveManager');
 const helper = require('./utils/listHelper');
 const commandManager = require('./utils/commandManager');
+require('discord-reply');
 
 const client = new Discord.Client();
 
 //Mandatory
 //add list config (nosort, etc...)
 //Handle move with autosorting lists
+//Put client.on('message', ...) behavior in command manager
 
 //Debug
 //Add a function to impersonate another user (impersonate user tag)

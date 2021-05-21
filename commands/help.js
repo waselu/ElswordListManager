@@ -6,7 +6,7 @@ const { prefix, aliases } = require('../config.json');
 async function specHelp(message, commandName, client) {
 	commandName = commandName.trim().toLowerCase();
 	if (!client.commands.has(commandName)) {
-		message.channel.send('No command named "' + commandName + '"');
+		message.lineReply('No command named "' + commandName + '"');
 		return;
 	}
 
