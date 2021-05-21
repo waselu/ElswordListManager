@@ -2,7 +2,7 @@
 const Discord = require('discord.js');
 const fs = require('fs');
 const schedule = require('node-schedule');
-const { prefix, aliases } = require('./config.json');
+const { aliases } = require('./config.json');
 const saveManager = require('./utils/saveManager');
 const helper = require('./utils/listHelper');
 const commandManager = require('./utils/commandManager');
@@ -13,7 +13,6 @@ const client = new Discord.Client();
 //Mandatory
 //add list config (nosort, etc...)
 //Handle move with autosorting lists
-//Put client.on('message', ...) behavior in command manager
 
 //Debug
 //Add a function to impersonate another user (impersonate user tag)
@@ -42,21 +41,7 @@ client.on('ready', function() {
 });
 
 client.on('message', function(message) {
-	if (!message.content.startsWith(prefix) || message.author.bot) return;
-
-	const args = message.content.slice(prefix.length).trim().split(/ +/);
-	const commandName = args.shift().toLowerCase();
-
-	if (!client.commands.has(commandName)) return;
-
-	const command = client.commands.get(commandName);
-
-	if (command.helpGroup == 'Debug' && message.author.id != '204486578482053120') {
-		return;
-	}
-
-	//message.delete({timeout: 1000});
-	commandManager.commandManager(command, message, args, client);
+	commandManager.commandManager(message, client);
 })
 
 //Auto resets
