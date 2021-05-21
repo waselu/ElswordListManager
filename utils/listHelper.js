@@ -1,7 +1,7 @@
 
 const copy = require('clipboardy');
 const { MessageEmbed } = require('discord.js');
-const { classes, attributes } = require('../config.json');
+const { classes, attributes, configurations } = require('../config.json');
 const saveManager = require('./saveManager');
 
 function findElswordClass(elswordClass) {
@@ -40,7 +40,7 @@ function findEmojiByAttributeName(attribute, forServer = false) {
 
 function canSetAttribute(attribute, type = null) {
 	for (attributeDef of attributes) {
-        if (attributeDef['name'] == attribute) {
+        if (attributeDef['name'] == attribute.toLowerCase()) {
             return type ? attributeDef['canSet'].includes(type) : (attributeDef['canSet'].length > 0);
         }
 	}
@@ -49,8 +49,26 @@ function canSetAttribute(attribute, type = null) {
 
 function isDefaultAttribute(attribute, type = null) {
     for (attributeDef of attributes) {
-        if (attributeDef['name'] == attribute) {
+        if (attributeDef['name'] == attribute.toLowerCase()) {
             return type ? attributeDef['isDefault'].includes(type) : (attributeDef['isDefault'].length > 0);
+        }
+    }
+    return false;
+}
+
+function canSetConfig(configKey, type = null) {
+    for (configDef of configurations) {
+        if (configDef['name'] == configKey) {
+            return type ? configDef['canSet'].includes(type) : (configDef['canSet'].length > 0);
+        }
+    }
+    return false;
+}
+
+function isDefaultConfig(configKey, type = null) {
+    for (configDef of configurations) {
+        if (configDef['name'] == configKey) {
+            return type ? configDef['isDefault'].includes(type) : (configDef['isDefault'].length > 0);
         }
     }
     return false;

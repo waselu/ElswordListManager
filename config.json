@@ -1,5 +1,5 @@
 {
-	"prefix": "?",
+	"prefix": "??",
 	"classes": [
 	    {"classNaming": ["KE", "KnightEmperor", "Elsword1"], "emoji": "<:KE:828899757359366166>"},
 	    {"classNaming": ["RM", "RuneMaster", "Elsword2"], "emoji": "<:RM:828906428584296470>"},
@@ -86,6 +86,9 @@
 		{"name": "heroicweekly", "value": 10, "canSet": ["heroic"], "isDefault": ["heroic"], "emoji": "<:heroicweekly:844868732370550814>", "serverEmoji": "", "additionalHelp": " [nbOfRunRemaining]", "help": "Set the remaining number of run for heroic weeklies"}
 	],
 	"typelists": ["rosso", "henir", "heroic"],
+	"configurations": [
+		{"name": "customEmojis", "value": [], "canSet": [], "default": ["rosso", "henir", "heroic"]}
+	],
 	"aliases": {
 		"newlist": ["addlist"],
 		"showlist": ["showlists"],
