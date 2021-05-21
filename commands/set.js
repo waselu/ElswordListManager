@@ -159,7 +159,6 @@ async function set(message, args, client, ignoreMessage) {
 module.exports = {
 	name: 'set',
     nbArgsMin: 2,
-    nbArgsMax: 2,
     helpGroup: 'Characters',
 	description: 'Set one or many attribute(s) for one of your character\ntype ``' + prefix + 'helpattr [attribute]`` for more help eg. ``' + prefix + 'helpattr dps``',
     example: '``' + prefix + 'set NP sage freeze``\n``' + prefix + 'set devi dps not fresh farm``\n``' + prefix + 'set shakti alias Eva``\n``' + prefix + 'set shakti no alias``\n\n' +

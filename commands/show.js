@@ -4,6 +4,8 @@ const saveManager = require('../utils/saveManager');
 const helper = require('../utils/listHelper');
 
 async function show(message, args) {
+    let list = saveManager.getList();
+
     function handleFresh(attrValue, classDef) {
         if (attrValue) {
             return helper.findEmojiByAttributeName("fresh");
@@ -29,7 +31,7 @@ async function show(message, args) {
 
     async function userFound(message) {
         let charList = "";
-        let userList = saveManager.getList()[message.author.id];
+        let userList = list[message.author.id];
         userList = userList['lists'][userList['active']]['list'];
         for ([index, classDef] of userList.entries()) {
             charList += "\n" + classDef["emoji"];
@@ -48,9 +50,11 @@ async function show(message, args) {
             charList += " " + (classDef['alias'] != null ? classDef['alias'] : classDef['className']);
         }
         listStr = "Your Character(s): " + charList + "\n";
-        helper.copyList(message.author.id);
+        if (list[message.author.id]['lists'][list[message.author.id]['active']]['type'] == 'rosso') {
+            helper.copyList(message.author.id);
+        }
         listStr += "\nList:\n" + helper.userListToEmojiList(message.author.id) + "\n";
-        await helper.sendBasicBotEmbed(message, message.author.username + '\'s list: ' + saveManager.getList()[message.author.id]['active'], listStr, '');
+        await helper.sendBasicBotEmbed(message, message.author.username + '\'s list: ' + list[message.author.id]['active'], listStr, '');
     }
 
     async function userNotFound(message) {

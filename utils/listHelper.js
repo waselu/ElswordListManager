@@ -289,7 +289,7 @@ async function sendUserList(message, list = null, copy = true, client) {
     if (list) {
         saveManager.setList(list);
     }
-    if (copy) {
+    if (copy && getTypeList[message.author.id]['lists'][getTypeList[message.author.id]['active']]['type'] == 'rosso') {
         copyList(message.author.id);
     }
 }
