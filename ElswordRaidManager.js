@@ -11,8 +11,8 @@ require('discord-reply');
 const client = new Discord.Client();
 
 //Mandatory
-//Add list types: SD, Rigomor
-//Either fix clipboard copy or add raid list field while using a rosso list
+//Add list types: SD, Rigomor (Later: Berthe)
+//Add henir config
 
 //Debug
 //Add a function to impersonate another user (impersonate user tag)

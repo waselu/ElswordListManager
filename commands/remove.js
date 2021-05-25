@@ -22,7 +22,7 @@ async function remove(message, args, client) {
         await helper.doIfClassFoundInUserList(message, className, successfullDelete, failureDelete, userNotFound)
     }
 
-    await helper.sendUserList(message, list, true, client);
+    await helper.sendUserList(message, list, client);
 }
 
 module.exports = {

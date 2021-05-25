@@ -66,7 +66,7 @@ async function move(message, args, client) {
         await helper.doIfClassFoundInUserList(message, className, classFound, classNotFound, userNotFound);
     }
 
-    await helper.sendUserList(message, list, true, client);
+    await helper.sendUserList(message, list, client);
 }
 
 module.exports = {

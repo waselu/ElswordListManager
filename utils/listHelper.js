@@ -1,5 +1,4 @@
 
-const copy = require('clipboardy');
 const { MessageEmbed } = require('discord.js');
 const { classes, attributes, configurations } = require('../config.json');
 const saveManager = require('./saveManager');
@@ -308,10 +307,6 @@ function userListToEmojiList(user, emojis = true) {
     return listString ? listString : 'Your list is empty'
 }
 
-function copyList(userId) {
-    copy.writeSync(userListToEmojiList(userId, false));
-}
-
 async function sendBotMessage(message, sending) {
     discordMessage = await message.lineReply(sending);
     //discordMessage.delete({timeout: 600000});
@@ -333,14 +328,11 @@ async function sendBasicBotEmbed(message, sendingTitle = null, sending = null, f
     await sendFormalBotMessage(message, sendingTitle, sending, '', '', footer, thumbnail)
 }
 
-async function sendUserList(message, list = null, copy = true, client) {
+async function sendUserList(message, list = null, client) {
     let getTypeList = saveManager.getList();
     await client.commands.get('show').execute(message, [], client);
     if (list) {
         saveManager.setList(list);
-    }
-    if (copy && getTypeList[message.author.id]['lists'][getTypeList[message.author.id]['active']]['type'] == 'rosso') {
-        copyList(message.author.id);
     }
 }
 
@@ -472,7 +464,6 @@ exports.doIfUserFoundInUserList = doIfUserFoundInUserList;
 exports.doIfClassFoundInUserList = doIfClassFoundInUserList;
 exports.doIfListFoundInUserList = doIfListFoundInUserList;
 exports.userListToEmojiList = userListToEmojiList;
-exports.copyList = copyList;
 exports.sendBotMessage = sendBotMessage;
 exports.sendFormalBotMessage = sendFormalBotMessage;
 exports.sendBasicBotEmbed = sendBasicBotEmbed;

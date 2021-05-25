@@ -110,7 +110,7 @@ async function setConfig(message, args, client, ignoreMessage) {
             invertAttr = false;
         }
 
-        await helper.sendUserList(message, list, true, client);
+        await helper.sendUserList(message, list, client);
     }
 
     async function listNotFound(message) {

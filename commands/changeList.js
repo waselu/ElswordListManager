@@ -13,7 +13,7 @@ async function changeList(message, args, client) {
             return;
         }
     
-        await helper.sendUserList(message, list, true, client);
+        await helper.sendUserList(message, list, client);
     }
 
     async function userNotFound() {

@@ -160,7 +160,7 @@ async function set(message, args, client, ignoreMessage) {
         }
 
         if (!ignoreMessage) {
-            await helper.sendUserList(message, list, true, client);
+            await helper.sendUserList(message, list, client);
         }
     }
 

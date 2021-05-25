@@ -1,4 +1,5 @@
 
+const { MessageEmbed } = require('discord.js');
 const { prefix } = require('../config.json');
 const saveManager = require('../utils/saveManager');
 const helper = require('../utils/listHelper');
@@ -27,7 +28,6 @@ async function show(message, args) {
         "fresh": handleFresh,
         "stone": handleStone
     };
-    let listStr = "";
 
     async function userFound(message) {
         let charList = "";
@@ -49,12 +49,18 @@ async function show(message, args) {
             }
             charList += " " + (classDef['alias'] != null ? classDef['alias'] : classDef['className']);
         }
-        listStr = "Your Character(s): " + charList + "\n";
+
+        let embed = new MessageEmbed()
+            .setTitle(message.author.username + '\'s list: ' + list[message.author.id]['active'])
+            .setAuthor('Rosso raid manager', 'https://64.media.tumblr.com/4d56ac1bcd708c38392a6b37f98a68b8/tumblr_pozk3r9eiW1wsn58z_640.jpg')
+            .addField('Your characters:', charList)
+            .addField('List:', helper.userListToEmojiList(message.author.id));
+
         if (list[message.author.id]['lists'][list[message.author.id]['active']]['type'] == 'rosso') {
-            helper.copyList(message.author.id);
+            embed.addField('**Raid server list**:', '```' + helper.userListToEmojiList(message.author.id, false) + '```')
         }
-        listStr += "\nList:\n" + helper.userListToEmojiList(message.author.id) + "\n";
-        await helper.sendBasicBotEmbed(message, message.author.username + '\'s list: ' + list[message.author.id]['active'], listStr, '');
+
+        await helper.sendBotMessage(message, embed);
     }
 
     async function userNotFound(message) {
