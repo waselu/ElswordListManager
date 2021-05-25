@@ -22,7 +22,7 @@ const client = new Discord.Client();
 
 
 //Things to change when adding a new list type: reset, list, set attributes, run command, set config, [idk]
-//Add list type in config, edit attributes and configurations
+//Add list type in config, edit attributes and configurations, add emojis
 
 client.commands = new Discord.Collection();
 
