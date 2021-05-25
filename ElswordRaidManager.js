@@ -12,6 +12,7 @@ const client = new Discord.Client();
 
 //Mandatory
 //Add list types: SD, Rigomor
+//Either fix clipboard copy or add raid list field while using a rosso list
 
 //Debug
 //Add a function to impersonate another user (impersonate user tag)
