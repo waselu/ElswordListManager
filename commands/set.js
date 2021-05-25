@@ -8,8 +8,27 @@ async function set(message, args, client, ignoreMessage) {
     let className = args[0];
     args.splice(0, 1);
 
-    function callFresh(message, classDef, invert, args, indexArg) {return !invert ? {"fresh": true, "reset": false} : {"fresh": false, "reset": false};}
-    function callReset(message, classDef, invert, args, indexArg) {return !invert ? {"fresh": false, "reset": true} : {"reset": false};}
+    function callFresh(message, classDef, invert, args, indexArg) {
+        if (invert) {
+            return {"fresh": 0, "reset": false};
+        }
+        setObject = {"reset": false}
+        switch (list[message.author.id]['lists'][list[message.author.id]['active']]['config']['freshbehavior']) {
+            case '2fresh':
+                setObject['fresh'] = 2;
+                break;
+            case '1fresh':
+                setObject['fresh'] = 1;
+                break;
+            case 'withreset':
+                setObject['fresh'] = 1;
+                break;
+            default:
+                break;
+        }
+        return setObject;
+    }
+    function callReset(message, classDef, invert, args, indexArg) {return !invert ? {"fresh": 0, "reset": true} : {"reset": false};}
     function callStone(message, classDef, invert, stoneColor) {
         if (stoneColor == "nostone") {
             return !invert ? {"stone": null} : {};

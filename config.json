@@ -64,7 +64,7 @@
 	    {"name": "speed", "value": false, "canSet": ["rosso"], "isDefault": ["rosso"], "emoji": "<:SpdBot:837244319726436372>", "serverEmoji": "SpdBot", "help": "Set a character as having a speed bottom equipped"},
 		{"name": "freeze", "value": false, "canSet": ["rosso"], "isDefault": ["rosso"], "emoji": "🧊", "serverEmoji": "icecube", "help": "Set a character as a freezer"},
 	   
-	    {"name": "fresh", "value": true, "canSet": ["rosso"], "isDefault": ["rosso"], "emoji": "<:fresh:828908656144678964>", "serverEmoji": "fresh", "help": "Set a character as fresh"},
+	    {"name": "fresh", "value": 1, "canSet": ["rosso"], "isDefault": ["rosso"], "emoji": "<:fresh:828908656144678964>", "serverEmoji": "fresh", "help": "Set a character as fresh"},
 	    {"name": "reset", "value": false, "canSet": ["rosso"], "isDefault": ["rosso"], "emoji": "<:reset:832571110906003496>", "serverEmoji": "reset", "help": "Set a character as having a reset ticket"},
 	    {"name": "flamemark", "value": false, "canSet": [], "isDefault": [], "emoji": "<:flamemark:828910673626923038>", "serverEmoji": "flamemark"},
 	   
@@ -87,7 +87,10 @@
 	],
 	"typelists": ["rosso", "henir", "heroic"],
 	"configurations": [
-		{"name": "customEmojis", "value": [], "canSet": [], "default": ["rosso", "henir", "heroic"]}
+		{"name": "freshbehavior", "value": "1fresh", "canSet": [], "isDefault": ["rosso"]},
+		{"name": "2fresh", "value": null, "canSet": ["rosso"], "isDefault": []},
+		{"name": "1fresh", "value": null, "canSet": ["rosso"], "isDefault": []},
+		{"name": "withreset", "value": null, "canSet": ["rosso"], "isDefault": []}
 	],
 	"aliases": {
 		"newlist": ["addlist"],

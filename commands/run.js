@@ -16,8 +16,20 @@ async function run(message, args, client) {
                         await helper.sendBotMessage(message, realName + " is not fresh nor has a reset");
                     }
                 } else {
-                    list[message.author.id]['lists'][list[message.author.id]['active']]['list'][index]["fresh"] = false;
-                    list[message.author.id]['lists'][list[message.author.id]['active']]['list'][index]["reset"] = true;
+                    switch (list[message.author.id]['lists'][list[message.author.id]['active']]['config']['freshbehavior']) {
+                        case '2fresh':
+                            list[message.author.id]['lists'][list[message.author.id]['active']]['list'][index]["fresh"] -= 1;
+                            break;
+                        case '1fresh':
+                            list[message.author.id]['lists'][list[message.author.id]['active']]['list'][index]["fresh"] = 0;
+                            break;
+                        case 'withreset':
+                            list[message.author.id]['lists'][list[message.author.id]['active']]['list'][index]["fresh"] = 0;
+                            list[message.author.id]['lists'][list[message.author.id]['active']]['list'][index]["reset"] = true;
+                            break;
+                        default:
+                            break;
+                    }
                 }
                 break;
             case 'henir':

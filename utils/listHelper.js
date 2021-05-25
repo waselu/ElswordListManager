@@ -7,7 +7,7 @@ const saveManager = require('./saveManager');
 function findElswordClass(elswordClass) {
 	for (const [index, definedClass] of classes.entries()) {
 		for (const [indexClassNaming, classNaming] of definedClass.classNaming.entries()) {
-			if (classNaming.toLowerCase() == elswordClass) {
+			if (classNaming.toLowerCase() == elswordClass.toLowerCase()) {
 				return {"name": definedClass.classNaming[0], "index": index};
 			}
 		}
@@ -89,13 +89,25 @@ function checkUserListHasChar(user, className) {
     return -1;
 }
 
+function checkUserListHasList(user, list) {
+    let userList = saveManager.getList()[user];
+    for ([listName, listDef] of Object.entries(userList['lists'])) {
+        if (listName == list) {
+            return true;
+        }
+    }
+    return false;
+}
+
 async function doIfUserFoundInUserList(message, successFunction, failureFunction) {
 	let list = saveManager.getList();
     if (!(message.author.id in list)) {
         await failureFunction(message);
+        return 1;
     }
     else {
         await successFunction(message);
+        return 0;
     }
 }
 
@@ -106,8 +118,8 @@ async function doIfClassFoundInUserList(message, className, successFunction, fai
         realName = realName["name"];
     } else {
         if (strictMode) {
-            await message.lineReply(className + " was not found");
-            return;
+            await sendBotMessage(message, className + ' was not found');
+            return -1;
         }
         realName = className;
     }
@@ -116,20 +128,38 @@ async function doIfClassFoundInUserList(message, className, successFunction, fai
         let index = checkUserListHasChar(message.author.id, realName);
         if (index == -1) {
             await failureFunction(message, realName);
+            return 1;
         } else {
             await successFunction(message, index, realName);
+            return 0;
         }
     }
 
     async function userNotFound(message) {
         await userNotFoundFunction(message, realName);
+        return 2;
     }
 
     await doIfUserFoundInUserList(message, userFound, userNotFound);
 }
 
-async function doIfListFoundInUserList(message, className, successFunction, failureFunction, userNotFoundFunction) {
+async function doIfListFoundInUserList(message, listName, successFunction, failureFunction, userNotFoundFunction) {
+    async function userFound(message) {
+        if (checkUserListHasList(message.author.id, listName)) {
+            await successFunction(message);
+            return 0;
+        } else {
+            await failureFunction(message);
+            return 1;
+        }
+    }
 
+    async function userNotFound(message) {
+        await userNotFoundFunction(message);
+        return 2;
+    }
+
+    await doIfUserFoundInUserList(message, userFound, userNotFound);
 }
 
 function removeDoneCharacters(userList, removeIfFunction) {
@@ -172,7 +202,7 @@ function rossoList(userList, emojis = true) {
             if (classDef['speed']) { listString += emojis ? findEmojiByAttributeName("speed") + ' ' : ':' + findEmojiByAttributeName("speed", true) + ': '; }
             if (classDef['stone'] != null && (classDef['fresh'] || classDef['reset'])) { listString += emojis ? findEmojiByAttributeName(classDef['stone']) + ' ' : ':' + findEmojiByAttributeName(classDef["stone"], true) + ': '; }
             if (classDef['freeze']) { listString += ':ice_cube: '; }
-            if (index < userList.length && (index == userList.length - 1 || classDef['fresh'] != userList[index + 1]['fresh'] || classDef['reset'] != userList[index + 1]['reset'] || classDef['break'])) {
+            if (index < userList.length && (index == userList.length - 1 || (classDef['fresh'] > 0) != (userList[index + 1]['fresh'] > 0) || classDef['reset'] != userList[index + 1]['reset'] || classDef['break'])) {
                 if (classDef['fresh']) { listString += emojis ? findEmojiByAttributeName("fresh") + ' ' : ':' + findEmojiByAttributeName("fresh", true) + ': '; }
                 else if (classDef['reset']) { listString += emojis ? findEmojiByAttributeName("reset") + ' ' : ':' + findEmojiByAttributeName("reset", true) + ': '; }
                 else { listString += emojis ? findEmojiByAttributeName("flamemark") + ' ' : ':' + findEmojiByAttributeName("flamemark", true) + ': '; }
@@ -311,6 +341,19 @@ function generateSetExample() {
     return helpStr;
 }
 
+function generateSetConfigExample() {
+    helpStr = '';
+    filteredConfigurations = configurations.filter(function(attribute) { return attribute.canSet.length != 0; });
+    for ([index, attribute] of filteredConfigurations.entries()) {
+        helpStr += '``' + attribute.name + (attribute.additionalHelp || '') + '`` ';
+        if (index % 3 == 2) {
+            helpStr += '\n';
+        }
+    }
+
+    return helpStr;
+}
+
 function checkArgNumberBetween(command, message, args, moreThan = -1, lessThan = -1) {
     expectedStr = 'expected number of argument';
     if (moreThan == -1 && lessThan == -1 ) { return true; };
@@ -334,7 +377,19 @@ function specResetWeekly(list) {
     for ([index, classDef] of list['list'].entries()) {
         switch (list['type']) {
             case 'rosso':
-                list['list'][index]['fresh'] = true;
+                switch (list['config']['freshbehavior']) {
+                    case '2fresh':
+                        list['list'][index]['fresh'] = 2;
+                        break;
+                    case '1fresh':
+                        list['list'][index]['fresh'] = 1;
+                        break;
+                    case 'withreset':
+                        list['list'][index]['fresh'] = 1;
+                        break;
+                    default:
+                        break;
+                }
                 list['list'][index]['reset'] = false;
                 break;
             case 'henir':
@@ -393,9 +448,12 @@ exports.findEmojiByClassName = findEmojiByClassName;
 exports.findEmojiByAttributeName = findEmojiByAttributeName;
 exports.canSetAttribute = canSetAttribute;
 exports.isDefaultAttribute = isDefaultAttribute;
+exports.canSetConfig = canSetConfig;
+exports.isDefaultConfig = isDefaultConfig;
 exports.checkUserListHasChar = checkUserListHasChar;
 exports.doIfUserFoundInUserList = doIfUserFoundInUserList;
 exports.doIfClassFoundInUserList = doIfClassFoundInUserList;
+exports.doIfListFoundInUserList = doIfListFoundInUserList;
 exports.userListToEmojiList = userListToEmojiList;
 exports.copyList = copyList;
 exports.sendBotMessage = sendBotMessage;
@@ -403,6 +461,8 @@ exports.sendFormalBotMessage = sendFormalBotMessage;
 exports.sendBasicBotEmbed = sendBasicBotEmbed;
 exports.sendUserList = sendUserList;
 exports.generateSetExample = generateSetExample;
+exports.generateSetConfigExample = generateSetConfigExample;
 exports.checkArgNumberBetween = checkArgNumberBetween;
+exports.specResetWeekly = specResetWeekly;
 exports.resetWeekly = resetWeekly;
 exports.resetDaily = resetDaily;

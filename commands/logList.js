@@ -3,7 +3,7 @@ const saveManager = require('../utils/saveManager');
 async function logList(message, args, client) {
     if (args.length > 0) {
         for (arg of args) {
-            console.log(saveManager.getList()[message.author.id]['lists'][arg]['list']);
+            console.log(saveManager.getList()[message.author.id]['lists'][arg]);
         }
     } else {
         console.log(saveManager.getList()[message.author.id]);
