@@ -278,6 +278,33 @@ function heroicList(userList, config) {
     return listString;
 }
 
+function rigomorList(userList, config) {
+    userList = removeDoneCharacters(userList, function(classDef) {
+        return !(classDef['rigomordaily']) && !(classDef['rigomorweekly']);
+    });
+
+    if (config['autosort']) {
+        userList = userList.sort(function(classDefA, classDefB) {
+            scoreA = ((classDefA['rigomordaily'] > 0) === true ? 1 : 0) * 1 + ((classDefA['rigomorweekly'] > 0) === true ? 1 : 0) * 2;
+            scoreB = ((classDefB['rigomordaily'] > 0) === true ? 1 : 0) * 1 + ((classDefB['rigomorweekly'] > 0) === true ? 1 : 0) * 2;
+
+            return scoreA - scoreB;
+        });
+    }
+    
+    let listString = '';
+    for ([index, classDef] of userList.entries()) {
+        listString += classDef["emoji"] + ' ';
+        if (index < userList.length && (index == userList.length - 1 || (classDef['rigomordaily'] > 0) != (userList[index + 1]['rigomordaily'] > 0) || (classDef['rigomorweekly'] > 0) != (userList[index + 1]['rigomorweekly'] > 0) || classDef['break'])) {
+            if (classDef['rigomordaily']) { listString += findEmojiByAttributeName('rigomordaily') + ' '; }
+            if (classDef['rigomorweekly']) { listString += findEmojiByAttributeName('rigomorweekly') + ' '; }
+        }
+        if (classDef['linebreak']) { listString += '\n' }
+    }
+
+    return listString;
+}
+
 function userListToEmojiList(user, emojis = true) {
 	let list = saveManager.getList();
 
@@ -299,6 +326,10 @@ function userListToEmojiList(user, emojis = true) {
             break;
         case 'heroic':
             listString = heroicList(userList, activeListConfig);
+            break;
+        case 'rigomor':
+            console.log('in rig list');
+            listString = rigomorList(userList, activeListConfig);
             break;
         default:
             break;
@@ -407,6 +438,9 @@ function specResetWeekly(list) {
             case 'heroic':
                 list['list'][index]['heroicweekly'] = 10;
                 break;
+            case 'rigomor':
+                list['list'][index]['rigomorweekly'] = 15;
+                break;
             default:
                 break;
         }
@@ -431,6 +465,9 @@ function specResetDaily(list) {
         switch (list['type']) {
             case 'heroic':
                 list['list'][index]['heroicdaily'] = 3;
+                break;
+            case 'rigomor':
+                list['list'][index]['rigomordaily'] = 5;
                 break;
             default:
                 break;

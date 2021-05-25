@@ -54,6 +54,17 @@ async function run(message, args, client) {
                     }
                 }
                 break;
+            case 'rigomor':
+                if (!list[message.author.id]['lists'][list[message.author.id]['active']]['list'][index]["rigomordaily"]) {
+                    await helper.sendBotMessage(message, realName + " has already cleared rigomor dailies");
+                } else {
+                    list[message.author.id]['lists'][list[message.author.id]['active']]['list'][index]["rigomorweekly"] -= list[message.author.id]['lists'][list[message.author.id]['active']]['list'][index]["rigomordaily"];
+                    list[message.author.id]['lists'][list[message.author.id]['active']]['list'][index]["rigomordaily"] = 0;
+                    if (list[message.author.id]['lists'][list[message.author.id]['active']]['list'][index]["rigomorweekly"] < 0) {
+                        list[message.author.id]['lists'][list[message.author.id]['active']]['list'][index]["rigomorweekly"] = 0;
+                    }
+                }
+                break;
             default:
                 break;
         }

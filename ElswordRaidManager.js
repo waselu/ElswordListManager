@@ -21,7 +21,7 @@ const client = new Discord.Client();
 //Add JSON.parse(JSON.stringify)
 
 
-//Things to change when adding a new list type: reset, list, set attributes, set config, [idk]
+//Things to change when adding a new list type: reset, list, set attributes, run command, set config, [idk]
 //Add list type in config, edit attributes and configurations
 
 client.commands = new Discord.Collection();
