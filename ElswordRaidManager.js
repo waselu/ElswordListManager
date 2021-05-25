@@ -11,7 +11,6 @@ require('discord-reply');
 const client = new Discord.Client();
 
 //Mandatory
-//Handle "changing list behavior will reset it, are you sure?" + reactions in setConfig
 //Handle move with autosorting lists
 
 //Debug
