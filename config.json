@@ -90,7 +90,8 @@
 		{"name": "freshbehavior", "value": "1fresh", "canSet": [], "isDefault": ["rosso"]},
 		{"name": "2fresh", "value": null, "canSet": ["rosso"], "isDefault": [], "help": "Define your rosso chars as having 2 fresh runs", "reset": true},
 		{"name": "1fresh", "value": null, "canSet": ["rosso"], "isDefault": [], "help": "Define your rosso chars as having 1 fresh run", "reset": true},
-		{"name": "withreset", "value": null, "canSet": ["rosso"], "isDefault": [], "help": "Define your rosso chars as having 1 fresh run and 1 reset", "reset": true}
+		{"name": "withreset", "value": null, "canSet": ["rosso"], "isDefault": [], "help": "Define your rosso chars as having 1 fresh run and 1 reset", "reset": true},
+		{"name": "autosort", "value": false, "canSet": ["rosso", "henir", "heroic"], "isDefault": ["rosso", "henir", "heroic"], "help": "Automatically sort the list, also disable the possibility to move characters", "reset": false}
 	],
 	"aliases": {
 		"newlist": ["addlist"],

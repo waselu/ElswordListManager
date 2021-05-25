@@ -187,20 +187,22 @@ function removeDoneCharacters(userList, removeIfFunction) {
     return userList;
 }
 
-function rossoList(userList, emojis = true) {
+function rossoList(userList, config, emojis = true) {
     userList = removeDoneCharacters(userList, function(classDef) {
         return !(classDef['fresh']) && !(classDef['reset']) && !(classDef['farm']);
     });
 
-    userList = userList.sort(function(classDefA, classDefB) {
-        scoreA = (classDefA['fresh'] === true ? 1 : 0) * 1 + (classDefA['reset'] === true ? 1 : 0) * 2;
-        scoreB = (classDefB['fresh'] === true ? 1 : 0) * 1 + (classDefB['reset'] === true ? 1 : 0) * 2;
-
-        scoreA = !scoreA ? 4 : scoreA;
-        scoreB = !scoreB ? 4 : scoreB;
-
-        return scoreA - scoreB;
-    });
+    if (config['autosort']) {
+        userList = userList.sort(function(classDefA, classDefB) {
+            scoreA = (classDefA['fresh'] ? 1 : 0) * 1 + (classDefA['reset'] === true ? 1 : 0) * 2;
+            scoreB = (classDefB['fresh'] ? 1 : 0) * 1 + (classDefB['reset'] === true ? 1 : 0) * 2;
+    
+            scoreA = !scoreA ? 4 : scoreA;
+            scoreB = !scoreB ? 4 : scoreB;
+    
+            return scoreA - scoreB;
+        });
+    }
 
     let listString = '';
     for ([index, classDef] of userList.entries()) {
@@ -223,17 +225,19 @@ function rossoList(userList, emojis = true) {
     return listString;
 }
 
-function henirList(userList) {
+function henirList(userList, config) {
     userList = removeDoneCharacters(userList, function(classDef) {
         return !(classDef['henirnormal']) && !(classDef['henirchallenge']);
     });
 
-    userList = userList.sort(function(classDefA, classDefB) {
-        scoreA = ((classDefA['henirnormal'] > 0) === true ? 1 : 0) * 1 + ((classDefA['henirchallenge'] > 0) === true ? 1 : 0) * 2;
-        scoreB = ((classDefB['henirnormal'] > 0) === true ? 1 : 0) * 1 + ((classDefB['henirchallenge'] > 0) === true ? 1 : 0) * 2;
+    if (config['autosort']) {
+        userList = userList.sort(function(classDefA, classDefB) {
+            scoreA = ((classDefA['henirnormal'] > 0) === true ? 1 : 0) * 1 + ((classDefA['henirchallenge'] > 0) === true ? 1 : 0) * 2;
+            scoreB = ((classDefB['henirnormal'] > 0) === true ? 1 : 0) * 1 + ((classDefB['henirchallenge'] > 0) === true ? 1 : 0) * 2;
 
-        return scoreA - scoreB;
-    });
+            return scoreA - scoreB;
+        });
+    }
 
     let listString = '';
     for ([index, classDef] of userList.entries()) {
@@ -248,17 +252,19 @@ function henirList(userList) {
     return listString;
 }
 
-function heroicList(userList) {
+function heroicList(userList, config) {
     userList = removeDoneCharacters(userList, function(classDef) {
         return !(classDef['heroicdaily']) && !(classDef['heroicweekly']);
     });
 
-    userList = userList.sort(function(classDefA, classDefB) {
-        scoreA = ((classDefA['heroicdaily'] > 0) === true ? 1 : 0) * 1 + ((classDefA['heroicweekly'] > 0) === true ? 1 : 0) * 2;
-        scoreB = ((classDefB['heroicdaily'] > 0) === true ? 1 : 0) * 1 + ((classDefB['heroicweekly'] > 0) === true ? 1 : 0) * 2;
+    if (config['autosort']) {
+        userList = userList.sort(function(classDefA, classDefB) {
+            scoreA = ((classDefA['heroicdaily'] > 0) === true ? 1 : 0) * 1 + ((classDefA['heroicweekly'] > 0) === true ? 1 : 0) * 2;
+            scoreB = ((classDefB['heroicdaily'] > 0) === true ? 1 : 0) * 1 + ((classDefB['heroicweekly'] > 0) === true ? 1 : 0) * 2;
 
-        return scoreA - scoreB;
-    });
+            return scoreA - scoreB;
+        });
+    }
     
     let listString = '';
     for ([index, classDef] of userList.entries()) {
@@ -281,18 +287,19 @@ function userListToEmojiList(user, emojis = true) {
     }
 
     let activeListType = list[user]['lists'][list[user]['active']]['type'];
+    let activeListConfig = list[user]['lists'][list[user]['active']]['config'];
     let userList = JSON.parse(JSON.stringify(list[user]['lists'][list[user]['active']]['list'])); //JSON used to copy DO NOT DELETE
 
     let listString = '';
     switch (activeListType) {
         case 'rosso':
-            listString = rossoList(userList, emojis);
+            listString = rossoList(userList, activeListConfig, emojis);
             break;
         case 'henir':
-            listString = henirList(userList);
+            listString = henirList(userList, activeListConfig);
             break;
         case 'heroic':
-            listString = heroicList(userList);
+            listString = heroicList(userList, activeListConfig);
             break;
         default:
             break;

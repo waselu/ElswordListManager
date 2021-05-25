@@ -38,9 +38,9 @@ async function setConfig(message, args, client, ignoreMessage) {
     let list = saveManager.getList();
     let listName = list[message.author.id]['active'];
 
-    function call2Fresh(message) {return {'freshbehavior': '2fresh', 'reset': true};}
-    function call1Fresh(message) {return {'freshbehavior': '1fresh', 'reset': true};}
-    function callWithReset(message) {return {'freshbehavior': 'withreset', 'reset': true};}
+    function call2Fresh(message, invert) {return invert ? {'error': 'You cannot remove this configuration'} : {'freshbehavior': '2fresh', 'reset': true};}
+    function call1Fresh(message, invert) {return invert ? {'error': 'You cannot remove this configuration'} : {'freshbehavior': '1fresh', 'reset': true};}
+    function callWithReset(message, invert) {return invert ? {'error': 'You cannot remove this configuration'} : {'freshbehavior': 'withreset', 'reset': true};}
 
     let attributeCases = [
         {'attribute': '2fresh', 'call': call2Fresh},
@@ -48,8 +48,9 @@ async function setConfig(message, args, client, ignoreMessage) {
         {'attribute': 'withreset', 'call': callWithReset}
     ]
 
-    async function setAttribute(message, attribute) {
+    async function setAttribute(message, attribute, invert) {
         let setObject = {};
+        setObject[attribute] = !invert;
         let skip = 0;
         for (attributeCase of attributeCases) {
             if (attributeCase["attribute"] == attribute) {
@@ -91,15 +92,22 @@ async function setConfig(message, args, client, ignoreMessage) {
                 continue;
             }
 
+            if (attribute == 'not' || attribute == 'no') {
+                invertAttr = true;
+                continue;
+            }
+
             if (!helper.canSetConfig(attribute, list[message.author.id]['lists'][listName]['type'])) {
                 await helper.sendBotMessage(message, "Attribute '" + attribute + "' is not available for this list");
                 return;
             }
             
-            skip = await setAttribute(message, attribute);
+            skip = await setAttribute(message, attribute, invertAttr);
             if (skip == -1) {
                 return;
             }
+
+            invertAttr = false;
         }
 
         await helper.sendUserList(message, list, true, client);
@@ -120,11 +128,11 @@ module.exports = {
 	name: 'setconfig',
     nbArgsMin: 1,
     helpGroup: 'List',
-	description: 'Set one or many attribute(s) for one of your list\ntype ``' + prefix + 'helpconfig [attribute]`` for more help eg. ``' + prefix + 'helpconfig withReset``',
+	description: 'Set one or many configuration(s) for your current list\ntype ``' + prefix + 'helpconfig [configuration]`` for more help eg. ``' + prefix + 'helpconfig withReset``',
     example: '``' + prefix + 'setconfig 2fresh``\n\n' +
-            '**List of available attributes**\n' +
+            '**List of available configurations**\n' +
             helper.generateSetConfigExample() + '\n',
-    additionalInfo: '',
+    additionalInfo: 'You can add no/not before a configuration to remove it',
 	async execute(message, args, client) {
 		await setConfig(message, args, client);
 	}

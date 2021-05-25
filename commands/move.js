@@ -6,6 +6,10 @@ const helper = require('../utils/listHelper');
 async function move(message, args, client) {
     let list = saveManager.getList();
 
+    if (list[message.author.id]['lists'][list[message.author.id]['active']]['config']['autosort']) {
+        await helper.sendBotMessage(message, 'You cannot move characters in an auto sorted list. Please use ``' + prefix + 'setconfig not autosort`` and try again');
+        return;
+    }
     function getActualIndexMoveTo(indexMoveTo, user) {
         let charList = list[user]['lists'][list[user]['active']]['list'];
         let mustAdd = 0;
@@ -67,7 +71,7 @@ async function move(message, args, client) {
 
 module.exports = {
     name: 'move',
-    nbArgsMin: 1,
+    nbArgsMin: 2,
     helpGroup: 'Characters',
     description: 'Move one or many character(s) somewhere else in your list',
     example: '``' + prefix + 'move KE 3``\n``' + prefix + 'move Devi 5 RaS 1 NP 3``',
