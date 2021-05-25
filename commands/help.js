@@ -4,7 +4,6 @@ const helper = require('../utils/listHelper');
 const { prefix, aliases } = require('../config.json');
 
 async function specHelp(message, commandName, client) {
-	commandName = commandName.trim().toLowerCase();
 	if (!client.commands.has(commandName)) {
 		message.lineReply('No command named "' + commandName + '"');
 		return;

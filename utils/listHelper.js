@@ -7,7 +7,7 @@ const saveManager = require('./saveManager');
 function findElswordClass(elswordClass) {
 	for (const [index, definedClass] of classes.entries()) {
 		for (const [indexClassNaming, classNaming] of definedClass.classNaming.entries()) {
-			if (classNaming.toLowerCase() == elswordClass.toLowerCase()) {
+			if (classNaming.toLowerCase() == elswordClass) {
 				return {"name": definedClass.classNaming[0], "index": index};
 			}
 		}
@@ -40,7 +40,7 @@ function findEmojiByAttributeName(attribute, forServer = false) {
 
 function canSetAttribute(attribute, type = null) {
 	for (attributeDef of attributes) {
-        if (attributeDef['name'] == attribute.toLowerCase()) {
+        if (attributeDef['name'].toLowerCase() == attribute) {
             return type ? attributeDef['canSet'].includes(type) : (attributeDef['canSet'].length > 0);
         }
 	}
@@ -49,7 +49,7 @@ function canSetAttribute(attribute, type = null) {
 
 function isDefaultAttribute(attribute, type = null) {
     for (attributeDef of attributes) {
-        if (attributeDef['name'] == attribute.toLowerCase()) {
+        if (attributeDef['name'].toLowerCase() == attribute) {
             return type ? attributeDef['isDefault'].includes(type) : (attributeDef['isDefault'].length > 0);
         }
     }
@@ -79,10 +79,10 @@ function checkUserListHasChar(user, className) {
     userList = userList['lists'][userList['active']]['list'];
     for ([index, classDef] of userList.entries()) {
         if (classDef['alias'] != null) {
-            if (classDef['alias'].toLowerCase() == className.toLowerCase()) {
+            if (classDef['alias'] == className) {
                 return index;
             }
-        } else if (classDef["className"].toLowerCase() == className.toLowerCase()) {
+        } else if (classDef["className"] == className) {
             return index;
         }
 	}
@@ -126,6 +126,10 @@ async function doIfClassFoundInUserList(message, className, successFunction, fai
     }
 
     await doIfUserFoundInUserList(message, userFound, userNotFound);
+}
+
+async function doIfListFoundInUserList(message, className, successFunction, failureFunction, userNotFoundFunction) {
+
 }
 
 function removeDoneCharacters(userList, removeIfFunction) {

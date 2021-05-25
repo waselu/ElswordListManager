@@ -10,7 +10,7 @@ async function helpAttr(message, args, client) {
 
     let attr = {};
     for (attribute of attributes) {
-        if (attribute.name == args[0].toLowerCase()) {
+        if (attribute.name == args[0]) {
             attr = attribute;
         }
     }

@@ -20,6 +20,10 @@ function commandManager(message, client) {
         return;
     }
 
+	for ([index, arg] of args.entries()) {
+		args[index] = arg.toLowerCase();
+	}
+	
     command.execute(message, args, client);
 }
 
