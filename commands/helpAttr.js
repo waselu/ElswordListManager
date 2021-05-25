@@ -24,7 +24,7 @@ module.exports = {
     nbArgsMax: 1,
 	helpGroup: 'Misc.',
 	description: 'Show the help for a specific attribute',  
-	example: '``' + prefix + 'helpattribute dps``',
+	example: '``' + prefix + 'helpattr dps``',
 	additionalInfo: '',
 	async execute(message, args, client) {
 		await helpAttr(message, args, client);

@@ -88,9 +88,9 @@
 	"typelists": ["rosso", "henir", "heroic"],
 	"configurations": [
 		{"name": "freshbehavior", "value": "1fresh", "canSet": [], "isDefault": ["rosso"]},
-		{"name": "2fresh", "value": null, "canSet": ["rosso"], "isDefault": []},
-		{"name": "1fresh", "value": null, "canSet": ["rosso"], "isDefault": []},
-		{"name": "withreset", "value": null, "canSet": ["rosso"], "isDefault": []}
+		{"name": "2fresh", "value": null, "canSet": ["rosso"], "isDefault": [], "help": "Define your rosso chars as having 2 fresh runs", "reset": true},
+		{"name": "1fresh", "value": null, "canSet": ["rosso"], "isDefault": [], "help": "Define your rosso chars as having 1 fresh run", "reset": true},
+		{"name": "withreset", "value": null, "canSet": ["rosso"], "isDefault": [], "help": "Define your rosso chars as having 1 fresh run and 1 reset", "reset": true}
 	],
 	"aliases": {
 		"newlist": ["addlist"],

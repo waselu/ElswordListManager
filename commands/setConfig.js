@@ -83,7 +83,7 @@ async function setConfig(message, args, client, ignoreMessage) {
 module.exports = {
 	name: 'setconfig',
     nbArgsMin: 1,
-    helpGroup: 'Characters',
+    helpGroup: 'List',
 	description: 'Set one or many attribute(s) for one of your list\ntype ``' + prefix + 'helpconfig [attribute]`` for more help eg. ``' + prefix + 'helpconfig withReset``',
     example: '``' + prefix + 'setconfig 2fresh``\n\n' +
             '**List of available attributes**\n' +
