@@ -5,12 +5,11 @@ const helper = require('../utils/listHelper');
 
 async function setConfig(message, args, client, ignoreMessage) {
     let list = saveManager.getList();
-    let listName = args[0];
-    args.splice(0, 1);
+    let listName = list[message.author.id]['active'];
 
     function call2Fresh(message) {return {'freshbehavior': '2fresh', 'reset': true};}
     function call1Fresh(message) {return {'freshbehavior': '1fresh', 'reset': true};}
-    function callWithReset(message) {return {'freshbehavior': 'withReset', 'reset': true};}
+    function callWithReset(message) {return {'freshbehavior': 'withreset', 'reset': true};}
 
     let attributeCases = [
         {'attribute': '2fresh', 'call': call2Fresh},
@@ -83,10 +82,10 @@ async function setConfig(message, args, client, ignoreMessage) {
 
 module.exports = {
 	name: 'setconfig',
-    nbArgsMin: 2,
+    nbArgsMin: 1,
     helpGroup: 'Characters',
 	description: 'Set one or many attribute(s) for one of your list\ntype ``' + prefix + 'helpconfig [attribute]`` for more help eg. ``' + prefix + 'helpconfig withReset``',
-    example: '``' + prefix + 'setconfig myRossoList 2fresh``\n\n' +
+    example: '``' + prefix + 'setconfig 2fresh``\n\n' +
             '**List of available attributes**\n' +
             helper.generateSetConfigExample() + '\n',
     additionalInfo: '',
