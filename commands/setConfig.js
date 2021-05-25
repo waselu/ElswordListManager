@@ -3,6 +3,37 @@ const { prefix, attributes } = require('../config.json');
 const saveManager = require('../utils/saveManager');
 const helper = require('../utils/listHelper');
 
+async function waitResetConfirmation(message, args, list) {
+    resetArray = [];
+    for (arg of args) {
+        if (helper.isResetConfig(arg, list[message.author.id]['lists'][list[message.author.id]['active']]['type'])) {
+            resetArray.push(arg);
+        }
+    }
+
+    let confirm = true;
+    if (resetArray.length > 0) {
+        confirm = await new Promise(async (resolve, reject) => {
+            await message.lineReply('Setting configuration' + (resetArray.length > 1 ? 's' : '') + ' ' + resetArray.join(', ') + ' will apply a daily and weekly reset on your list, are you sure?').then(function(sent) {
+                sent.react('✅');
+                sent.react('❌');
+                sent.awaitReactions(function(reaction, user) {return user.id == message.author.id;}, {max: 1}).then(function(collected) {
+                    let reaction = collected.first();
+                    if (reaction.emoji.name === '✅') {
+                        resolve(true);
+                        return;
+                    } else if (reaction.emoji.name === '❌') {
+                        resolve(false);
+                        return;
+                    }
+                });
+            })
+        });
+    }
+
+    return confirm;
+}
+
 async function setConfig(message, args, client, ignoreMessage) {
     let list = saveManager.getList();
     let listName = list[message.author.id]['active'];
@@ -29,6 +60,7 @@ async function setConfig(message, args, client, ignoreMessage) {
                 }
                 if ('reset' in setObject) {
                     helper.specResetWeekly(list[message.author.id]['lists'][listName]);
+                    helper.specResetDaily(list[message.author.id]['lists'][listName]);
                 }
                 if ('error' in setObject) {
                     await helper.sendBotMessage(message, setObject['error']);
@@ -45,6 +77,12 @@ async function setConfig(message, args, client, ignoreMessage) {
     }
 
     async function listFound(message) {
+        let confirm = await waitResetConfirmation(message, args, list);
+        if (!confirm) {
+            await message.channel.send('SetConfig cancelled');
+            return;
+        }
+
         let invertAttr = false
         let skip = 0
         for ([indexArg, attribute] of args.entries()) {
@@ -64,9 +102,7 @@ async function setConfig(message, args, client, ignoreMessage) {
             }
         }
 
-        if (!ignoreMessage) {
-            await helper.sendUserList(message, list, true, client);
-        }
+        await helper.sendUserList(message, list, true, client);
     }
 
     async function listNotFound(message) {

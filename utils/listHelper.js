@@ -74,6 +74,15 @@ function isDefaultConfig(configKey, type = null) {
     return false;
 }
 
+function isResetConfig(configKey, type = null) {
+    for (configDef of configurations) {
+        if (configDef['name'] == configKey) {
+            return type ? (configDef['canSet'].includes(type) && configDef['reset']) : configDef['reset'];
+        }
+    }
+    return false;
+}
+
 function checkUserListHasChar(user, className) {
     let userList = saveManager.getList()[user];
     userList = userList['lists'][userList['active']]['list'];
@@ -450,6 +459,7 @@ exports.canSetAttribute = canSetAttribute;
 exports.isDefaultAttribute = isDefaultAttribute;
 exports.canSetConfig = canSetConfig;
 exports.isDefaultConfig = isDefaultConfig;
+exports.isResetConfig = isResetConfig;
 exports.checkUserListHasChar = checkUserListHasChar;
 exports.doIfUserFoundInUserList = doIfUserFoundInUserList;
 exports.doIfClassFoundInUserList = doIfClassFoundInUserList;
@@ -465,4 +475,5 @@ exports.generateSetConfigExample = generateSetConfigExample;
 exports.checkArgNumberBetween = checkArgNumberBetween;
 exports.specResetWeekly = specResetWeekly;
 exports.resetWeekly = resetWeekly;
+exports.specResetDaily = specResetDaily;
 exports.resetDaily = resetDaily;
