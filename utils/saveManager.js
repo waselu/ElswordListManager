@@ -17,7 +17,7 @@ function readSaveFile() {
 
 function writeSaveFile() {
 	try {
-		fs.writeFileSync('./ElswordTest.txt', JSON.stringify(list), {flag: 'w'});
+		fs.writeFileSync('./ElswordTest.txt', JSON.stringify(list, null, 4), {flag: 'w'});
 	} catch (err) {
 		console.error(err);
 	}

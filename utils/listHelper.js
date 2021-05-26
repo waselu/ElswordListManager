@@ -328,7 +328,6 @@ function userListToEmojiList(user, emojis = true) {
             listString = heroicList(userList, activeListConfig);
             break;
         case 'rigomor':
-            console.log('in rig list');
             listString = rigomorList(userList, activeListConfig);
             break;
         default:

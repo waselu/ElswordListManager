@@ -11,7 +11,7 @@ require('discord-reply');
 const client = new Discord.Client();
 
 //Mandatory
-//Add list types: SD, Rigomor (Later: Berthe)
+//Add list types: SD (Later: Berthe)
 //Add henir config
 
 //Debug
