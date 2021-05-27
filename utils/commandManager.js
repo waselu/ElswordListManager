@@ -23,7 +23,7 @@ function commandManager(message, client) {
 	for ([index, arg] of args.entries()) {
 		args[index] = arg.toLowerCase();
 	}
-	
+
     command.execute(message, args, client);
 }
 

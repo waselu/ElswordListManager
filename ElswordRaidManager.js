@@ -14,12 +14,8 @@ const client = new Discord.Client();
 //Add list types: SD (Later: Berthe)
 //Add henir config
 
-//Debug
-//Add a function to impersonate another user (impersonate user tag)
-
 //Fixes
 //Add JSON.parse(JSON.stringify)
-
 
 //Things to change when adding a new list type: reset, list, set attributes, run command, set config, [idk]
 //Add list type in config, edit attributes and configurations, add emojis
