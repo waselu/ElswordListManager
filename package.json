@@ -4,6 +4,7 @@
   "description": "Discord bot to manager your weeklies/dailies on Elsword",
   "main": "ElswordRaidManager.js",
   "dependencies": {
+    "discord-buttons": "^3.1.1",
     "discord-reply": "^0.1.2",
     "discord.js": "^12.5.3",
     "node-schedule": "^2.0.0"

@@ -73,11 +73,10 @@
 	    {"name": "blue", "value": null, "canSet": ["rosso"], "isDefault": [], "emoji": "<:bluecrystal:830525860418551899>", "serverEmoji": "bluecrystal", "help": "Set a character as having his drop bar on blue crystal"},
 	    {"name": "yellow", "value": null, "canSet": ["rosso"], "isDefault": [], "emoji": "<:yellowcrystal:830525869487161354>", "serverEmoji": "yellowcrystal", "help": "Set a character as having his drop bar on yellow crystal"},
 	    {"name": "giant", "value": null, "canSet": ["rosso"], "isDefault": [], "emoji": "<:giantcrystal:830525874007965766>", "serverEmoji": "giantcrystal", "help": "Set a character as having his drop bar on giant crystal"},
-	    {"name": "nostone", "value": null, "canSet": ["rosso"], "isDefault": [], "emoji": "", "serverEmoji": "", "help": "Shortcut for ``not red/blue/yellow/giant``"},
 	   
 	    {"name": "farm", "value": false, "canSet": ["rosso"], "isDefault": ["rosso"], "emoji": "🌾", "serverEmoji": "", "help": "Set a character as a farm character, he will still appear on your list even if not fresh"},
-	    {"name": "linebreak", "value": false, "canSet": ["rosso", "henir", "heroic", "rigomor"], "isDefault": ["rosso", "henir", "heroic"], "emoji": "⤵️", "serverEmoji": "break", "help": "Add a line break after this character"},
-	    {"name": "alias", "value": null, "canSet": ["rosso", "henir", "heroic", "rigomor"], "isDefault": ["rosso", "henir", "heroic"], "emoji": "", "serverEmoji": "", "additionalHelp": " [name]", "help": "Replace this character name by the given alias\nAfter doing this you will only be able to reference this character by its alias and no longer his class name\nAdditionaly it allows you to add another character of the same class\nThe only restriction being that you do not have 2 characters with the same name"},
+	    {"name": "linebreak", "value": false, "canSet": ["rosso", "henir", "heroic", "rigomor"], "isDefault": ["rosso", "henir", "heroic", "rigomor"], "emoji": "⤵️", "serverEmoji": "break", "help": "Add a line break after this character"},
+	    {"name": "alias", "value": null, "canSet": ["rosso", "henir", "heroic", "rigomor"], "isDefault": ["rosso", "henir", "heroic", "rigomor"], "emoji": "", "serverEmoji": "", "additionalHelp": " [name]", "help": "Replace this character name by the given alias\nAfter doing this you will only be able to reference this character by its alias and no longer his class name\nAdditionaly it allows you to add another character of the same class\nThe only restriction being that you do not have 2 characters with the same name"},
 
 		{"name": "henirnormal", "value": true, "canSet": ["henir"], "isDefault": ["henir"], "emoji": "<:henirnormal:844849301838626827>", "serverEmoji": "", "help": "Set that a character has not cleared henir normal mode yet"},
 		{"name": "henirchallenge", "value": true, "canSet": ["henir"], "isDefault": ["henir"], "emoji": "<:henirchallenge:844849311107383297>", "serverEmoji": "", "help": "Set that a character has not cleared henir challenge mode yet"},
@@ -85,8 +84,8 @@
 		{"name": "heroicdaily", "value": 3, "canSet": ["heroic"], "isDefault": ["heroic"], "emoji": "<:heroicdaily:844868721385668628>", "serverEmoji": "", "additionalHelp": " [nbOfRunRemaining]", "help": "Set the remaining number of run for heroic dailies"},
 		{"name": "heroicweekly", "value": 10, "canSet": ["heroic"], "isDefault": ["heroic"], "emoji": "<:heroicweekly:844868732370550814>", "serverEmoji": "", "additionalHelp": " [nbOfRunRemaining]", "help": "Set the remaining number of run for heroic weeklies"},
 
-		{"name": "rigomordaily", "value": 5, "canSet": ["rigomor"], "isDefault": ["rigomor"], "emoji": ":one:", "serverEmoji": "", "additionalHelp": " [nbOfRunRemaining]", "help": "Set the remaining number of run for rigomor dailies"},
-		{"name": "rigomorweekly", "value": 15, "canSet": ["rigomor"], "isDefault": ["rigomor"], "emoji": ":two:", "serverEmoji": "", "additionalHelp": " [nbOfRunRemaining]", "help": "Set the remaining number of run for rigomor weeklies"}
+		{"name": "rigomordaily", "value": 5, "canSet": ["rigomor"], "isDefault": ["rigomor"], "emoji": "🇩", "serverEmoji": "", "additionalHelp": " [nbOfRunRemaining]", "help": "Set the remaining number of run for rigomor dailies"},
+		{"name": "rigomorweekly", "value": 15, "canSet": ["rigomor"], "isDefault": ["rigomor"], "emoji": "🇼", "serverEmoji": "", "additionalHelp": " [nbOfRunRemaining]", "help": "Set the remaining number of run for rigomor weeklies"}
 	],
 	"typelists": ["rosso", "henir", "heroic", "rigomor"],
 	"configurations": [

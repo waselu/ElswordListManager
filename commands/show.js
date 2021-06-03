@@ -7,46 +7,12 @@ const helper = require('../utils/listHelper');
 async function show(message, args) {
     let list = saveManager.getList();
 
-    function handleFresh(attrValue, classDef) {
-        if (attrValue) {
-            return helper.findEmojiByAttributeName("fresh");
-        }
-        else if (!classDef["reset"]) {
-            return helper.findEmojiByAttributeName("flamemark")
-        }
-        return null;
-    }
-
-    function handleStone(attrValue, classDef) {
-        if (!attrValue) {
-            return null;
-        }
-        return helper.findEmojiByAttributeName(attrValue);
-    }
-
-    let specListCases = {
-        "fresh": handleFresh,
-        "stone": handleStone
-    };
-
     async function userFound(message) {
         let charList = "";
         let userList = list[message.author.id];
         userList = userList['lists'][userList['active']]['list'];
         for ([index, classDef] of userList.entries()) {
-            charList += "\n" + classDef["emoji"];
-            for (attribute in classDef) {
-                attributeText = null;
-                if (attribute in specListCases) {
-                    attributeText = specListCases[attribute](classDef[attribute], classDef);
-                }
-                else if (classDef[attribute]) {
-                    attributeText = helper.findEmojiByAttributeName(attribute);
-                }
-                if (attributeText) {
-                    charList += " " + attributeText;
-                }
-            }
+            charList += '\n' + helper.charDefToEmojiList(classDef);
             charList += " " + (classDef['alias'] != null ? classDef['alias'] : classDef['className']);
         }
 

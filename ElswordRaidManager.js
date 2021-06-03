@@ -10,9 +10,12 @@ require('discord-reply');
 
 const client = new Discord.Client();
 
+require('discord-buttons')(client);
+
 //Mandatory
 //Add list types: SD (Later: Berthe)
 //Add henir config
+//Add rigomor emojis, change heroic emojis
 
 //Fixes
 //Add JSON.parse(JSON.stringify)

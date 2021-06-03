@@ -37,6 +37,13 @@ function findEmojiByAttributeName(attribute, forServer = false) {
     return null;
 }
 
+function findEmojiIDByAttributeName(attribute) {
+    let emoji = findEmojiByAttributeName(attribute);
+    let emojiNumbers = emoji.match(/\d+/);
+
+    return emojiNumbers ? emojiNumbers[0] : null;
+}
+
 function canSetAttribute(attribute, type = null) {
 	for (attributeDef of attributes) {
         if (attributeDef['name'].toLowerCase() == attribute) {
@@ -337,6 +344,48 @@ function userListToEmojiList(user, emojis = true) {
     return listString ? listString : 'Your list is empty'
 }
 
+function charDefToEmojiList(char) {
+    let charList = '';
+
+    function handleFresh(attrValue, classDef) {
+        if (attrValue) {
+            return findEmojiByAttributeName("fresh");
+        }
+        else if (!classDef["reset"]) {
+            return findEmojiByAttributeName("flamemark")
+        }
+        return null;
+    }
+
+    function handleStone(attrValue, classDef) {
+        if (!attrValue) {
+            return null;
+        }
+        return findEmojiByAttributeName(attrValue);
+    }
+
+    let specListCases = {
+        "fresh": handleFresh,
+        "stone": handleStone
+    };
+
+    charList += classDef["emoji"];
+    for (attribute in classDef) {
+        attributeText = null;
+        if (attribute in specListCases) {
+            attributeText = specListCases[attribute](classDef[attribute], classDef);
+        }
+        else if (classDef[attribute]) {
+            attributeText = findEmojiByAttributeName(attribute);
+        }
+        if (attributeText) {
+            charList += " " + attributeText;
+        }
+    }
+
+    return charList;
+}
+
 async function sendBotMessage(message, sending) {
     discordMessage = await message.lineReply(sending);
     //discordMessage.delete({timeout: 600000});
@@ -490,6 +539,7 @@ function resetDaily() {
 exports.findElswordClass = findElswordClass;
 exports.findEmojiByClassName = findEmojiByClassName;
 exports.findEmojiByAttributeName = findEmojiByAttributeName;
+exports.findEmojiIDByAttributeName = findEmojiIDByAttributeName;
 exports.canSetAttribute = canSetAttribute;
 exports.isDefaultAttribute = isDefaultAttribute;
 exports.canSetConfig = canSetConfig;
@@ -500,6 +550,7 @@ exports.doIfUserFoundInUserList = doIfUserFoundInUserList;
 exports.doIfClassFoundInUserList = doIfClassFoundInUserList;
 exports.doIfListFoundInUserList = doIfListFoundInUserList;
 exports.userListToEmojiList = userListToEmojiList;
+exports.charDefToEmojiList = charDefToEmojiList;
 exports.sendBotMessage = sendBotMessage;
 exports.sendFormalBotMessage = sendFormalBotMessage;
 exports.sendBasicBotEmbed = sendBasicBotEmbed;
