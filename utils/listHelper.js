@@ -219,7 +219,7 @@ function rossoList(userList, config, emojis = true) {
             if (classDef['speed']) { listString += emojis ? findEmojiByAttributeName("speed") + ' ' : ':' + findEmojiByAttributeName("speed", true) + ': '; }
             if (classDef['stone'] != null && (classDef['fresh'] || classDef['reset'])) { listString += emojis ? findEmojiByAttributeName(classDef['stone']) + ' ' : ':' + findEmojiByAttributeName(classDef["stone"], true) + ': '; }
             if (classDef['freeze']) { listString += ':ice_cube: '; }
-            if (index < userList.length && (index == userList.length - 1 || classDef['fresh'] != userList[index + 1]['fresh'] || classDef['reset'] != userList[index + 1]['reset'] || classDef['break'])) {
+            if (index < userList.length && (index == userList.length - 1 || classDef['fresh'] != userList[index + 1]['fresh'] || classDef['reset'] != userList[index + 1]['reset'] || classDef['linebreak'])) {
                 if (classDef['fresh']) { listString += emojis ? findEmojiByAttributeName("fresh") + ' ' : ':' + findEmojiByAttributeName("fresh", true) + ': '; }
                 else if (classDef['reset']) { listString += emojis ? findEmojiByAttributeName("reset") + ' ' : ':' + findEmojiByAttributeName("reset", true) + ': '; }
                 else { listString += emojis ? findEmojiByAttributeName("flamemark") + ' ' : ':' + findEmojiByAttributeName("flamemark", true) + ': '; }
@@ -248,7 +248,7 @@ function henirList(userList, config) {
     let listString = '';
     for ([index, classDef] of userList.entries()) {
         listString += classDef["emoji"] + ' ';
-        if (index < userList.length && (index == userList.length - 1 || classDef['henirnormal'] != userList[index + 1]['henirnormal'] || classDef['henirchallenge'] != userList[index + 1]['henirchallenge'] || classDef['break'])) {
+        if (index < userList.length && (index == userList.length - 1 || classDef['henirnormal'] != userList[index + 1]['henirnormal'] || classDef['henirchallenge'] != userList[index + 1]['henirchallenge'] || classDef['linebreak'])) {
             if (classDef['henirnormal']) { listString += findEmojiByAttributeName('henirnormal') + ' '; }
             if (classDef['henirchallenge']) { listString += findEmojiByAttributeName('henirchallenge') + ' '; }
         }
@@ -275,7 +275,7 @@ function heroicList(userList, config) {
     let listString = '';
     for ([index, classDef] of userList.entries()) {
         listString += classDef["emoji"] + ' ';
-        if (index < userList.length && (index == userList.length - 1 || (classDef['heroicdaily'] > 0) != (userList[index + 1]['heroicdaily'] > 0) || (classDef['heroicweekly'] > 0) != (userList[index + 1]['heroicweekly'] > 0) || classDef['break'])) {
+        if (index < userList.length && (index == userList.length - 1 || (classDef['heroicdaily'] > 0) != (userList[index + 1]['heroicdaily'] > 0) || (classDef['heroicweekly'] > 0) != (userList[index + 1]['heroicweekly'] > 0) || classDef['linebreak'])) {
             if (classDef['heroicdaily']) { listString += findEmojiByAttributeName('heroicdaily') + ' '; }
             if (classDef['heroicweekly']) { listString += findEmojiByAttributeName('heroicweekly') + ' '; }
         }
@@ -302,7 +302,7 @@ function rigomorList(userList, config) {
     let listString = '';
     for ([index, classDef] of userList.entries()) {
         listString += classDef["emoji"] + ' ';
-        if (index < userList.length && (index == userList.length - 1 || (classDef['rigomordaily'] > 0) != (userList[index + 1]['rigomordaily'] > 0) || (classDef['rigomorweekly'] > 0) != (userList[index + 1]['rigomorweekly'] > 0) || classDef['break'])) {
+        if (index < userList.length && (index == userList.length - 1 || (classDef['rigomordaily'] > 0) != (userList[index + 1]['rigomordaily'] > 0) || (classDef['rigomorweekly'] > 0) != (userList[index + 1]['rigomorweekly'] > 0) || classDef['linebreak'])) {
             if (classDef['rigomordaily']) { listString += findEmojiByAttributeName('rigomordaily') + ' '; }
             if (classDef['rigomorweekly']) { listString += findEmojiByAttributeName('rigomorweekly') + ' '; }
         }
