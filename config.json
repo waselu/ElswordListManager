@@ -64,15 +64,15 @@
 	    {"name": "speed", "value": false, "canSet": ["rosso"], "isDefault": ["rosso"], "emoji": "<:SpdBot:837244319726436372>", "serverEmoji": "SpdBot", "help": "Set a character as having a speed bottom equipped"},
 		{"name": "freeze", "value": false, "canSet": ["rosso"], "isDefault": ["rosso"], "emoji": "🧊", "serverEmoji": "icecube", "help": "Set a character as a freezer"},
 	   
-	    {"name": "fresh", "value": 1, "canSet": ["rosso"], "isDefault": ["rosso"], "emoji": "<:fresh:828908656144678964>", "serverEmoji": "fresh", "help": "Set a character as fresh"},
-	    {"name": "reset", "value": false, "canSet": ["rosso"], "isDefault": ["rosso"], "emoji": "<:reset:832571110906003496>", "serverEmoji": "reset", "help": "Set a character as having a reset ticket"},
-	    {"name": "flamemark", "value": false, "canSet": [], "isDefault": [], "emoji": "<:flamemark:828910673626923038>", "serverEmoji": "flamemark"},
-	   
 	    {"name": "stone", "value": null, "canSet": [], "isDefault": ["rosso"], "emoji": "", "serverEmoji": ""},
 	    {"name": "red", "value": null, "canSet": ["rosso"], "isDefault": [], "emoji": "<:redcrystal:830525849391464511>", "serverEmoji": "redcrystal", "help": "Set a character as having his drop bar on red crystal"},
 	    {"name": "blue", "value": null, "canSet": ["rosso"], "isDefault": [], "emoji": "<:bluecrystal:830525860418551899>", "serverEmoji": "bluecrystal", "help": "Set a character as having his drop bar on blue crystal"},
 	    {"name": "yellow", "value": null, "canSet": ["rosso"], "isDefault": [], "emoji": "<:yellowcrystal:830525869487161354>", "serverEmoji": "yellowcrystal", "help": "Set a character as having his drop bar on yellow crystal"},
 	    {"name": "giant", "value": null, "canSet": ["rosso"], "isDefault": [], "emoji": "<:giantcrystal:830525874007965766>", "serverEmoji": "giantcrystal", "help": "Set a character as having his drop bar on giant crystal"},
+
+		{"name": "fresh", "value": true, "canSet": ["rosso"], "isDefault": ["rosso"], "emoji": "<:fresh:828908656144678964>", "serverEmoji": "fresh", "help": "Set a character as fresh"},
+		{"name": "reset", "value": false, "canSet": ["rosso"], "isDefault": ["rosso"], "emoji": "<:reset:832571110906003496>", "serverEmoji": "reset", "help": "Set a character as having a reset ticket"},
+		{"name": "flamemark", "value": false, "canSet": [], "isDefault": [], "emoji": "<:flamemark:828910673626923038>", "serverEmoji": "flamemark"},
 	   
 	    {"name": "farm", "value": false, "canSet": ["rosso"], "isDefault": ["rosso"], "emoji": "🌾", "serverEmoji": "", "help": "Set a character as a farm character, he will still appear on your list even if not fresh"},
 	    {"name": "linebreak", "value": false, "canSet": ["rosso", "henir", "heroic", "rigomor"], "isDefault": ["rosso", "henir", "heroic", "rigomor"], "emoji": "⤵️", "serverEmoji": "break", "help": "Add a line break after this character"},
@@ -89,10 +89,6 @@
 	],
 	"typelists": ["rosso", "henir", "heroic", "rigomor"],
 	"configurations": [
-		{"name": "freshbehavior", "value": "1fresh", "canSet": [], "isDefault": ["rosso"]},
-		{"name": "2fresh", "value": null, "canSet": ["rosso"], "isDefault": [], "help": "Define your rosso chars as having 2 fresh runs", "reset": true},
-		{"name": "1fresh", "value": null, "canSet": ["rosso"], "isDefault": [], "help": "Define your rosso chars as having 1 fresh run", "reset": true},
-		{"name": "withreset", "value": null, "canSet": ["rosso"], "isDefault": [], "help": "Define your rosso chars as having 1 fresh run and 1 reset", "reset": true},
 		{"name": "autosort", "value": false, "canSet": ["rosso", "henir", "heroic", "rigomor"], "isDefault": ["rosso", "henir", "heroic"], "help": "Automatically sort the list, also disable the possibility to move characters", "reset": false}
 	],
 	"aliases": {

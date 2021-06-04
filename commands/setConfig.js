@@ -38,6 +38,7 @@ async function setConfig(message, args, client, ignoreMessage) {
     let list = saveManager.getList();
     let listName = list[message.author.id]['active'];
 
+    //Keeping those as example
     function call2Fresh(message, invert) {return invert ? {'error': 'You cannot remove this configuration'} : {'freshbehavior': '2fresh', 'reset': true};}
     function call1Fresh(message, invert) {return invert ? {'error': 'You cannot remove this configuration'} : {'freshbehavior': '1fresh', 'reset': true};}
     function callWithReset(message, invert) {return invert ? {'error': 'You cannot remove this configuration'} : {'freshbehavior': 'withreset', 'reset': true};}

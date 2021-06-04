@@ -14,14 +14,17 @@ require('discord-buttons')(client);
 
 //Mandatory
 //Add list types: SD (Later: Berthe)
-//Add henir config
 //Add rigomor emojis, change heroic emojis
+//Rework client being passed everywhere, direcly call command via require
+//Remove setconfig and helpconfig commands, add editconfig command that behave like the edit command (buttons)
+//Add other list behavior to the edit command
 
 //Fixes
 //Add JSON.parse(JSON.stringify)
+//Rework set array
 
-//Things to change when adding a new list type: reset, list, set attributes, run command, set config, [idk]
-//Add list type in config, edit attributes and configurations, add emojis
+//Things to change when adding a new list type: reset, list, set attributes, [idk]
+//Add list type in config, edit attributes, add emojis
 
 client.commands = new Discord.Collection();
 

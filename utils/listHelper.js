@@ -219,7 +219,7 @@ function rossoList(userList, config, emojis = true) {
             if (classDef['speed']) { listString += emojis ? findEmojiByAttributeName("speed") + ' ' : ':' + findEmojiByAttributeName("speed", true) + ': '; }
             if (classDef['stone'] != null && (classDef['fresh'] || classDef['reset'])) { listString += emojis ? findEmojiByAttributeName(classDef['stone']) + ' ' : ':' + findEmojiByAttributeName(classDef["stone"], true) + ': '; }
             if (classDef['freeze']) { listString += ':ice_cube: '; }
-            if (index < userList.length && (index == userList.length - 1 || (classDef['fresh'] > 0) != (userList[index + 1]['fresh'] > 0) || classDef['reset'] != userList[index + 1]['reset'] || classDef['break'])) {
+            if (index < userList.length && (index == userList.length - 1 || classDef['fresh'] != userList[index + 1]['fresh'] || classDef['reset'] != userList[index + 1]['reset'] || classDef['break'])) {
                 if (classDef['fresh']) { listString += emojis ? findEmojiByAttributeName("fresh") + ' ' : ':' + findEmojiByAttributeName("fresh", true) + ': '; }
                 else if (classDef['reset']) { listString += emojis ? findEmojiByAttributeName("reset") + ' ' : ':' + findEmojiByAttributeName("reset", true) + ': '; }
                 else { listString += emojis ? findEmojiByAttributeName("flamemark") + ' ' : ':' + findEmojiByAttributeName("flamemark", true) + ': '; }
@@ -415,19 +415,6 @@ async function sendUserList(message, list = null, client) {
     }
 }
 
-function generateSetExample() {
-    helpStr = '';
-    filteredAttributes = attributes.filter(function(attribute) { return attribute.canSet.length != 0; });
-    for ([index, attribute] of filteredAttributes.entries()) {
-        helpStr += '``' + attribute.name + (attribute.additionalHelp || '') + '`` ';
-        if (index % 3 == 2) {
-            helpStr += '\n';
-        }
-    }
-
-    return helpStr;
-}
-
 function generateSetConfigExample() {
     helpStr = '';
     filteredConfigurations = configurations.filter(function(attribute) { return attribute.canSet.length != 0; });
@@ -464,19 +451,7 @@ function specResetWeekly(list) {
     for ([index, classDef] of list['list'].entries()) {
         switch (list['type']) {
             case 'rosso':
-                switch (list['config']['freshbehavior']) {
-                    case '2fresh':
-                        list['list'][index]['fresh'] = 2;
-                        break;
-                    case '1fresh':
-                        list['list'][index]['fresh'] = 1;
-                        break;
-                    case 'withreset':
-                        list['list'][index]['fresh'] = 1;
-                        break;
-                    default:
-                        break;
-                }
+                list['list'][index]['fresh'] = true;
                 list['list'][index]['reset'] = false;
                 break;
             case 'henir':
@@ -555,7 +530,6 @@ exports.sendBotMessage = sendBotMessage;
 exports.sendFormalBotMessage = sendFormalBotMessage;
 exports.sendBasicBotEmbed = sendBasicBotEmbed;
 exports.sendUserList = sendUserList;
-exports.generateSetExample = generateSetExample;
 exports.generateSetConfigExample = generateSetConfigExample;
 exports.checkArgNumberBetween = checkArgNumberBetween;
 exports.specResetWeekly = specResetWeekly;

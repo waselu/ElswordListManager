@@ -95,29 +95,82 @@ async function getEmbedAndButtons(message, className) {
     }
 
     await helper.doIfClassFoundInUserList(message, className, classFound, classNotFound, userNotFound);
-
+    
     return embedAndButtons;
 }
 
-async function editAttribute(message, className, attribute) {
+async function editAttribute(message, className, attribute, invert) {
+    let list = saveManager.getList();
 
+    function callFresh(invert) {return invert ? {'fresh': false} : {'fresh': true, 'reset': false};}
+    function callReset(invert) {return !invert ? {'reset': true, 'fresh': false} : {'reset': false};}
+    function callStone(invert, stoneColor) {return invert ? {'stone': null} : {'stone': stoneColor};}
+    function callStoneRed(invert) {return callStone(invert, 'red');}
+    function callStoneBlue(invert) {return callStone(invert, 'blue');}
+    function callStoneYellow(invert) {return callStone(invert, 'yellow');}
+    function callStoneGiant(invert) {return callStone(invert, 'giant');}
+
+    let attributeCases = {
+        fresh: callFresh,
+        reset: callReset,
+        red: callStoneRed,
+        blue: callStoneBlue,
+        yellow: callStoneYellow,
+        giant: callStoneGiant,
+    };
+
+    async function classFound(message, index, realName) {
+        if (attributeCases[attribute]) {
+            let setObject = attributeCases[attribute](invert);
+            for (attributeName in setObject) {
+                list[message.author.id]['lists'][list[message.author.id]['active']]['list'][index][attributeName] = setObject[attributeName];
+            }
+        } else {
+            list[message.author.id]['lists'][list[message.author.id]['active']]['list'][index][attribute] = !invert;
+        }
+        saveManager.setList(list);
+    }
+
+    async function classNotFound(message, realName) {
+        await helper.sendBotMessage(message, realName + " was not found in your list");
+    }
+
+    async function userNotFound(message, realName) {
+        await helper.sendBotMessage(message, "You have no list yet");
+    }
+
+    await helper.doIfClassFoundInUserList(message, className, classFound, classNotFound, userNotFound);
 }
 
-async function edit(message, args, client) {
-    let embedAndButtons = await getEmbedAndButtons(message, args[0]);
+async function createMessageAndCollector(message, className, m = null) {
+    let embedAndButtons = await getEmbedAndButtons(message, className);
 
-    let m = await message.channel.send('', { components: embedAndButtons['buttons'], embed: embedAndButtons['embed'] });
+    if (m) {
+        await m.edit('', { components: embedAndButtons['buttons'], embed: embedAndButtons['embed'] });
+    } else {
+        var m = await message.channel.send('', { components: embedAndButtons['buttons'], embed: embedAndButtons['embed'] });
+    }
     const filter = (button) => button.clicker.user.id === message.author.id;
-    const collector = m.createButtonCollector(filter);
+    const collector = m.createButtonCollector(filter, {time: 60000});
 
     collector.on('collect', async function (button) {
         await button.defer();
-        console.log(button.id);
-        console.log(button.setStyle);
+        let invert = embedAndButtons['buttons'].map(function(row) {return row.components;}).flat().filter(b => b.custom_id === button.id)[0].style === 3;
+        await editAttribute(message, className, button.id, invert);
+        collector.stop();
     });
-    collector.on('end', function() {
-        m.delete();
+
+    collector.on('end', async function() {
+        if (collector.collected.first()) {
+            createMessageAndCollector(message, className, m);
+        } else {
+            m.delete();
+        }
     });
+}
+
+async function edit(message, args, client) {
+    createMessageAndCollector(message, args[0]);
 }
 
 module.exports = {
