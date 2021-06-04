@@ -51,7 +51,7 @@ module.exports = {
 	description: 'Add a new list of the specified type and an alias for it, then swap to it',
     example: '``' + prefix + 'newlist rosso myRaidList``\n\n**Available types**\n' + typelists.join(' '),
     additionalInfo: '',
-	async execute(message, args, client) {
+	async execute(message, args, trueArgs, client) {
 		await addList(message, args, client);
 	}
 }

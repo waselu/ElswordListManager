@@ -32,7 +32,7 @@ module.exports = {
 	description: 'Remove one or many character(s) from your list',
     example: '``' + prefix + 'remove CL NP``\n``' + prefix + 'remove elsword1 laby3 ara2``\n``' + prefix + 'remove myAliasA myAliasB``',
     additionalInfo: 'You must follow the add syntax, or use aliases if you set any',
-	async execute(message, args, client) {
+	async execute(message, args, trueArgs, client) {
 		await remove(message, args, client);
 	}
 }

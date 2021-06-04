@@ -28,7 +28,7 @@ module.exports = {
 	description: 'Show the help for a specific configuration',  
 	example: '``' + prefix + 'helpconfig 2fresh``',
 	additionalInfo: '',
-	async execute(message, args, client) {
+	async execute(message, args, trueArgs, client) {
 		await helpConfig(message, args, client);
 	}
 }

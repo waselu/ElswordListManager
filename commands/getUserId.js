@@ -22,7 +22,7 @@ module.exports = {
 	description: '',
     example: '',
     additionalInfo: '',
-	async execute(message, args, client) {
+	async execute(message, args, trueArgs, client) {
 		await getUserId(message, args, client);
 	}
 }

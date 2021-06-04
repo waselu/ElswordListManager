@@ -41,7 +41,7 @@ module.exports = {
 	description: 'Show all your created lists',
     example: '``' + prefix + 'showlist``',
     additionalInfo: '',
-	async execute(message, args, client) {
+	async execute(message, args, trueArgs, client) {
 		await showList(message, args, client);
 	}
 }

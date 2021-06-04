@@ -20,11 +20,7 @@ function commandManager(message, client) {
         return;
     }
 
-	for ([index, arg] of args.entries()) {
-		args[index] = arg.toLowerCase();
-	}
-
-    command.execute(message, args, client);
+    command.execute(message, args.map(function(arg) {return arg.toLowerCase();}), args, client);
 }
 
 exports.commandManager = commandManager;

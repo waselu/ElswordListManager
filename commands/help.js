@@ -82,7 +82,7 @@ module.exports = {
 	description: 'Display this help',
 	example: '``' + prefix + 'help``\n``' + prefix + 'help add``',
 	additionalInfo: '',
-	async execute(message, args, client) {
+	async execute(message, args, trueArgs, client) {
 		await help(message, args, client);
 	}
 }

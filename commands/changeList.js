@@ -31,7 +31,7 @@ module.exports = {
 	description: 'Swap to one of your other lists',
     example: '``' + prefix + 'changelist myRossoList``',
     additionalInfo: '',
-	async execute(message, args, client) {
+	async execute(message, args, trueArgs, client) {
 		await changeList(message, args, client);
 	}
 }

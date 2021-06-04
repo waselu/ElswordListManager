@@ -41,7 +41,7 @@ module.exports = {
 	description: 'Remove one of your lists',
     example: '``' + prefix + 'removelist myRossoList``',
     additionalInfo: '',
-	async execute(message, args, client) {
+	async execute(message, args, trueArgs, client) {
 		await removeList(message, args, client);
 	}
 }

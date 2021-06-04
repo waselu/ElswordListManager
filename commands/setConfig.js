@@ -134,7 +134,7 @@ module.exports = {
             '**List of available configurations**\n' +
             helper.generateSetConfigExample() + '\n',
     additionalInfo: 'You can add no/not before a configuration to remove it',
-	async execute(message, args, client) {
+	async execute(message, args, trueArgs, client) {
 		await setConfig(message, args, client);
 	}
 }

@@ -13,7 +13,7 @@ module.exports = {
 	description: '',
     example: '',
     additionalInfo: '',
-	async execute(message, args, client) {
+	async execute(message, args, trueArgs, client) {
 		await clear(message, args, client);
 	}
 }

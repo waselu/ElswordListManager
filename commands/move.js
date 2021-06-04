@@ -76,7 +76,7 @@ module.exports = {
     description: 'Move one or many character(s) somewhere else in your list',
     example: '``' + prefix + 'move KE 3``\n``' + prefix + 'move Devi 5 RaS 1 NP 3``',
     additionalInfo: 'Characters will always be moved after those who aren\'t displayed',
-    async execute(message, args, client) {
+    async execute(message, args, trueArgs, client) {
         await move(message, args, client);
     }
 }

@@ -94,10 +94,10 @@ function checkUserListHasChar(user, className) {
     userList = userList['lists'][userList['active']]['list'];
     for ([index, classDef] of userList.entries()) {
         if (classDef['alias'] != null) {
-            if (classDef['alias'] == className) {
+            if (classDef['alias'].toLowerCase() == className.toLowerCase()) {
                 return index;
             }
-        } else if (classDef["className"] == className) {
+        } else if (classDef["className"].toLowerCase() == className.toLowerCase()) {
             return index;
         }
 	}

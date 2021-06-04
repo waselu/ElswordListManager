@@ -40,7 +40,7 @@ module.exports = {
 	description: 'Add characters to your list',
     example: '``' + prefix + 'add Devi CL RaS``',
     additionalInfo: '',
-	async execute(message, args, client) {
+	async execute(message, args, trueArgs, client) {
 		await add(message, args, client);
 	}
 }

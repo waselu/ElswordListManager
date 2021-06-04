@@ -45,7 +45,7 @@ module.exports = {
 	description: 'Show the state of the selectionned list',
     example: '``' + prefix + 'show``',
     additionalInfo: '',
-	async execute(message, args, client) {
+	async execute(message, args, trueArgs, client) {
 		await show(message, args);
 	}
 }

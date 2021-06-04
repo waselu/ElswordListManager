@@ -188,7 +188,7 @@ module.exports = {
 	description: 'Edit one of your character',
     example: '``' + prefix + 'edit MP``',
     additionalInfo: '',
-	async execute(message, args, client) {
+	async execute(message, args, trueArgs, client) {
 		await edit(message, args, client);
 	}
 }
