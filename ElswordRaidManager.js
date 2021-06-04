@@ -20,7 +20,6 @@ require('discord-buttons')(client);
 //Add other list behavior to the edit command
 //Sort each list independently when autosorting
 //Rename newlist to addlist
-//Add server emoji list to edit message if type == 'rosso'
 
 //Fixes
 //Add JSON.parse(JSON.stringify)
