@@ -21,7 +21,6 @@ require('discord-buttons')(client);
 
 //Fixes
 //Add JSON.parse(JSON.stringify)
-//Rework set array
 
 //Things to change when adding a new list type: reset, list, set attributes, [idk]
 //Add list type in config, edit attributes, add emojis
