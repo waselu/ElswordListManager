@@ -344,20 +344,20 @@ function userListToEmojiList(user, emojis = true) {
     return listString ? listString : 'Your list is empty'
 }
 
-function charDefToEmojiList(char) {
+function charDefToEmojiList(charDef) {
     let charList = '';
 
-    function handleFresh(attrValue, classDef) {
+    function handleFresh(attrValue, charDef) {
         if (attrValue) {
             return findEmojiByAttributeName("fresh");
         }
-        else if (!classDef["reset"]) {
+        else if (!charDef["reset"]) {
             return findEmojiByAttributeName("flamemark")
         }
         return null;
     }
 
-    function handleStone(attrValue, classDef) {
+    function handleStone(attrValue, charDef) {
         if (!attrValue) {
             return null;
         }
@@ -369,13 +369,13 @@ function charDefToEmojiList(char) {
         "stone": handleStone
     };
 
-    charList += classDef["emoji"];
-    for (attribute in classDef) {
+    charList += charDef["emoji"];
+    for (attribute in charDef) {
         attributeText = null;
         if (attribute in specListCases) {
-            attributeText = specListCases[attribute](classDef[attribute], classDef);
+            attributeText = specListCases[attribute](charDef[attribute], charDef);
         }
-        else if (classDef[attribute]) {
+        else if (charDef[attribute]) {
             attributeText = findEmojiByAttributeName(attribute);
         }
         if (attributeText) {

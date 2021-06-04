@@ -4,9 +4,9 @@ const saveManager = require('../utils/saveManager');
 const helper = require('../utils/listHelper');
 const disbut = require('discord-buttons');
 
-async function getEmbedAndButtons(message, className) {
+async function getMessageAndButtons(message, className) {
     let list = saveManager.getList();
-    let embedAndButtons = {embed: null, buttons: null};
+    let messageAndButtons = {message: null, buttons: null};
 
     function displayStone(charDef) {
         return [
@@ -38,9 +38,6 @@ async function getEmbedAndButtons(message, className) {
 
     async function classFound(message, index, realName) {
         let charDef = list[message.author.id]['lists'][list[message.author.id]['active']]['list'][index];
-
-        let embed = new MessageEmbed()
-            .setTitle(helper.charDefToEmojiList(charDef) + (charDef.alias ? charDef.alias : charDef.className));
 
         let rowArray = [];
         let rowNumber = 0;
@@ -82,8 +79,8 @@ async function getEmbedAndButtons(message, className) {
             }
         }
 
-        embedAndButtons['embed'] = embed;
-        embedAndButtons['buttons'] = rowArray;
+        messageAndButtons['message'] = helper.userListToEmojiList(message.author.id) + '\n\n' + helper.charDefToEmojiList(charDef);
+        messageAndButtons['buttons'] = rowArray;
     }
 
     async function classNotFound(message, realName) {
@@ -96,7 +93,7 @@ async function getEmbedAndButtons(message, className) {
 
     await helper.doIfClassFoundInUserList(message, className, classFound, classNotFound, userNotFound);
     
-    return embedAndButtons;
+    return messageAndButtons;
 }
 
 async function editAttribute(message, className, attribute, invert) {
@@ -143,19 +140,19 @@ async function editAttribute(message, className, attribute, invert) {
 }
 
 async function createMessageAndCollector(message, className, m = null) {
-    let embedAndButtons = await getEmbedAndButtons(message, className);
+    let messageAndButtons = await getMessageAndButtons(message, className);
 
     if (m) {
-        await m.edit('', { components: embedAndButtons['buttons'], embed: embedAndButtons['embed'] });
+        await m.edit(messageAndButtons['message'], { components: messageAndButtons['buttons'] });
     } else {
-        var m = await message.channel.send('', { components: embedAndButtons['buttons'], embed: embedAndButtons['embed'] });
+        var m = await message.channel.send(messageAndButtons['message'], { components: messageAndButtons['buttons']});
     }
     const filter = (button) => button.clicker.user.id === message.author.id;
     const collector = m.createButtonCollector(filter, {time: 60000});
 
     collector.on('collect', async function (button) {
         await button.defer();
-        let invert = embedAndButtons['buttons'].map(function(row) {return row.components;}).flat().filter(b => b.custom_id === button.id)[0].style === 3;
+        let invert = messageAndButtons['buttons'].map(function(row) {return row.components;}).flat().filter(b => b.custom_id === button.id)[0].style === 3;
         await editAttribute(message, className, button.id, invert);
         collector.stop();
     });
