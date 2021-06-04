@@ -12,19 +12,19 @@ async function getMessageAndButtons(message, className) {
         return [
             new disbut.MessageButton()
                 .setEmoji(helper.findEmojiIDByAttributeName('red'))
-                .setStyle((charDef['stone'] === 'red') ? 'green' : 'red')
+                .setStyle((charDef['stone'] === 'red') ? 'green' : 'grey')
                 .setID('red'),
             new disbut.MessageButton()
                 .setEmoji(helper.findEmojiIDByAttributeName('blue'))
-                .setStyle((charDef['stone'] === 'blue') ? 'green' : 'red')
+                .setStyle((charDef['stone'] === 'blue') ? 'green' : 'grey')
                 .setID('blue'),
             new disbut.MessageButton()
                 .setEmoji(helper.findEmojiIDByAttributeName('yellow'))
-                .setStyle((charDef['stone'] === 'yellow') ? 'green' : 'red')
+                .setStyle((charDef['stone'] === 'yellow') ? 'green' : 'grey')
                 .setID('yellow'),
             new disbut.MessageButton()
                 .setEmoji(helper.findEmojiIDByAttributeName('giant'))
-                .setStyle((charDef['stone'] === 'giant') ? 'green' : 'red')
+                .setStyle((charDef['stone'] === 'giant') ? 'green' : 'grey')
                 .setID('giant')
         ];
     }
@@ -66,7 +66,7 @@ async function getMessageAndButtons(message, className) {
                 } else {
                     let emojiID = helper.findEmojiIDByAttributeName(attribute.name);
                     let button = new disbut.MessageButton()
-                        .setStyle(charDef[attribute.name] ? 'green' : 'red')
+                        .setStyle(charDef[attribute.name] ? 'green' : 'grey')
                         .setID(attribute.name);
                     if (emojiID || attribute.emoji) {
                         button.setEmoji(emojiID || attribute.emoji);
