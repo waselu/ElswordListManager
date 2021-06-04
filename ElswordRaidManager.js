@@ -15,7 +15,6 @@ require('discord-buttons')(client);
 //Mandatory
 //Add list types: SD (Later: Berthe)
 //Add rigomor emojis, change heroic emojis
-//Rework client being passed everywhere, direcly call command via require
 //Remove setconfig and helpconfig commands, add editconfig command that behave like the edit command (buttons)
 //Add other list behavior to the edit command
 //Sort each list independently according to character when autosorting

@@ -95,10 +95,12 @@ async function getEmbedAndButtons(message, className) {
 
     async function classNotFound(message, realName) {
         await helper.sendBotMessage(message, realName + " was not found in your list");
+        embedAndButtons = null;
     }
 
     async function userNotFound(message, realName) {
         await helper.sendBotMessage(message, "You have no list yet");
+        embedAndButtons = null;
     }
 
     await helper.doIfClassFoundInUserList(message, className, classFound, classNotFound, userNotFound);
@@ -151,6 +153,10 @@ async function editAttribute(message, className, attribute, invert) {
 
 async function createMessageAndCollector(message, className, m = null) {
     let embedAndButtons = await getEmbedAndButtons(message, className);
+
+    if (!embedAndButtons) {
+        return;
+    }
 
     if (m) {
         await m.edit('', { components: embedAndButtons['buttons'], embed: embedAndButtons['embed'] });
