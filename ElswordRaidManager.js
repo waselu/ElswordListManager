@@ -19,6 +19,7 @@ require('discord-buttons')(client);
 //Remove setconfig and helpconfig commands, add editconfig command that behave like the edit command (buttons)
 //Add other list behavior to the edit command
 //Sort each list independently when autosorting
+//Rename newlist to addlist
 
 //Fixes
 //Add JSON.parse(JSON.stringify)
