@@ -83,6 +83,7 @@ async function getEmbedAndButtons(message, className) {
                     for (button of buttons) {
                         if (buttonNumber === 5 || (rowNumber === 0 &&  buttonNumber === 0)) {
                             rowArray.push(new disbut.MessageActionRow());
+                            buttonNumber = 0;
                             rowNumber += 1;
                         }
                         rowArray[rowNumber - 1].addComponent(button);
@@ -92,6 +93,7 @@ async function getEmbedAndButtons(message, className) {
                     let emojiID = helper.findEmojiIDByAttributeName(attribute.name);
                     if (buttonNumber === 5 || (rowNumber === 0 &&  buttonNumber === 0)) {
                         rowArray.push(new disbut.MessageActionRow());
+                        buttonNumber = 0;
                         rowNumber += 1;
                     }
                     let button = new disbut.MessageButton()

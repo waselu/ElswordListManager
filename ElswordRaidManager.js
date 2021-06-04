@@ -13,7 +13,6 @@ const client = new Discord.Client();
 require('discord-buttons')(client);
 
 //Mandatory
-//Sort each list independently according to character when autosorting
 //Add rigomor emojis, change heroic emojis
 //Remove setconfig and helpconfig commands, add editconfig command that behave like the edit command (buttons)
 

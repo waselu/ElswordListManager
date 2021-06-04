@@ -193,21 +193,43 @@ function removeDoneCharacters(userList, removeIfFunction) {
     return userList;
 }
 
+function generateListPerAttribute(userList, attributeRequirements) {
+    let listArray = [];
+
+    for (attributeRequirement of attributeRequirements) {
+        listArray.push([]);
+    }
+
+    for (charDef of userList) {
+        for ([indexList, attributeRequirement] of attributeRequirements.entries()) {
+            let fine = true;
+            for ([attributeName, attributeValue] of Object.entries(attributeRequirement)) {
+                if (!((charDef[attributeName] >= 1) == attributeValue)) {
+                    fine = false;
+                    break;
+                }
+            }
+            if (fine) {
+                listArray[indexList].push(charDef);
+                break;
+            }
+        }
+    }
+
+    return listArray.map(function(classList) {
+        return classList.sort(function(classDefA, classDefB) {
+            return findElswordClass(classDefA['className'])['index'] - findElswordClass(classDefB['className'])['index'];
+        });
+    }).flat();
+}
+
 function rossoList(userList, config, emojis = true) {
     userList = removeDoneCharacters(userList, function(classDef) {
         return !(classDef['fresh']) && !(classDef['reset']) && !(classDef['farm']);
     });
 
     if (config['autosort']) {
-        userList = userList.sort(function(classDefA, classDefB) {
-            scoreA = (classDefA['fresh'] ? 1 : 0) * 1 + (classDefA['reset'] === true ? 1 : 0) * 2;
-            scoreB = (classDefB['fresh'] ? 1 : 0) * 1 + (classDefB['reset'] === true ? 1 : 0) * 2;
-    
-            scoreA = !scoreA ? 4 : scoreA;
-            scoreB = !scoreB ? 4 : scoreB;
-    
-            return scoreA - scoreB;
-        });
+        userList = generateListPerAttribute(userList, [{'fresh': true}, {'reset': true}, {'fresh': false, 'reset': false}]);
     }
 
     let listString = '';
@@ -237,12 +259,7 @@ function henirList(userList, config) {
     });
 
     if (config['autosort']) {
-        userList = userList.sort(function(classDefA, classDefB) {
-            scoreA = ((classDefA['henirnormal'] > 0) === true ? 1 : 0) * 1 + ((classDefA['henirchallenge'] > 0) === true ? 1 : 0) * 2;
-            scoreB = ((classDefB['henirnormal'] > 0) === true ? 1 : 0) * 1 + ((classDefB['henirchallenge'] > 0) === true ? 1 : 0) * 2;
-
-            return scoreA - scoreB;
-        });
+        userList = generateListPerAttribute(userList, [{'henirnormal': true, 'henirchallenge': false}, {'henirnormal': false, 'henirchallenge': true}, {'henirnormal': true, 'henirchallenge': true}]);
     }
 
     let listString = '';
@@ -264,12 +281,7 @@ function heroicList(userList, config) {
     });
 
     if (config['autosort']) {
-        userList = userList.sort(function(classDefA, classDefB) {
-            scoreA = ((classDefA['heroicdaily'] > 0) === true ? 1 : 0) * 1 + ((classDefA['heroicweekly'] > 0) === true ? 1 : 0) * 2;
-            scoreB = ((classDefB['heroicdaily'] > 0) === true ? 1 : 0) * 1 + ((classDefB['heroicweekly'] > 0) === true ? 1 : 0) * 2;
-
-            return scoreA - scoreB;
-        });
+        userList = generateListPerAttribute(userList, [{'heroicdaily': true, 'heroicweekly': false}, {'heroicdaily': false, 'heroicweekly': true}, {'heroicdaily': true, 'heroicweekly': true}]);
     }
     
     let listString = '';
@@ -291,12 +303,7 @@ function rigomorList(userList, config) {
     });
 
     if (config['autosort']) {
-        userList = userList.sort(function(classDefA, classDefB) {
-            scoreA = ((classDefA['rigomordaily'] > 0) === true ? 1 : 0) * 1 + ((classDefA['rigomorweekly'] > 0) === true ? 1 : 0) * 2;
-            scoreB = ((classDefB['rigomordaily'] > 0) === true ? 1 : 0) * 1 + ((classDefB['rigomorweekly'] > 0) === true ? 1 : 0) * 2;
-
-            return scoreA - scoreB;
-        });
+        userList = generateListPerAttribute(userList, [{'rigomordaily': true, 'rigomorweekly': false}, {'rigomordaily': false, 'rigomorweekly': true}, {'rigomordaily': true, 'rigomorweekly': true}]);
     }
     
     let listString = '';
