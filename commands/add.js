@@ -39,7 +39,7 @@ module.exports = {
     helpGroup: 'Characters',
 	description: 'Add characters to your list',
     example: '``' + prefix + 'add Devi CL RaS``',
-    additionalInfo: 'You can add no/not before an attribute to remove it',
+    additionalInfo: '',
 	async execute(message, args, client) {
 		await add(message, args, client);
 	}

@@ -133,7 +133,7 @@ async function doIfClassFoundInUserList(message, className, successFunction, fai
         realName = realName["name"];
     } else {
         if (strictMode) {
-            await sendBotMessage(message, className + ' was not found');
+            await sendBotMessage(message, className + ' is not an Elsword class');
             return -1;
         }
         realName = className;
