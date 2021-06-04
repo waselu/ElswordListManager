@@ -13,11 +13,13 @@ const client = new Discord.Client();
 require('discord-buttons')(client);
 
 //Mandatory
-//Add list types: SD (Later: Berthe)
+//Sort each list independently according to character when autosorting
 //Add rigomor emojis, change heroic emojis
 //Remove setconfig and helpconfig commands, add editconfig command that behave like the edit command (buttons)
-//Add other list behavior to the edit command
-//Sort each list independently according to character when autosorting
+
+//Add list types: SD (Later: Berthe)
+//Add rigomor behavior to edit command
+//Add new button line behavior to edit command
 
 //Fixes
 //Add JSON.parse(JSON.stringify)

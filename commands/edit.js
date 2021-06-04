@@ -28,10 +28,40 @@ async function getEmbedAndButtons(message, className) {
                 .setID('giant')
         ];
     }
+    function displayHeroicDaily(charDef) {
+        return [
+            new disbut.MessageButton()
+                .setEmoji('➕')
+                .setLabel('daily')
+                .setStyle('green')
+                .setID('heroicdailyplus'),
+            new disbut.MessageButton()
+                .setEmoji('➖')
+                .setLabel('daily')
+                .setStyle('red')
+                .setID('heroicdailyminus')
+        ];
+    }
+    function displayHeroicWeekly(charDef) {
+        return [
+            new disbut.MessageButton()
+                .setEmoji('➕')
+                .setLabel('weekly')
+                .setStyle('green')
+                .setID('heroicweeklyplus'),
+            new disbut.MessageButton()
+                .setEmoji('➖')
+                .setLabel('weekly')
+                .setStyle('red')
+                .setID('heroicweeklyminus')
+        ];
+    }
     function displayAlias(charDef) { return null; };
 
     let specialDisplayCases = {
         'stone': displayStone,
+        'heroicdaily': displayHeroicDaily,
+        'heroicweekly': displayHeroicWeekly,
         'alias': displayAlias
     };
     let specialEditCases = {};
@@ -44,27 +74,26 @@ async function getEmbedAndButtons(message, className) {
         let buttonNumber = 0;
 
         for (attribute of attributes) {
-            if (helper.isDefaultAttribute(attribute.name, list[message.author.id]['lists'][list[message.author.id]['active']]['type'])) {
-                if (buttonNumber === 0) {
-                    rowArray.push(new disbut.MessageActionRow());
-                    rowNumber += 1;
-                }
-                
+            if (helper.isDefaultAttribute(attribute.name, list[message.author.id]['lists'][list[message.author.id]['active']]['type'])) {                
                 if (specialDisplayCases[attribute.name]) {
                     let buttons = specialDisplayCases[attribute.name](charDef);
                     if (!buttons) {
                         continue;
                     }
                     for (button of buttons) {
-                        if (buttonNumber === 0) {
+                        if (buttonNumber === 5 || (rowNumber === 0 &&  buttonNumber === 0)) {
                             rowArray.push(new disbut.MessageActionRow());
                             rowNumber += 1;
                         }
                         rowArray[rowNumber - 1].addComponent(button);
-                        buttonNumber = (buttonNumber + 1) % 5;
+                        buttonNumber = buttonNumber + 1;
                     }
                 } else {
                     let emojiID = helper.findEmojiIDByAttributeName(attribute.name);
+                    if (buttonNumber === 5 || (rowNumber === 0 &&  buttonNumber === 0)) {
+                        rowArray.push(new disbut.MessageActionRow());
+                        rowNumber += 1;
+                    }
                     let button = new disbut.MessageButton()
                         .setStyle(charDef[attribute.name] ? 'green' : 'grey')
                         .setID(attribute.name);
@@ -74,7 +103,7 @@ async function getEmbedAndButtons(message, className) {
                         button.setLabel(attribute.name);
                     }
                     rowArray[rowNumber - 1].addComponent(button);
-                    buttonNumber = (buttonNumber + 1) % 5;
+                    buttonNumber = buttonNumber + 1;
                 }
             }
         }
@@ -83,11 +112,21 @@ async function getEmbedAndButtons(message, className) {
             .setTitle('Editing character ' + className + ' on list ' + list[message.author.id]['active'])
             .addField('List:', helper.userListToEmojiList(message.author.id));
 
-        if (list[message.author.id]['lists'][list[message.author.id]['active']]['type'] === 'rosso') {
-            embed.addField('Raid server list:', '```' + helper.userListToEmojiList(message.author.id, false) + '```')
+        let charTitle = className + ':';
+        let charContent = helper.charDefToEmojiList(charDef);
+
+        switch (list[message.author.id]['lists'][list[message.author.id]['active']]['type']) {
+            case 'rosso':
+                embed.addField('Raid server list:', '```' + helper.userListToEmojiList(message.author.id, false) + '```');
+                break;
+            case 'heroic':
+                charContent += '\n' + 'Dailies: ' + list[message.author.id]['lists'][list[message.author.id]['active']]['list'][index]['heroicdaily'];
+                charContent += '\n' + 'Weeklies ' + list[message.author.id]['lists'][list[message.author.id]['active']]['list'][index]['heroicweekly'];
+            default:
+                break;
         }
 
-        embed.addField(className + ':', helper.charDefToEmojiList(charDef));
+        embed.addField(charTitle, charContent);
 
         embedAndButtons['embed'] = embed;
         embedAndButtons['buttons'] = rowArray;
@@ -111,13 +150,17 @@ async function getEmbedAndButtons(message, className) {
 async function editAttribute(message, className, attribute, invert) {
     let list = saveManager.getList();
 
-    function callFresh(invert) {return invert ? {'fresh': false} : {'fresh': true, 'reset': false};}
-    function callReset(invert) {return !invert ? {'reset': true, 'fresh': false} : {'reset': false};}
-    function callStone(invert, stoneColor) {return invert ? {'stone': null} : {'stone': stoneColor};}
-    function callStoneRed(invert) {return callStone(invert, 'red');}
-    function callStoneBlue(invert) {return callStone(invert, 'blue');}
-    function callStoneYellow(invert) {return callStone(invert, 'yellow');}
-    function callStoneGiant(invert) {return callStone(invert, 'giant');}
+    function callFresh(invert, classDef) {return invert ? {'fresh': false} : {'fresh': true, 'reset': false};};
+    function callReset(invert, classDef) {return !invert ? {'reset': true, 'fresh': false} : {'reset': false};};
+    function callStone(invert, stoneColor) {return invert ? {'stone': null} : {'stone': stoneColor};};
+    function callStoneRed(invert, classDef) {return callStone(invert, 'red');};
+    function callStoneBlue(invert, classDef) {return callStone(invert, 'blue');};
+    function callStoneYellow(invert, classDef) {return callStone(invert, 'yellow');};
+    function callStoneGiant(invert, classDef) {return callStone(invert, 'giant');};
+    function callHeroicdailyplus(invert, classDef) { return classDef['heroicdaily'] < 3 ? {'heroicdaily': classDef['heroicdaily'] + 1} : {} };
+    function callHeroicdailyminus(invert, classDef) { return classDef['heroicdaily'] > 0 ? {'heroicdaily': classDef['heroicdaily'] - 1} : {} };
+    function callHeroicweeklyplus(invert, classDef) { return classDef['heroicweekly'] < 15 ? {'heroicweekly': classDef['heroicweekly'] + 1} : {} };
+    function callHeroicweeklyminus(invert, classDef) { return classDef['heroicweekly'] > 0 ? {'heroicweekly': classDef['heroicweekly'] - 1} : {} };
 
     let attributeCases = {
         fresh: callFresh,
@@ -126,11 +169,15 @@ async function editAttribute(message, className, attribute, invert) {
         blue: callStoneBlue,
         yellow: callStoneYellow,
         giant: callStoneGiant,
+        heroicdailyplus: callHeroicdailyplus,
+        heroicdailyminus: callHeroicdailyminus,
+        heroicweeklyplus: callHeroicweeklyplus,
+        heroicweeklyminus: callHeroicweeklyminus
     };
 
     async function classFound(message, index, realName) {
         if (attributeCases[attribute]) {
-            let setObject = attributeCases[attribute](invert);
+            let setObject = attributeCases[attribute](invert, list[message.author.id]['lists'][list[message.author.id]['active']]['list'][index]);
             for (attributeName in setObject) {
                 list[message.author.id]['lists'][list[message.author.id]['active']]['list'][index][attributeName] = setObject[attributeName];
             }
