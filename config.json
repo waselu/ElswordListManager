@@ -92,11 +92,7 @@
 		{"name": "autosort", "value": false, "canSet": ["rosso", "henir", "heroic", "rigomor"], "isDefault": ["rosso", "henir", "heroic"], "help": "Automatically sort the list, also disable the possibility to move characters", "reset": false}
 	],
 	"aliases": {
-		"newlist": ["addlist"],
 		"showlist": ["showlists"],
-		"move": ["mv"],
-		"remove": ["rm"],
-		"loglist": ["ll"],
-		"clear": ["c"]
+		"loglist": ["ll"]
 	}
 }

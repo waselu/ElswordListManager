@@ -2,7 +2,7 @@ const { prefix, typelists, configurations } = require('../config.json');
 const saveManager = require('../utils/saveManager');
 const helper = require('../utils/listHelper');
 
-async function newList(message, args, client) {
+async function addList(message, args, client) {
     if (!typelists.includes(args[0])) {
         await helper.sendBotMessage(message, args[0] + ' is not a list type\nAvailable list types: ' + typelists.join(', '));
         return;
@@ -44,7 +44,7 @@ async function newList(message, args, client) {
 }
 
 module.exports = {
-	name: 'newlist',
+	name: 'addlist',
     nbArgsMin: 2,
     nbArgsMax: 2,
     helpGroup: 'List',
@@ -52,6 +52,6 @@ module.exports = {
     example: '``' + prefix + 'newlist rosso myRaidList``\n\n**Available types**\n' + typelists.join(' '),
     additionalInfo: '',
 	async execute(message, args, client) {
-		await newList(message, args, client);
+		await addList(message, args, client);
 	}
 }
