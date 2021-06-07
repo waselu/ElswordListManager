@@ -94,7 +94,6 @@ async function getEmbedAndButtons(message, className) {
         'rigomorweekly': displayRigomorWeekly,
         'alias': displayAlias
     };
-    let specialEditCases = {};
 
     async function classFound(message, index, realName) {
         let charDef = list[message.author.id]['lists'][list[message.author.id]['active']]['list'][index];

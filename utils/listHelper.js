@@ -44,15 +44,6 @@ function findEmojiIDByAttributeName(attribute) {
     return emojiNumbers ? emojiNumbers[0] : null;
 }
 
-function canSetAttribute(attribute, type = null) {
-	for (attributeDef of attributes) {
-        if (attributeDef['name'].toLowerCase() == attribute) {
-            return type ? attributeDef['canSet'].includes(type) : (attributeDef['canSet'].length > 0);
-        }
-	}
-    return false;
-}
-
 function isDefaultAttribute(attribute, type = null) {
     for (attributeDef of attributes) {
         if (attributeDef['name'].toLowerCase() == attribute) {
@@ -62,28 +53,10 @@ function isDefaultAttribute(attribute, type = null) {
     return false;
 }
 
-function canSetConfig(configKey, type = null) {
-    for (configDef of configurations) {
-        if (configDef['name'] == configKey) {
-            return type ? configDef['canSet'].includes(type) : (configDef['canSet'].length > 0);
-        }
-    }
-    return false;
-}
-
 function isDefaultConfig(configKey, type = null) {
     for (configDef of configurations) {
         if (configDef['name'] == configKey) {
             return type ? configDef['isDefault'].includes(type) : (configDef['isDefault'].length > 0);
-        }
-    }
-    return false;
-}
-
-function isResetConfig(configKey, type = null) {
-    for (configDef of configurations) {
-        if (configDef['name'] == configKey) {
-            return type ? (configDef['canSet'].includes(type) && configDef['reset']) : configDef['reset'];
         }
     }
     return false;
@@ -229,7 +202,7 @@ function rossoList(userList, config, emojis = true) {
     });
 
     if (config['autosort']) {
-        userList = generateListPerAttribute(userList, [{'fresh': true}, {'reset': true}, {'fresh': false, 'reset': false}]);
+        userList = generateListPerAttribute(userList, [{'fresh': false, 'reset': false}, {'reset': true}, {'fresh': true}]);
     }
 
     let listString = '';
@@ -398,60 +371,11 @@ async function sendBotMessage(message, sending) {
     //discordMessage.delete({timeout: 600000});
 }
 
-async function sendFormalBotMessage(message, sendingTitle = null, sending = null, title = null, description = null, footer = null, thumbnail = null) {
-    let embed = new MessageEmbed()
-	.setAuthor('Rosso raid manager', 'https://64.media.tumblr.com/4d56ac1bcd708c38392a6b37f98a68b8/tumblr_pozk3r9eiW1wsn58z_640.jpg')
-	.setThumbnail(thumbnail)
-	.setTitle(title)
-	.setDescription(description)
-	.addField(sendingTitle, sending)
-	.setFooter(footer);
-
-    await sendBotMessage(message, embed);
-}
-
-async function sendBasicBotEmbed(message, sendingTitle = null, sending = null, footer = null, thumbnail = null) {
-    await sendFormalBotMessage(message, sendingTitle, sending, '', '', footer, thumbnail)
-}
-
 async function sendUserList(message, list = null, client) {
-    let getTypeList = saveManager.getList();
     await client.commands.get('show').execute(message, [], client);
     if (list) {
         saveManager.setList(list);
     }
-}
-
-function generateSetConfigExample() {
-    helpStr = '';
-    filteredConfigurations = configurations.filter(function(attribute) { return attribute.canSet.length != 0; });
-    for ([index, attribute] of filteredConfigurations.entries()) {
-        helpStr += '``' + attribute.name + (attribute.additionalHelp || '') + '`` ';
-        if (index % 3 == 2) {
-            helpStr += '\n';
-        }
-    }
-
-    return helpStr;
-}
-
-function checkArgNumberBetween(command, message, args, moreThan = -1, lessThan = -1) {
-    expectedStr = 'expected number of argument';
-    if (moreThan == -1 && lessThan == -1 ) { return true; };
-    if (moreThan != -1 && lessThan == -1) { expectedStr += ' higher than ' + (moreThan - 1); }
-    else if (moreThan == - 1 && lessThan != - 1) { expectedStr += ' lower than ' + (lessThan + 1); }
-    else if (moreThan == lessThan) { expectedStr += ': ' + moreThan; }
-    else { expectedStr += ' between ' + (moreThan - 1) + ' and ' + (lessThan + 1)};
-    
-    if (moreThan != -1 && args.length < moreThan) {
-        sendBotMessage(message, 'Not enough arguments provided to command ``' + command.name + '``\n' + expectedStr)
-        return false;
-    }
-    if (lessThan != -1 && args.length > lessThan) {
-        sendBotMessage(message, 'Too many arguments provided to command ``' + command.name + '``\n' + expectedStr)
-        return false;
-    }
-    return true
 }
 
 function specResetWeekly(list) {
@@ -530,11 +454,8 @@ exports.findElswordClass = findElswordClass;
 exports.findEmojiByClassName = findEmojiByClassName;
 exports.findEmojiByAttributeName = findEmojiByAttributeName;
 exports.findEmojiIDByAttributeName = findEmojiIDByAttributeName;
-exports.canSetAttribute = canSetAttribute;
 exports.isDefaultAttribute = isDefaultAttribute;
-exports.canSetConfig = canSetConfig;
 exports.isDefaultConfig = isDefaultConfig;
-exports.isResetConfig = isResetConfig;
 exports.checkUserListHasChar = checkUserListHasChar;
 exports.doIfUserFoundInUserList = doIfUserFoundInUserList;
 exports.doIfClassFoundInUserList = doIfClassFoundInUserList;
@@ -542,11 +463,7 @@ exports.doIfListFoundInUserList = doIfListFoundInUserList;
 exports.userListToEmojiList = userListToEmojiList;
 exports.charDefToEmojiList = charDefToEmojiList;
 exports.sendBotMessage = sendBotMessage;
-exports.sendFormalBotMessage = sendFormalBotMessage;
-exports.sendBasicBotEmbed = sendBasicBotEmbed;
 exports.sendUserList = sendUserList;
-exports.generateSetConfigExample = generateSetConfigExample;
-exports.checkArgNumberBetween = checkArgNumberBetween;
 exports.specResetWeekly = specResetWeekly;
 exports.resetWeekly = resetWeekly;
 exports.specResetDaily = specResetDaily;

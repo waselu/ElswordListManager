@@ -13,8 +13,6 @@ const client = new Discord.Client();
 require('discord-buttons')(client);
 
 //Mandatory
-//Remove setconfig and helpconfig commands, add listconfig command that behave like the edit command (buttons)
-
 //Add list types: SD (Later: Berthe)
 //Add new button line behavior to edit command (optional)
 //Change heroic emojis (optional)
