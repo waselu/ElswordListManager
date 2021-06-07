@@ -14,8 +14,7 @@ require('discord-buttons')(client);
 
 //Mandatory
 //Add rigomor emojis
-//Add rigomor behavior to edit command
-//Remove setconfig and helpconfig commands, add editconfig command that behave like the edit command (buttons)
+//Remove setconfig and helpconfig commands, add listconfig command that behave like the edit command (buttons)
 
 //Add list types: SD (Later: Berthe)
 //Add new button line behavior to edit command (optional)

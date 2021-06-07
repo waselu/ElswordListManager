@@ -56,12 +56,42 @@ async function getEmbedAndButtons(message, className) {
                 .setID('heroicweeklyminus')
         ];
     }
+    function displayRigomorDaily(charDef) {
+        return [
+            new disbut.MessageButton()
+                .setEmoji('➕')
+                .setLabel('daily')
+                .setStyle('green')
+                .setID('rigomordailyplus'),
+            new disbut.MessageButton()
+                .setEmoji('➖')
+                .setLabel('daily')
+                .setStyle('red')
+                .setID('rigomordailyminus')
+        ];
+    }
+    function displayRigomorWeekly(charDef) {
+        return [
+            new disbut.MessageButton()
+                .setEmoji('➕')
+                .setLabel('weekly')
+                .setStyle('green')
+                .setID('rigomorweeklyplus'),
+            new disbut.MessageButton()
+                .setEmoji('➖')
+                .setLabel('weekly')
+                .setStyle('red')
+                .setID('rigomorweeklyminus')
+        ];
+    }
     function displayAlias(charDef) { return null; };
 
     let specialDisplayCases = {
         'stone': displayStone,
         'heroicdaily': displayHeroicDaily,
         'heroicweekly': displayHeroicWeekly,
+        'rigomordaily': displayRigomorDaily,
+        'rigomorweekly': displayRigomorWeekly,
         'alias': displayAlias
     };
     let specialEditCases = {};
@@ -124,6 +154,11 @@ async function getEmbedAndButtons(message, className) {
             case 'heroic':
                 charContent += '\n' + 'Dailies: ' + list[message.author.id]['lists'][list[message.author.id]['active']]['list'][index]['heroicdaily'];
                 charContent += '\n' + 'Weeklies ' + list[message.author.id]['lists'][list[message.author.id]['active']]['list'][index]['heroicweekly'];
+                break;
+            case 'rigomor':
+                charContent += '\n' + 'Dailies: ' + list[message.author.id]['lists'][list[message.author.id]['active']]['list'][index]['rigomordaily'];
+                charContent += '\n' + 'Weeklies ' + list[message.author.id]['lists'][list[message.author.id]['active']]['list'][index]['rigomorweekly'];
+                break;
             default:
                 break;
         }
@@ -152,17 +187,21 @@ async function getEmbedAndButtons(message, className) {
 async function editAttribute(message, className, attribute, invert) {
     let list = saveManager.getList();
 
-    function callFresh(invert, classDef) {return invert ? {'fresh': false} : {'fresh': true, 'reset': false};};
-    function callReset(invert, classDef) {return !invert ? {'reset': true, 'fresh': false} : {'reset': false};};
-    function callStone(invert, stoneColor) {return invert ? {'stone': null} : {'stone': stoneColor};};
-    function callStoneRed(invert, classDef) {return callStone(invert, 'red');};
-    function callStoneBlue(invert, classDef) {return callStone(invert, 'blue');};
-    function callStoneYellow(invert, classDef) {return callStone(invert, 'yellow');};
-    function callStoneGiant(invert, classDef) {return callStone(invert, 'giant');};
-    function callHeroicdailyplus(invert, classDef) { return classDef['heroicdaily'] < 3 ? {'heroicdaily': classDef['heroicdaily'] + 1} : {} };
-    function callHeroicdailyminus(invert, classDef) { return classDef['heroicdaily'] > 0 ? {'heroicdaily': classDef['heroicdaily'] - 1} : {} };
-    function callHeroicweeklyplus(invert, classDef) { return classDef['heroicweekly'] < 15 ? {'heroicweekly': classDef['heroicweekly'] + 1} : {} };
-    function callHeroicweeklyminus(invert, classDef) { return classDef['heroicweekly'] > 0 ? {'heroicweekly': classDef['heroicweekly'] - 1} : {} };
+    function callFresh(invert, classDef) { return invert ? {'fresh': false} : {'fresh': true, 'reset': false}; };
+    function callReset(invert, classDef) { return !invert ? {'reset': true, 'fresh': false} : {'reset': false}; };
+    function callStone(invert, stoneColor) { return invert ? {'stone': null} : {'stone': stoneColor}; };
+    function callStoneRed(invert, classDef) { return callStone(invert, 'red'); };
+    function callStoneBlue(invert, classDef) { return callStone(invert, 'blue'); };
+    function callStoneYellow(invert, classDef) { return callStone(invert, 'yellow'); };
+    function callStoneGiant(invert, classDef) { return callStone(invert, 'giant'); };
+    function callHeroicdailyplus(invert, classDef) { return classDef['heroicdaily'] < 3 ? {'heroicdaily': classDef['heroicdaily'] + 1} : {}; };
+    function callHeroicdailyminus(invert, classDef) { return classDef['heroicdaily'] > 0 ? {'heroicdaily': classDef['heroicdaily'] - 1} : {}; };
+    function callHeroicweeklyplus(invert, classDef) { return classDef['heroicweekly'] < 10 ? {'heroicweekly': classDef['heroicweekly'] + 1} : {}; };
+    function callHeroicweeklyminus(invert, classDef) { return classDef['heroicweekly'] > 0 ? {'heroicweekly': classDef['heroicweekly'] - 1} : {}; };
+    function callRigomorDailyPlus(invert, classDef) { return classDef['rigomordaily'] < 5 ? {'rigomordaily': classDef['rigomordaily'] + 1} : {}; };
+    function callRigomorDailyMinus(invert, classDef) { return classDef['rigomordaily'] > 0 ? {'rigomordaily': classDef['rigomordaily'] - 1} : {}; };
+    function callRigomorWeeklyPlus(invert, classDef) { return classDef['rigomorweekly'] < 15 ? {'rigomorweekly': classDef['rigomorweekly'] + 1} : {}; };
+    function callRigomorWeeklyMinus(invert, classDef) { return classDef['rigomorweekly'] > 0 ? {'rigomorweekly': classDef['rigomorweekly'] - 1} : {}; };
 
     let attributeCases = {
         fresh: callFresh,
@@ -174,7 +213,11 @@ async function editAttribute(message, className, attribute, invert) {
         heroicdailyplus: callHeroicdailyplus,
         heroicdailyminus: callHeroicdailyminus,
         heroicweeklyplus: callHeroicweeklyplus,
-        heroicweeklyminus: callHeroicweeklyminus
+        heroicweeklyminus: callHeroicweeklyminus,
+        rigomordailyplus: callRigomorDailyPlus,
+        rigomordailyminus: callRigomorDailyMinus,
+        rigomorweeklyplus: callRigomorWeeklyPlus,
+        rigomorweeklyminus: callRigomorWeeklyMinus
     };
 
     async function classFound(message, index, realName) {
