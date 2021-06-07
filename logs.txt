@@ -2,3 +2,21 @@
 [07/06/2021 à 16:03:19] [Waselu#8834] show 
 [07/06/2021 à 16:03:26] [Waselu#8834] help add
 [07/06/2021 à 16:04:38] [Tarzan#9684] help 
+[07/06/2021 à 16:24:58] [Waselu#8834] showlist 
+[07/06/2021 à 16:25:06] [Waselu#8834] addlist heroic heroic
+[07/06/2021 à 16:25:12] [Waselu#8834] add devi aps
+[07/06/2021 à 16:25:15] [Waselu#8834] edit devi
+[07/06/2021 à 16:26:55] [Waselu#8834] edit devi
+[07/06/2021 à 16:29:26] [Waselu#8834] edit devi
+[07/06/2021 à 16:31:11] [Waselu#8834] edit devi
+[07/06/2021 à 16:32:57] [Waselu#8834] edit devi
+[07/06/2021 à 16:33:41] [Waselu#8834] edit devi
+[07/06/2021 à 16:33:45] [Waselu#8834] changelist rosso
+[07/06/2021 à 16:33:47] [Waselu#8834] edit devi
+[07/06/2021 à 16:34:20] [Waselu#8834] edit devi
+[07/06/2021 à 16:35:25] [Waselu#8834] edit devi
+[07/06/2021 à 16:36:55] [Waselu#8834] addlist rigomor rigomor
+[07/06/2021 à 16:36:58] [Waselu#8834] add devi aps
+[07/06/2021 à 16:37:01] [Waselu#8834] edit devi
+[07/06/2021 à 16:38:18] [Waselu#8834] edit devi
+[07/06/2021 à 16:40:16] [Waselu#8834] edit devi

@@ -10,7 +10,7 @@ async function getEmbedAndButtons(message, className) {
     let embedAndButtons = {embed: null, buttons: null};
 
     function displayStone(charDef) {
-        return [
+        return {'buttons': [
             new disbut.MessageButton()
                 .setEmoji(helper.findEmojiIDByAttributeName('red'))
                 .setStyle((charDef['stone'] === 'red') ? 'green' : 'grey')
@@ -27,10 +27,18 @@ async function getEmbedAndButtons(message, className) {
                 .setEmoji(helper.findEmojiIDByAttributeName('giant'))
                 .setStyle((charDef['stone'] === 'giant') ? 'green' : 'grey')
                 .setID('giant')
-        ];
+        ], 'newline': true};
+    }
+    function displayFresh(charDef) {
+        return {'buttons': [
+            new disbut.MessageButton()
+                .setEmoji(helper.findEmojiIDByAttributeName('fresh'))
+                .setStyle(charDef['fresh'] ? 'green' : 'grey')
+                .setID('fresh')
+        ], 'newline': true};
     }
     function displayHeroicDaily(charDef) {
-        return [
+        return {'buttons': [
             new disbut.MessageButton()
                 .setEmoji('➕')
                 .setLabel('daily')
@@ -40,11 +48,19 @@ async function getEmbedAndButtons(message, className) {
                 .setEmoji('➖')
                 .setLabel('daily')
                 .setStyle('red')
-                .setID('heroicdailyminus')
-        ];
+                .setID('heroicdailyminus'),
+            new disbut.MessageButton()
+                .setLabel('Max dailies')
+                .setStyle('grey')
+                .setID('heroicdailymax'),
+            new disbut.MessageButton()
+                .setLabel('0 dailies')
+                .setStyle('grey')
+                .setID('heroicdailyzero')
+        ], 'newline': true};
     }
     function displayHeroicWeekly(charDef) {
-        return [
+        return {'buttons': [
             new disbut.MessageButton()
                 .setEmoji('➕')
                 .setLabel('weekly')
@@ -54,11 +70,19 @@ async function getEmbedAndButtons(message, className) {
                 .setEmoji('➖')
                 .setLabel('weekly')
                 .setStyle('red')
-                .setID('heroicweeklyminus')
-        ];
+                .setID('heroicweeklyminus'),
+            new disbut.MessageButton()
+                .setLabel('Max weeklies')
+                .setStyle('grey')
+                .setID('heroicweeklymax'),
+            new disbut.MessageButton()
+                .setLabel('0 weeklies')
+                .setStyle('grey')
+                .setID('heroicweeklyzero')
+        ], 'newline': true};
     }
     function displayRigomorDaily(charDef) {
-        return [
+        return {'buttons': [
             new disbut.MessageButton()
                 .setEmoji('➕')
                 .setLabel('daily')
@@ -68,11 +92,19 @@ async function getEmbedAndButtons(message, className) {
                 .setEmoji('➖')
                 .setLabel('daily')
                 .setStyle('red')
-                .setID('rigomordailyminus')
-        ];
+                .setID('rigomordailyminus'),
+            new disbut.MessageButton()
+                .setLabel('Max dailies')
+                .setStyle('grey')
+                .setID('rigomordailymax'),
+            new disbut.MessageButton()
+                .setLabel('0 dailies')
+                .setStyle('grey')
+                .setID('rigomordailyzero')
+        ], 'newline': true};
     }
     function displayRigomorWeekly(charDef) {
-        return [
+        return {'buttons': [
             new disbut.MessageButton()
                 .setEmoji('➕')
                 .setLabel('weekly')
@@ -82,12 +114,21 @@ async function getEmbedAndButtons(message, className) {
                 .setEmoji('➖')
                 .setLabel('weekly')
                 .setStyle('red')
-                .setID('rigomorweeklyminus')
-        ];
+                .setID('rigomorweeklyminus'),
+            new disbut.MessageButton()
+                .setLabel('Max weeklies')
+                .setStyle('grey')
+                .setID('rigomorweeklymax'),
+            new disbut.MessageButton()
+                .setLabel('0 weeklies')
+                .setStyle('grey')
+                .setID('rigomorweeklyzero')
+        ], 'newline': true};
     }
     function displayAlias(charDef) { return null; };
 
     let specialDisplayCases = {
+        'fresh': displayFresh,
         'stone': displayStone,
         'heroicdaily': displayHeroicDaily,
         'heroicweekly': displayHeroicWeekly,
@@ -107,10 +148,15 @@ async function getEmbedAndButtons(message, className) {
             if (helper.isDefaultAttribute(attribute.name, list[message.author.id]['lists'][list[message.author.id]['active']]['type'])) {                
                 if (specialDisplayCases[attribute.name]) {
                     let buttons = specialDisplayCases[attribute.name](charDef);
-                    if (!buttons) {
+                    if (!buttons || !buttons.buttons) {
                         continue;
                     }
-                    for (button of buttons) {
+                    if (buttons.newline && buttonNumber !== 0) {
+                        rowArray.push(new disbut.MessageActionRow());
+                        buttonNumber = 0;
+                        rowNumber += 1;
+                    }
+                    for (button of buttons.buttons) {
                         if (buttonNumber === 5 || (rowNumber === 0 &&  buttonNumber === 0)) {
                             rowArray.push(new disbut.MessageActionRow());
                             buttonNumber = 0;
@@ -196,12 +242,20 @@ async function editAttribute(message, className, attribute, invert) {
     function callStoneGiant(invert, classDef) { return callStone(invert, 'giant'); };
     function callHeroicdailyplus(invert, classDef) { return classDef['heroicdaily'] < 3 ? {'heroicdaily': classDef['heroicdaily'] + 1} : {}; };
     function callHeroicdailyminus(invert, classDef) { return classDef['heroicdaily'] > 0 ? {'heroicdaily': classDef['heroicdaily'] - 1} : {}; };
+    function callHeroicdailymax(invert, classDef) { return {'heroicdaily': 3} };
+    function callHeroicdailyzero(invert, classDef) { return {'heroicdaily': 0} };
     function callHeroicweeklyplus(invert, classDef) { return classDef['heroicweekly'] < 10 ? {'heroicweekly': classDef['heroicweekly'] + 1} : {}; };
     function callHeroicweeklyminus(invert, classDef) { return classDef['heroicweekly'] > 0 ? {'heroicweekly': classDef['heroicweekly'] - 1} : {}; };
+    function callHeroicweeklymax(invert, classDef) { return {'heroicweekly': 10} };
+    function callHeroicweeklyzero(invert, classDef) { return {'heroicweekly': 0} };
     function callRigomorDailyPlus(invert, classDef) { return classDef['rigomordaily'] < 5 ? {'rigomordaily': classDef['rigomordaily'] + 1} : {}; };
     function callRigomorDailyMinus(invert, classDef) { return classDef['rigomordaily'] > 0 ? {'rigomordaily': classDef['rigomordaily'] - 1} : {}; };
+    function callRigomordailymax(invert, classDef) { return {'rigomordaily': 3} };
+    function callRigomordailyzero(invert, classDef) { return {'rigomordaily': 0} };
     function callRigomorWeeklyPlus(invert, classDef) { return classDef['rigomorweekly'] < 15 ? {'rigomorweekly': classDef['rigomorweekly'] + 1} : {}; };
     function callRigomorWeeklyMinus(invert, classDef) { return classDef['rigomorweekly'] > 0 ? {'rigomorweekly': classDef['rigomorweekly'] - 1} : {}; };
+    function callRigomorweeklymax(invert, classDef) { return {'rigomorweekly': 15} };
+    function callRigomorweeklyzero(invert, classDef) { return {'rigomorweekly': 0} };
 
     let attributeCases = {
         fresh: callFresh,
@@ -212,12 +266,20 @@ async function editAttribute(message, className, attribute, invert) {
         giant: callStoneGiant,
         heroicdailyplus: callHeroicdailyplus,
         heroicdailyminus: callHeroicdailyminus,
+        heroicdailymax: callHeroicdailymax,
+        heroicdailyzero: callHeroicdailyzero,
         heroicweeklyplus: callHeroicweeklyplus,
         heroicweeklyminus: callHeroicweeklyminus,
+        heroicweeklymax: callHeroicweeklymax,
+        heroicweeklyzero: callHeroicweeklyzero,
         rigomordailyplus: callRigomorDailyPlus,
         rigomordailyminus: callRigomorDailyMinus,
+        rigomordailymax: callRigomordailymax,
+        rigomordailyzero: callRigomordailyzero,
         rigomorweeklyplus: callRigomorWeeklyPlus,
-        rigomorweeklyminus: callRigomorWeeklyMinus
+        rigomorweeklyminus: callRigomorWeeklyMinus,
+        rigomorweeklymax: callRigomorweeklymax,
+        rigomorweeklyzero: callRigomorweeklyzero
     };
 
     async function classFound(message, index, realName) {

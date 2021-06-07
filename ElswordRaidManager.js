@@ -14,8 +14,7 @@ const client = new Discord.Client();
 require('discord-buttons')(client);
 
 //Mandatory
-//Add new button line behavior to edit command
-//Add new buttons (max daily/weekly, 0 daily/weekly)
+//Add buttons to edit other characters, remove first argument to edit command
 
 //Long term
 //Anti-conflict system on logs, 10+ files and array of used files to use an unused one, store time of command to merge afterward
