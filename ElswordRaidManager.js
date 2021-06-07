@@ -4,6 +4,7 @@ const fs = require('fs');
 const schedule = require('node-schedule');
 const { aliases } = require('./config.json');
 const saveManager = require('./utils/saveManager');
+const logs = require('./utils/logs');
 const helper = require('./utils/listHelper');
 const commandManager = require('./utils/commandManager');
 require('discord-reply');
@@ -13,14 +14,13 @@ const client = new Discord.Client();
 require('discord-buttons')(client);
 
 //Mandatory
-//Add list types: SD (Later: Berthe)
-//Add new button line behavior to edit command (optional)
+//Add new button line behavior to edit command
 //Add new buttons (max daily/weekly, 0 daily/weekly)
-//Change heroic emojis (optional)
-//Add logs (User + command)
 
-//Fixes
-//Add JSON.parse(JSON.stringify)
+//Long term
+//Anti-conflict system on logs, 10+ files and array of used files to use an unused one, store time of command to merge afterward
+
+//Add list types: SD (Later: Berthe)
 
 client.commands = new Discord.Collection();
 
@@ -40,6 +40,7 @@ for (let [commandName, commandAliases] of Object.entries(aliases)) {
 client.on('ready', function() {
 	console.log(`logged in as ${client.user.tag}`);
 	saveManager.getList(true);
+	logs.getLogs(true);
 });
 
 client.on('message', function(message) {

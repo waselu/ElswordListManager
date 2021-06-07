@@ -1,5 +1,6 @@
 
 const helper = require('./listHelper');
+const logs = require('./logs');
 const { prefix } = require('../config.json');
 
 function checkArgNumberBetween(command, message, args, moreThan = -1, lessThan = -1) {
@@ -39,6 +40,7 @@ function commandManager(message, client) {
         return;
     }
 
+    logs.log(message, command, args);
     command.execute(message, args.map(function(arg) {return arg.toLowerCase();}), args, client);
 }
 
