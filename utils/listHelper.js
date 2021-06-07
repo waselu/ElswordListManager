@@ -466,10 +466,14 @@ function specResetWeekly(list) {
                 list['list'][index]['henirchallenge'] = true;
                 break;
             case 'heroic':
-                list['list'][index]['heroicweekly'] = 10;
+                if (list['list'][index]['heroicweekly'] === 0) {
+                    list['list'][index]['heroicweekly'] = 10;
+                }
                 break;
             case 'rigomor':
-                list['list'][index]['rigomorweekly'] = 15;
+                if (list['list'][index]['rigomorweekly'] === 0) {
+                    list['list'][index]['rigomorweekly'] = 15;
+                }
                 break;
             default:
                 break;
@@ -494,10 +498,14 @@ function specResetDaily(list) {
     for ([index, classDef] of list['list'].entries()) {
         switch (list['type']) {
             case 'heroic':
-                list['list'][index]['heroicdaily'] = 3;
+                if (list['list'][index]['heroicdaily'] === 0) {
+                    list['list'][index]['heroicdaily'] = 3;
+                }
                 break;
             case 'rigomor':
-                list['list'][index]['rigomordaily'] = 5;
+                if (list['list'][index]['rigomordaily'] === 0) {
+                    list['list'][index]['rigomordaily'] = 5;
+                }
                 break;
             default:
                 break;
