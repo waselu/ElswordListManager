@@ -130,10 +130,13 @@ async function getEmbedAndButtons(message, className) {
     let specialDisplayCases = {
         'fresh': displayFresh,
         'stone': displayStone,
+
         'heroicdaily': displayHeroicDaily,
         'heroicweekly': displayHeroicWeekly,
+
         'rigomordaily': displayRigomorDaily,
         'rigomorweekly': displayRigomorWeekly,
+        
         'alias': displayAlias
     };
 
@@ -264,6 +267,7 @@ async function editAttribute(message, className, attribute, invert) {
         blue: callStoneBlue,
         yellow: callStoneYellow,
         giant: callStoneGiant,
+
         heroicdailyplus: callHeroicdailyplus,
         heroicdailyminus: callHeroicdailyminus,
         heroicdailymax: callHeroicdailymax,
@@ -272,6 +276,7 @@ async function editAttribute(message, className, attribute, invert) {
         heroicweeklyminus: callHeroicweeklyminus,
         heroicweeklymax: callHeroicweeklymax,
         heroicweeklyzero: callHeroicweeklyzero,
+
         rigomordailyplus: callRigomorDailyPlus,
         rigomordailyminus: callRigomorDailyMinus,
         rigomordailymax: callRigomordailymax,
