@@ -28,7 +28,7 @@ function getLogs(reload = false) {
 }
 
 function log(message, command, args, save = true) {
-    logs.push('[' + (new Date()).toLocaleString('fr-FR') + '] [' + message.author.username + '#' + message.author.discriminator + '] ' + command.name + ' ' + args.join(' '));
+    logs = [...[('[' + (new Date()).toLocaleString('fr-FR') + '] [' + message.author.username + '#' + message.author.discriminator + '] [' + message.author.id + '] ' + command.name + ' ' + args.join(' '))], ...logs];
     if (save) {
         saveLogs();
     }
