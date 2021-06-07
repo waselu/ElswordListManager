@@ -15,6 +15,7 @@ require('discord-buttons')(client);
 //Mandatory
 //Add list types: SD (Later: Berthe)
 //Add new button line behavior to edit command (optional)
+//Add new buttons (max daily/weekly, 0 daily/weekly)
 //Change heroic emojis (optional)
 
 //Fixes
