@@ -17,12 +17,10 @@ require('discord-buttons')(client);
 //Add new button line behavior to edit command (optional)
 //Add new buttons (max daily/weekly, 0 daily/weekly)
 //Change heroic emojis (optional)
+//Add logs (User + command)
 
 //Fixes
 //Add JSON.parse(JSON.stringify)
-
-//Things to change when adding a new list type: reset, list, set attributes, [idk]
-//Add list type in config, edit attributes, add emojis
 
 client.commands = new Discord.Collection();
 
