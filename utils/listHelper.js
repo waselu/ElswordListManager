@@ -1,5 +1,4 @@
 
-const { MessageEmbed } = require('discord.js');
 const { classes, attributes, configurations } = require('../config.json');
 const saveManager = require('./saveManager');
 

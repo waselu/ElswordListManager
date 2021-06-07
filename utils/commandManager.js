@@ -11,11 +11,11 @@ function checkArgNumberBetween(command, message, args, moreThan = -1, lessThan =
     else { expectedStr += ' between ' + (moreThan - 1) + ' and ' + (lessThan + 1)};
     
     if (moreThan != -1 && args.length < moreThan) {
-        sendBotMessage(message, 'Not enough arguments provided to command ``' + command.name + '``\n' + expectedStr)
+        helper.sendBotMessage(message, 'Not enough arguments provided to command ``' + command.name + '``\n' + expectedStr)
         return false;
     }
     if (lessThan != -1 && args.length > lessThan) {
-        sendBotMessage(message, 'Too many arguments provided to command ``' + command.name + '``\n' + expectedStr)
+        helper.sendBotMessage(message, 'Too many arguments provided to command ``' + command.name + '``\n' + expectedStr)
         return false;
     }
     return true

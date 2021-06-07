@@ -1,5 +1,4 @@
 
-const helper = require('../utils/listHelper');
 const saveManager = require('../utils/saveManager');
 
 async function clear(message, args, client) {

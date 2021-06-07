@@ -1,3 +1,4 @@
+
 const { prefix, configurations } = require('../config.json');
 const { MessageEmbed } = require('discord.js');
 const saveManager = require('../utils/saveManager');
