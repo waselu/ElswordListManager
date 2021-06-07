@@ -80,8 +80,8 @@
 		{"name": "heroicdaily", "value": 3, "canSet": ["heroic"], "isDefault": ["heroic"], "emoji": "<:heroicdaily:844868721385668628>", "serverEmoji": "", "additionalHelp": " [nbOfRunRemaining]", "help": "Set the remaining number of run for heroic dailies"},
 		{"name": "heroicweekly", "value": 10, "canSet": ["heroic"], "isDefault": ["heroic"], "emoji": "<:heroicweekly:844868732370550814>", "serverEmoji": "", "additionalHelp": " [nbOfRunRemaining]", "help": "Set the remaining number of run for heroic weeklies"},
 
-		{"name": "rigomordaily", "value": 5, "canSet": ["rigomor"], "isDefault": ["rigomor"], "emoji": "🇩", "serverEmoji": "", "additionalHelp": " [nbOfRunRemaining]", "help": "Set the remaining number of run for rigomor dailies"},
-		{"name": "rigomorweekly", "value": 15, "canSet": ["rigomor"], "isDefault": ["rigomor"], "emoji": "🇼", "serverEmoji": "", "additionalHelp": " [nbOfRunRemaining]", "help": "Set the remaining number of run for rigomor weeklies"},
+		{"name": "rigomordaily", "value": 5, "canSet": ["rigomor"], "isDefault": ["rigomor"], "emoji": "<:rigomordaily:851376456641806337>", "serverEmoji": "", "additionalHelp": " [nbOfRunRemaining]", "help": "Set the remaining number of run for rigomor dailies"},
+		{"name": "rigomorweekly", "value": 15, "canSet": ["rigomor"], "isDefault": ["rigomor"], "emoji": "<:rigomorweekly:851376475143536672>", "serverEmoji": "", "additionalHelp": " [nbOfRunRemaining]", "help": "Set the remaining number of run for rigomor weeklies"},
 
 	    {"name": "farm", "value": false, "canSet": ["rosso"], "isDefault": ["rosso"], "emoji": "🌾", "serverEmoji": "", "help": "Set a character as a farm character, he will still appear on your list even if not fresh"},
 	    {"name": "linebreak", "value": false, "canSet": ["rosso", "henir", "heroic", "rigomor"], "isDefault": ["rosso", "henir", "heroic", "rigomor"], "emoji": "⤵️", "serverEmoji": "", "help": "Add a line break after this character"},

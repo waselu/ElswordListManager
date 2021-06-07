@@ -13,7 +13,6 @@ const client = new Discord.Client();
 require('discord-buttons')(client);
 
 //Mandatory
-//Add rigomor emojis
 //Remove setconfig and helpconfig commands, add listconfig command that behave like the edit command (buttons)
 
 //Add list types: SD (Later: Berthe)
