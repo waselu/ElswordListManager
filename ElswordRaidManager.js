@@ -14,12 +14,12 @@ const client = new Discord.Client();
 require('discord-buttons')(client);
 
 //Mandatory
+//Add list types: SD (Later: Berthe)
 
 //Long term
 //Merge edit and config commands
+//Clear logs older than 1 month (parse log date)
 //Anti-conflict system on logs, 10+ files and array of used files to use an unused one, store time of command to merge afterward
-
-//Add list types: SD (Later: Berthe)
 
 client.commands = new Discord.Collection();
 

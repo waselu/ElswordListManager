@@ -346,7 +346,12 @@ async function editAttribute(message, selectedClass, attribute, invert) {
 async function createMessageAndCollector(message, selectedClass = null, m = null) {
     if (!selectedClass) {
         let list = saveManager.getList();
-        selectedClass = list[message.author.id]['lists'][list[message.author.id]['active']]['list'][0]['className'];
+        let activeUserList = list[message.author.id]['lists'][list[message.author.id]['active']]['list'];
+        if (activeUserList.length === 0) {
+            helper.sendBotMessage(message, 'You cannot edit an empty list');
+            return;
+        }
+        selectedClass = activeUserList[0]['className'];
     }
 
     let embedAndButtons = await getEmbedAndButtons(message, selectedClass);
