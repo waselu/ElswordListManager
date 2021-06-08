@@ -27,6 +27,13 @@ function findEmojiByClassName(elswordClass) {
     return null;
 }
 
+function findEmojiIDByClassName(elswordClass) {
+    let emoji = findEmojiByClassName(elswordClass);
+    let emojiNumbers = emoji.match(/\d+/);
+
+    return emojiNumbers ? emojiNumbers[0] : null;
+}
+
 function findEmojiByAttributeName(attribute, forServer = false) {
     for (attributeDef of attributes) {
         if (attributeDef['name'] == attribute) {
@@ -451,6 +458,7 @@ function resetDaily() {
 
 exports.findElswordClass = findElswordClass;
 exports.findEmojiByClassName = findEmojiByClassName;
+exports.findEmojiIDByClassName = findEmojiIDByClassName;
 exports.findEmojiByAttributeName = findEmojiByAttributeName;
 exports.findEmojiIDByAttributeName = findEmojiIDByAttributeName;
 exports.isDefaultAttribute = isDefaultAttribute;

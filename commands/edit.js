@@ -5,7 +5,7 @@ const saveManager = require('../utils/saveManager');
 const helper = require('../utils/listHelper');
 const disbut = require('discord-buttons');
 
-async function getEmbedAndButtons(message, className) {
+async function getEmbedAndButtons(message, selectedClass) {
     let list = saveManager.getList();
     let embedAndButtons = {embed: null, buttons: null};
 
@@ -190,10 +190,10 @@ async function getEmbedAndButtons(message, className) {
         }
 
         let embed = new MessageEmbed()
-            .setTitle('Editing character ' + className + ' on list ' + list[message.author.id]['active'])
+            .setTitle('Editing character ' + selectedClass + ' on list ' + list[message.author.id]['active'])
             .addField('List:', helper.userListToEmojiList(message.author.id));
 
-        let charTitle = className + ':';
+        let charTitle = selectedClass + ':';
         let charContent = helper.charDefToEmojiList(charDef);
 
         switch (list[message.author.id]['lists'][list[message.author.id]['active']]['type']) {
@@ -228,12 +228,45 @@ async function getEmbedAndButtons(message, className) {
         embedAndButtons = null;
     }
 
-    await helper.doIfClassFoundInUserList(message, className, classFound, classNotFound, userNotFound);
+    await helper.doIfClassFoundInUserList(message, selectedClass, classFound, classNotFound, userNotFound);
     
     return embedAndButtons;
 }
 
-async function editAttribute(message, className, attribute, invert) {
+async function createCharacterButtons(message, selectedClass) {
+    let list = saveManager.getList();
+    let activeUserList = list[message.author.id]['lists'][list[message.author.id]['active']]['list'];
+
+    let rowArray = [];
+    let rowNumber = 0;
+    let buttonNumber = 0;
+    for (charDef of activeUserList) {
+        if (buttonNumber === 5 || (rowNumber === 0 &&  buttonNumber === 0)) {
+            rowArray.push(new disbut.MessageActionRow());
+            buttonNumber = 0;
+            rowNumber += 1;
+        }
+
+        let label = charDef['alias'] || charDef['className'];
+
+        let button = new disbut.MessageButton()
+            .setEmoji(helper.findEmojiIDByClassName(charDef['className']))
+            .setStyle((label.toLowerCase() === selectedClass.toLowerCase()) ? 'green' : 'grey')
+            .setID('character_' + label);
+
+        if (label !== charDef['className']) {
+            button.setLabel(label);
+        }
+
+        rowArray[rowNumber - 1].addComponent(button);
+
+        buttonNumber += 1;
+    }
+
+    return rowArray;
+}
+
+async function editAttribute(message, selectedClass, attribute, invert) {
     let list = saveManager.getList();
 
     function callFresh(invert, classDef) { return invert ? {'fresh': false} : {'fresh': true, 'reset': false}; };
@@ -307,34 +340,46 @@ async function editAttribute(message, className, attribute, invert) {
         await helper.sendBotMessage(message, "You have no list yet");
     }
 
-    await helper.doIfClassFoundInUserList(message, className, classFound, classNotFound, userNotFound);
+    await helper.doIfClassFoundInUserList(message, selectedClass, classFound, classNotFound, userNotFound);
 }
 
-async function createMessageAndCollector(message, className, m = null) {
-    let embedAndButtons = await getEmbedAndButtons(message, className);
+async function createMessageAndCollector(message, selectedClass = null, m = null) {
+    if (!selectedClass) {
+        let list = saveManager.getList();
+        selectedClass = list[message.author.id]['lists'][list[message.author.id]['active']]['list'][0]['className'];
+    }
+
+    let embedAndButtons = await getEmbedAndButtons(message, selectedClass);
 
     if (!embedAndButtons) {
         return;
     }
 
+    let charButtons = await createCharacterButtons(message, selectedClass);
+
     if (m) {
-        await m.edit('', { components: embedAndButtons['buttons'], embed: embedAndButtons['embed'] });
+        await m.edit('', { components: [...charButtons, ...embedAndButtons['buttons']], embed: embedAndButtons['embed'] });
     } else {
-        var m = await message.channel.send('', { components: embedAndButtons['buttons'], embed: embedAndButtons['embed'] });
+        var m = await message.channel.send('', { components: [...charButtons, ...embedAndButtons['buttons']], embed: embedAndButtons['embed'] });
     }
     const filter = (button) => button.clicker.user.id === message.author.id;
     const collector = m.createButtonCollector(filter, {time: 60000});
 
     collector.on('collect', async function (button) {
         await button.defer();
+        if (button.id.startsWith('character_')) {
+            selectedClass = button.id.replace('character_','');
+            collector.stop();
+            return;
+        }
         let invert = embedAndButtons['buttons'].map(function(row) {return row.components;}).flat().filter(b => b.custom_id === button.id)[0].style === 3;
-        await editAttribute(message, className, button.id, invert);
+        await editAttribute(message, selectedClass, button.id, invert);
         collector.stop();
     });
 
     collector.on('end', async function() {
         if (collector.collected.first()) {
-            createMessageAndCollector(message, className, m);
+            createMessageAndCollector(message, selectedClass, m);
         } else {
             m.delete();
         }
@@ -342,13 +387,28 @@ async function createMessageAndCollector(message, className, m = null) {
 }
 
 async function edit(message, args, client) {
-    createMessageAndCollector(message, args[0]);
+    let list = saveManager.getList();
+    let activeList = list[message.author.id]['active'];
+
+    async function listFound() {
+        createMessageAndCollector(message);
+    }
+
+    async function listNotFound() {
+        await helper.sendBotMessage(message, 'Your active list was not found, please contact Waselu#8834');
+    }
+
+    async function userNotFound() {
+        await helper.sendBotMessage(message, 'You have no list yet');
+    }
+
+    helper.doIfListFoundInUserList(message, activeList, listFound, listNotFound, userNotFound);
 }
 
 module.exports = {
 	name: 'edit',
-    nbArgsMin: 1,
-    nbArgsMax: 1,
+    nbArgsMin: 0,
+    nbArgsMax: 0,
     helpGroup: 'Characters',
 	description: 'Edit one of your character',
     example: '``' + prefix + 'edit MP``',

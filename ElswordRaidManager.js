@@ -14,9 +14,9 @@ const client = new Discord.Client();
 require('discord-buttons')(client);
 
 //Mandatory
-//Add buttons to edit other characters, remove first argument to edit command
 
 //Long term
+//Merge edit and config commands
 //Anti-conflict system on logs, 10+ files and array of used files to use an unused one, store time of command to merge afterward
 
 //Add list types: SD (Later: Berthe)
