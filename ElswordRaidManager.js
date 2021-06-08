@@ -15,10 +15,14 @@ require('discord-buttons')(client);
 
 //Mandatory
 //Add list types: SD (Later: Berthe)
+//Disable buttons instead of removing message
+//Check if other users can interact with buttons
 
 //Long term
 //Merge edit and move commands
 //Merge edit and config commands
+//Add button calculation to even out character buttons
+
 //Clear logs older than 1 month (parse log date)
 //Anti-conflict system on logs, 10+ files and array of used files to use an unused one, store time of command to merge afterward
 
