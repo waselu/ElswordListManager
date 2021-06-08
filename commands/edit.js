@@ -415,8 +415,8 @@ module.exports = {
     nbArgsMin: 0,
     nbArgsMax: 0,
     helpGroup: 'Characters',
-	description: 'Edit one of your character',
-    example: '``' + prefix + 'edit MP``',
+	description: 'Edit your current list',
+    example: '``' + prefix + 'edit``',
     additionalInfo: '',
 	async execute(message, args, trueArgs, client) {
 		await edit(message, args, client);

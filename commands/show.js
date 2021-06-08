@@ -42,7 +42,7 @@ module.exports = {
     nbArgsMin: 0,
     nbArgsMax: 0,
     helpGroup: 'List',
-	description: 'Show the state of the selectionned list',
+	description: 'Show the current list',
     example: '``' + prefix + 'show``',
     additionalInfo: '',
 	async execute(message, args, trueArgs, client) {
