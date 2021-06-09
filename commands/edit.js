@@ -233,20 +233,64 @@ async function getEmbedAndButtons(message, selectedClass) {
     return embedAndButtons;
 }
 
+function cutCharacterButtons(buttonArray) {
+    let nbElement = buttonArray.length;
+
+    let configArray = [
+		{'nbPerRow': 1, 'nbOfRows': Math.trunc(nbElement / 1), 'remain': nbElement % 1},
+		{'nbPerRow': 2, 'nbOfRows': Math.trunc(nbElement / 2), 'remain': nbElement % 2},
+		{'nbPerRow': 3, 'nbOfRows': Math.trunc(nbElement / 3), 'remain': nbElement % 3},
+		{'nbPerRow': 4, 'nbOfRows': Math.trunc(nbElement / 4), 'remain': nbElement % 4},
+		{'nbPerRow': 5, 'nbOfRows': Math.trunc(nbElement / 5), 'remain': nbElement % 5}
+	];
+
+	configArray = configArray.filter(function(config) {
+		return config.remain !== 1 && (config.nbPerRow !== 1 || config.nbOfRows === 1);
+	});
+
+	let perfectConfig = null;
+
+	//Find config with perfect rows
+	configArray.map(function(config) {
+		if (config.remain === 0 && (!perfectConfig || config.nbPerRow > perfectConfig.nbPerRow) && (config.nbPerRow >= Math.min(4, nbElement / 2) || (config.nbPerRow === nbElement))) {
+			perfectConfig = config;
+		}
+	})
+	if (!perfectConfig) {
+        //Find config with best remain but highest buttonPerRow
+        configArray.map(function(config) {
+            if (!perfectConfig || (perfectConfig.remain <= config.remain)) {
+                perfectConfig = config;
+            }
+        });
+	}
+
+    let rowArray = [];
+	let nbButton = 0;
+    let nbRow = 0;
+    while (buttonArray.length !== 0) {
+        if (nbButton === 0) {
+            rowArray.push(new disbut.MessageActionRow());
+            nbRow += 1;
+        }
+        rowArray[nbRow - 1].addComponent(buttonArray[0]);
+        buttonArray.shift();
+        nbButton += 1;
+        if (nbButton === perfectConfig.nbPerRow) {
+            nbButton = 0;
+        }
+    }
+
+    return rowArray;
+}
+
 async function createCharacterButtons(message, selectedClass) {
     let list = saveManager.getList();
     let activeUserList = list[message.author.id]['lists'][list[message.author.id]['active']]['list'];
 
-    let rowArray = [];
-    let rowNumber = 0;
-    let buttonNumber = 0;
-    for (charDef of activeUserList) {
-        if (buttonNumber === 5 || (rowNumber === 0 &&  buttonNumber === 0)) {
-            rowArray.push(new disbut.MessageActionRow());
-            buttonNumber = 0;
-            rowNumber += 1;
-        }
+    let buttonArray = [];
 
+    for (charDef of activeUserList) {
         let label = charDef['alias'] || charDef['className'];
 
         let button = new disbut.MessageButton()
@@ -258,12 +302,10 @@ async function createCharacterButtons(message, selectedClass) {
             button.setLabel(label);
         }
 
-        rowArray[rowNumber - 1].addComponent(button);
-
-        buttonNumber += 1;
+        buttonArray.push(button);
     }
 
-    return rowArray;
+    return cutCharacterButtons(buttonArray);
 }
 
 async function editAttribute(message, selectedClass, attribute, invert) {
