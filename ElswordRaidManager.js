@@ -16,6 +16,7 @@ require('discord-buttons')(client);
 //Mandatory
 //Add list types: SD (Later: Berthe)
 //Disable buttons instead of removing message
+//Remove config command, make autosort default value = true
 
 //Long term
 //Clear logs older than 1 month (parse log date)
