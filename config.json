@@ -84,7 +84,6 @@
 		{"name": "rigomorweekly", "value": 15, "isDefault": ["rigomor"], "emoji": "<:rigomorweekly:851376475143536672>", "serverEmoji": ""},
 
 	    {"name": "farm", "value": false, "isDefault": ["rosso"], "emoji": "🌾", "serverEmoji": ""},
-	    {"name": "linebreak", "value": false, "isDefault": ["rosso", "henir", "heroic", "rigomor"], "emoji": "⤵️", "serverEmoji": ""},
 	    {"name": "alias", "value": null, "isDefault": ["rosso", "henir", "heroic", "rigomor"], "emoji": "", "serverEmoji": ""}
 	],
 	"typelists": ["rosso", "henir", "heroic", "rigomor"],

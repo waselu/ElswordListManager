@@ -18,9 +18,6 @@ require('discord-buttons')(client);
 //Disable buttons instead of removing message
 
 //Long term
-//Merge edit and move commands (Add list of all characters to edit command)
-//Merge edit and config commands (Maybe not)
-
 //Clear logs older than 1 month (parse log date)
 //Anti-conflict system on logs, 10+ files and array of used files to use an unused one, store time of command to merge afterward
 //Discord slash commands

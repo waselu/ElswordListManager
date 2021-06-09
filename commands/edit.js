@@ -233,64 +233,22 @@ async function getEmbedAndButtons(message, selectedClass) {
     return embedAndButtons;
 }
 
-function cutCharacterButtons(buttonArray) {
-    let nbElement = buttonArray.length;
-
-    let configArray = [
-		{'nbPerRow': 1, 'nbOfRows': Math.trunc(nbElement / 1), 'remain': nbElement % 1},
-		{'nbPerRow': 2, 'nbOfRows': Math.trunc(nbElement / 2), 'remain': nbElement % 2},
-		{'nbPerRow': 3, 'nbOfRows': Math.trunc(nbElement / 3), 'remain': nbElement % 3},
-		{'nbPerRow': 4, 'nbOfRows': Math.trunc(nbElement / 4), 'remain': nbElement % 4},
-		{'nbPerRow': 5, 'nbOfRows': Math.trunc(nbElement / 5), 'remain': nbElement % 5}
-	];
-
-	configArray = configArray.filter(function(config) {
-		return config.remain !== 1 && (config.nbPerRow !== 1 || config.nbOfRows === 1);
-	});
-
-	let perfectConfig = null;
-
-	//Find config with perfect rows
-	configArray.map(function(config) {
-		if (config.remain === 0 && (!perfectConfig || config.nbPerRow > perfectConfig.nbPerRow) && (config.nbPerRow >= Math.min(4, nbElement / 2) || (config.nbPerRow === nbElement))) {
-			perfectConfig = config;
-		}
-	})
-	if (!perfectConfig) {
-        //Find config with best remain but highest buttonPerRow
-        configArray.map(function(config) {
-            if (!perfectConfig || (perfectConfig.remain <= config.remain)) {
-                perfectConfig = config;
-            }
-        });
-	}
-
-    let rowArray = [];
-	let nbButton = 0;
-    let nbRow = 0;
-    while (buttonArray.length !== 0) {
-        if (nbButton === 0) {
-            rowArray.push(new disbut.MessageActionRow());
-            nbRow += 1;
-        }
-        rowArray[nbRow - 1].addComponent(buttonArray[0]);
-        buttonArray.shift();
-        nbButton += 1;
-        if (nbButton === perfectConfig.nbPerRow) {
-            nbButton = 0;
-        }
-    }
-
-    return rowArray;
-}
-
-async function createCharacterButtons(message, selectedClass) {
+async function createCharacterButtons(message, selectedClass, currentPanel) {
     let list = saveManager.getList();
     let activeUserList = list[message.author.id]['lists'][list[message.author.id]['active']]['list'];
 
-    let buttonArray = [];
+    let rowArray = [];
+    rowArray.push(new disbut.MessageActionRow());
+    rowArray.push(new disbut.MessageActionRow());
 
-    for (charDef of activeUserList) {
+    let startIndex = 5 * currentPanel;
+    let endIndex = 5 * (currentPanel + 1);
+
+    while (startIndex < endIndex) {
+        if (startIndex === activeUserList.length) {
+            break;
+        }
+        let charDef = activeUserList[startIndex];
         let label = charDef['alias'] || charDef['className'];
 
         let button = new disbut.MessageButton()
@@ -302,10 +260,42 @@ async function createCharacterButtons(message, selectedClass) {
             button.setLabel(label);
         }
 
-        buttonArray.push(button);
+        rowArray[0].addComponent(button);
+        startIndex += 1;
     }
 
-    return cutCharacterButtons(buttonArray);
+    async function classFound(message, index, realName) {
+        let leftButton = new disbut.MessageButton()
+            .setEmoji('⬅️')
+            .setLabel('Move to the left')
+            .setStyle('grey')
+            .setID('changepanelminus');
+        if (currentPanel === 0) {
+            leftButton.setDisabled();
+        }
+        let rightButton = new disbut.MessageButton()
+            .setEmoji('➡️')
+            .setLabel('Move to the right')
+            .setStyle('grey')
+            .setID('changepanelplus');
+        if (startIndex !== endIndex) {
+            rightButton.setDisabled();
+        }
+        rowArray[1].addComponent(leftButton);
+        rowArray[1].addComponent(rightButton);
+    }
+
+    async function classNotFound(message, realName) {
+        await helper.sendBotMessage(message, realName + " was not found in your list");
+    }
+
+    async function userNotFound(message, realName) {
+        await helper.sendBotMessage(message, "You have no list yet");
+    }
+
+    await helper.doIfClassFoundInUserList(message, selectedClass, classFound, classNotFound, userNotFound);
+
+    return rowArray;
 }
 
 async function editAttribute(message, selectedClass, attribute, invert) {
@@ -385,7 +375,7 @@ async function editAttribute(message, selectedClass, attribute, invert) {
     await helper.doIfClassFoundInUserList(message, selectedClass, classFound, classNotFound, userNotFound);
 }
 
-async function createMessageAndCollector(message, selectedClass = null, m = null) {
+async function createMessageAndCollector(message, selectedClass = null, m = null, currentPanel = 0) {
     if (!selectedClass) {
         let list = saveManager.getList();
         let activeUserList = list[message.author.id]['lists'][list[message.author.id]['active']]['list'];
@@ -397,12 +387,7 @@ async function createMessageAndCollector(message, selectedClass = null, m = null
     }
 
     let embedAndButtons = await getEmbedAndButtons(message, selectedClass);
-
-    if (!embedAndButtons) {
-        return;
-    }
-
-    let charButtons = await createCharacterButtons(message, selectedClass);
+    let charButtons = await createCharacterButtons(message, selectedClass, currentPanel);
 
     if (m) {
         await m.edit('', { components: [...charButtons, ...embedAndButtons['buttons']], embed: embedAndButtons['embed'] });
@@ -416,17 +401,23 @@ async function createMessageAndCollector(message, selectedClass = null, m = null
         await button.defer();
         if (button.id.startsWith('character_')) {
             selectedClass = button.id.replace('character_','');
-            collector.stop();
-            return;
+        } else if (button.id.startsWith('changepanel')) {
+            let move = button.id.replace('changepanel','');
+            if (move === 'minus') {
+                currentPanel -= 1;
+            } else if (move === 'plus') {
+                currentPanel += 1;
+            }
+        } else {
+            let invert = embedAndButtons['buttons'].map(function(row) {return row.components;}).flat().filter(b => b.custom_id === button.id)[0].style === 3;
+            await editAttribute(message, selectedClass, button.id, invert);
         }
-        let invert = embedAndButtons['buttons'].map(function(row) {return row.components;}).flat().filter(b => b.custom_id === button.id)[0].style === 3;
-        await editAttribute(message, selectedClass, button.id, invert);
         collector.stop();
     });
 
     collector.on('end', async function() {
         if (collector.collected.first()) {
-            createMessageAndCollector(message, selectedClass, m);
+            createMessageAndCollector(message, selectedClass, m, currentPanel);
         } else {
             m.delete();
         }
