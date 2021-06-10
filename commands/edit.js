@@ -239,7 +239,6 @@ async function createCharacterButtons(message, selectedClass, currentPanel) {
 
     let rowArray = [];
     rowArray.push(new disbut.MessageActionRow());
-    rowArray.push(new disbut.MessageActionRow());
 
     let startIndex = 5 * currentPanel;
     let endIndex = 5 * (currentPanel + 1);
@@ -267,7 +266,7 @@ async function createCharacterButtons(message, selectedClass, currentPanel) {
     async function classFound(message, index, realName) {
         let leftButton = new disbut.MessageButton()
             .setEmoji('⬅️')
-            .setLabel('Move to the left')
+            .setLabel('Previous characters')
             .setStyle('grey')
             .setID('changepanelminus');
         if (currentPanel === 0) {
@@ -275,14 +274,17 @@ async function createCharacterButtons(message, selectedClass, currentPanel) {
         }
         let rightButton = new disbut.MessageButton()
             .setEmoji('➡️')
-            .setLabel('Move to the right')
+            .setLabel('Next characters')
             .setStyle('grey')
             .setID('changepanelplus');
         if (startIndex !== endIndex) {
             rightButton.setDisabled();
         }
-        rowArray[1].addComponent(leftButton);
-        rowArray[1].addComponent(rightButton);
+        if (activeUserList.length > 5) {
+            rowArray.push(new disbut.MessageActionRow());
+            rowArray[1].addComponent(leftButton);
+            rowArray[1].addComponent(rightButton);
+        }
     }
 
     async function classNotFound(message, realName) {
@@ -376,8 +378,8 @@ async function editAttribute(message, selectedClass, attribute, invert) {
 }
 
 async function createMessageAndCollector(message, selectedClass = null, m = null, currentPanel = 0) {
+    let list = JSON.parse(JSON.stringify(saveManager.getList()));
     if (!selectedClass) {
-        let list = saveManager.getList();
         let activeUserList = list[message.author.id]['lists'][list[message.author.id]['active']]['list'];
         if (activeUserList.length === 0) {
             helper.sendBotMessage(message, 'You cannot edit an empty list');
@@ -399,6 +401,10 @@ async function createMessageAndCollector(message, selectedClass = null, m = null
 
     collector.on('collect', async function (button) {
         await button.defer();
+        if (!(JSON.stringify(list) === JSON.stringify(saveManager.getList()))) {
+            await m.edit(new MessageEmbed().setTitle('__***Your list changed, you cannot use this anymore***__'))
+            return;
+        }
         if (button.id.startsWith('character_')) {
             selectedClass = button.id.replace('character_','');
         } else if (button.id.startsWith('changepanel')) {
