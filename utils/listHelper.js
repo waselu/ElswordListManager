@@ -207,9 +207,7 @@ function rossoList(userList, config, emojis = true) {
         return !(classDef['fresh']) && !(classDef['reset']) && !(classDef['farm']);
     });
 
-    if (config['autosort']) {
-        userList = generateListPerAttribute(userList, [{'fresh': false, 'reset': false}, {'reset': true}, {'fresh': true}]);
-    }
+    userList = generateListPerAttribute(userList, [{'fresh': false, 'reset': false}, {'reset': true}, {'fresh': true}]);
 
     let listString = '';
     for ([index, classDef] of userList.entries()) {
@@ -236,9 +234,7 @@ function henirList(userList, config) {
         return !(classDef['henirnormal']) && !(classDef['henirchallenge']);
     });
 
-    if (config['autosort']) {
-        userList = generateListPerAttribute(userList, [{'henirnormal': true, 'henirchallenge': false}, {'henirnormal': false, 'henirchallenge': true}, {'henirnormal': true, 'henirchallenge': true}]);
-    }
+    userList = generateListPerAttribute(userList, [{'henirnormal': true, 'henirchallenge': false}, {'henirnormal': false, 'henirchallenge': true}, {'henirnormal': true, 'henirchallenge': true}]);
 
     let listString = '';
     for ([index, classDef] of userList.entries()) {
@@ -257,9 +253,7 @@ function heroicList(userList, config) {
         return !(classDef['heroicdaily']) && !(classDef['heroicweekly']);
     });
 
-    if (config['autosort']) {
-        userList = generateListPerAttribute(userList, [{'heroicdaily': true, 'heroicweekly': false}, {'heroicdaily': false, 'heroicweekly': true}, {'heroicdaily': true, 'heroicweekly': true}]);
-    }
+    userList = generateListPerAttribute(userList, [{'heroicdaily': true, 'heroicweekly': false}, {'heroicdaily': false, 'heroicweekly': true}, {'heroicdaily': true, 'heroicweekly': true}]);
     
     let listString = '';
     for ([index, classDef] of userList.entries()) {
@@ -278,9 +272,7 @@ function rigomorList(userList, config) {
         return !(classDef['rigomordaily']) && !(classDef['rigomorweekly']);
     });
 
-    if (config['autosort']) {
-        userList = generateListPerAttribute(userList, [{'rigomordaily': true, 'rigomorweekly': false}, {'rigomordaily': false, 'rigomorweekly': true}, {'rigomordaily': true, 'rigomorweekly': true}]);
-    }
+    userList = generateListPerAttribute(userList, [{'rigomordaily': true, 'rigomorweekly': false}, {'rigomordaily': false, 'rigomorweekly': true}, {'rigomordaily': true, 'rigomorweekly': true}]);
     
     let listString = '';
     for ([index, classDef] of userList.entries()) {

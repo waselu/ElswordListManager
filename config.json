@@ -88,7 +88,6 @@
 	],
 	"typelists": ["rosso", "henir", "heroic", "rigomor"],
 	"configurations": [
-		{"name": "autosort", "value": false, "isDefault": ["rosso", "henir", "heroic", "rigomor"]}
 	],
 	"aliases": {
 		"showlist": ["showlists"],

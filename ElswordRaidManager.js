@@ -15,7 +15,6 @@ require('discord-buttons')(client);
 
 //Mandatory
 //Add list types: SD (Later: Berthe)
-//Remove config command, make autosort default value = true
 
 //Long term
 //Clear logs older than 1 month (parse log date)
