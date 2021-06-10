@@ -229,7 +229,7 @@ async function getEmbedAndButtons(message, selectedClass) {
     }
 
     await helper.doIfClassFoundInUserList(message, selectedClass, classFound, classNotFound, userNotFound);
-    
+
     return embedAndButtons;
 }
 
@@ -395,7 +395,7 @@ async function createMessageAndCollector(message, selectedClass = null, m = null
         var m = await message.channel.send('', { components: [...charButtons, ...embedAndButtons['buttons']], embed: embedAndButtons['embed'] });
     }
     const filter = (button) => button.clicker.user.id === message.author.id;
-    const collector = m.createButtonCollector(filter, {time: 60000});
+    const collector = m.createButtonCollector(filter, {time: 300000});
 
     collector.on('collect', async function (button) {
         await button.defer();
@@ -419,7 +419,7 @@ async function createMessageAndCollector(message, selectedClass = null, m = null
         if (collector.collected.first()) {
             createMessageAndCollector(message, selectedClass, m, currentPanel);
         } else {
-            m.delete();
+            await m.edit(new MessageEmbed().setTitle('__***Timed out***__'))
         }
     });
 }

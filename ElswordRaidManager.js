@@ -15,7 +15,7 @@ require('discord-buttons')(client);
 
 //Mandatory
 //Add list types: SD (Later: Berthe)
-//Disable buttons instead of removing message
+//Check list integrity on button click
 //Remove config command, make autosort default value = true
 
 //Long term
