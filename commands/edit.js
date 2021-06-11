@@ -125,6 +125,50 @@ async function getEmbedAndButtons(message, selectedClass) {
                 .setID('rigomorweeklyzero')
         ], 'newline': true};
     }
+    function displaySdDaily(charDef) {
+        return {'buttons': [
+            new disbut.MessageButton()
+                .setEmoji('➕')
+                .setLabel('daily')
+                .setStyle('green')
+                .setID('sddailyplus'),
+            new disbut.MessageButton()
+                .setEmoji('➖')
+                .setLabel('daily')
+                .setStyle('red')
+                .setID('sddailyminus'),
+            new disbut.MessageButton()
+                .setLabel('Max dailies')
+                .setStyle('grey')
+                .setID('sddailymax'),
+            new disbut.MessageButton()
+                .setLabel('0 dailies')
+                .setStyle('grey')
+                .setID('sddailyzero')
+        ], 'newline': true};
+    }
+    function displaySdWeekly(charDef) {
+        return {'buttons': [
+            new disbut.MessageButton()
+                .setEmoji('➕')
+                .setLabel('weekly')
+                .setStyle('green')
+                .setID('sdweeklyplus'),
+            new disbut.MessageButton()
+                .setEmoji('➖')
+                .setLabel('weekly')
+                .setStyle('red')
+                .setID('sdweeklyminus'),
+            new disbut.MessageButton()
+                .setLabel('Max weeklies')
+                .setStyle('grey')
+                .setID('sdweeklymax'),
+            new disbut.MessageButton()
+                .setLabel('0 weeklies')
+                .setStyle('grey')
+                .setID('sdweeklyzero')
+        ], 'newline': true};
+    }
     function displayAlias(charDef) { return null; };
 
     let specialDisplayCases = {
@@ -136,6 +180,9 @@ async function getEmbedAndButtons(message, selectedClass) {
 
         'rigomordaily': displayRigomorDaily,
         'rigomorweekly': displayRigomorWeekly,
+
+        'sddaily': displaySdDaily,
+        'sdweekly': displaySdWeekly,
         
         'alias': displayAlias
     };
@@ -207,6 +254,10 @@ async function getEmbedAndButtons(message, selectedClass) {
             case 'rigomor':
                 charContent += '\n' + 'Dailies: ' + list[message.author.id]['lists'][list[message.author.id]['active']]['list'][index]['rigomordaily'];
                 charContent += '\n' + 'Weeklies ' + list[message.author.id]['lists'][list[message.author.id]['active']]['list'][index]['rigomorweekly'];
+                break;
+            case 'sd':
+                charContent += '\n' + 'Dailies: ' + list[message.author.id]['lists'][list[message.author.id]['active']]['list'][index]['sddaily'];
+                charContent += '\n' + 'Weeklies ' + list[message.author.id]['lists'][list[message.author.id]['active']]['list'][index]['sdweekly'];
                 break;
             default:
                 break;
@@ -320,12 +371,20 @@ async function editAttribute(message, selectedClass, attribute, invert) {
     function callHeroicweeklyzero(invert, classDef) { return {'heroicweekly': 0} };
     function callRigomorDailyPlus(invert, classDef) { return classDef['rigomordaily'] < 5 ? {'rigomordaily': classDef['rigomordaily'] + 1} : {}; };
     function callRigomorDailyMinus(invert, classDef) { return classDef['rigomordaily'] > 0 ? {'rigomordaily': classDef['rigomordaily'] - 1} : {}; };
-    function callRigomordailymax(invert, classDef) { return {'rigomordaily': 3} };
+    function callRigomordailymax(invert, classDef) { return {'rigomordaily': 5} };
     function callRigomordailyzero(invert, classDef) { return {'rigomordaily': 0} };
     function callRigomorWeeklyPlus(invert, classDef) { return classDef['rigomorweekly'] < 15 ? {'rigomorweekly': classDef['rigomorweekly'] + 1} : {}; };
     function callRigomorWeeklyMinus(invert, classDef) { return classDef['rigomorweekly'] > 0 ? {'rigomorweekly': classDef['rigomorweekly'] - 1} : {}; };
     function callRigomorweeklymax(invert, classDef) { return {'rigomorweekly': 15} };
     function callRigomorweeklyzero(invert, classDef) { return {'rigomorweekly': 0} };
+    function callSdDailyPlus(invert, classDef) { return classDef['sddaily'] < 2 ? {'sddaily': classDef['sddaily'] + 1} : {}; };
+    function callSdDailyMinus(invert, classDef) { return classDef['sddaily'] > 0 ? {'sddaily': classDef['sddaily'] - 1} : {}; };
+    function callSddailymax(invert, classDef) { return {'sddaily': 2} };
+    function callSddailyzero(invert, classDef) { return {'sddaily': 0} };
+    function callSdWeeklyPlus(invert, classDef) { return classDef['sdweekly'] < 5 ? {'sdweekly': classDef['sdweekly'] + 1} : {}; };
+    function callSdWeeklyMinus(invert, classDef) { return classDef['sdweekly'] > 0 ? {'sdweekly': classDef['sdweekly'] - 1} : {}; };
+    function callSdweeklymax(invert, classDef) { return {'sdweekly': 5} };
+    function callSdweeklyzero(invert, classDef) { return {'sdweekly': 0} };
 
     let attributeCases = {
         fresh: callFresh,
@@ -351,7 +410,16 @@ async function editAttribute(message, selectedClass, attribute, invert) {
         rigomorweeklyplus: callRigomorWeeklyPlus,
         rigomorweeklyminus: callRigomorWeeklyMinus,
         rigomorweeklymax: callRigomorweeklymax,
-        rigomorweeklyzero: callRigomorweeklyzero
+        rigomorweeklyzero: callRigomorweeklyzero,
+
+        sddailyplus: callSdDailyPlus,
+        sddailyminus: callSdDailyMinus,
+        sddailymax: callSddailymax,
+        sddailyzero: callSddailyzero,
+        sdweeklyplus: callSdWeeklyPlus,
+        sdweeklyminus: callSdWeeklyMinus,
+        sdweeklymax: callSdweeklymax,
+        sdweeklyzero: callSdweeklyzero
     };
 
     async function classFound(message, index, realName) {

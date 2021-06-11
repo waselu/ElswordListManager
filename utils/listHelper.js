@@ -286,6 +286,25 @@ function rigomorList(userList, config) {
     return listString;
 }
 
+function sdList(userList, config) {
+    userList = removeDoneCharacters(userList, function(classDef) {
+        return !(classDef['sddaily']) && !(classDef['sdweekly']);
+    });
+
+    userList = generateListPerAttribute(userList, [{'sddaily': true, 'sdweekly': false}, {'sddaily': false, 'sdweekly': true}, {'sddaily': true, 'sdweekly': true}]);
+
+    let listString = '';
+    for ([index, classDef] of userList.entries()) {
+        listString += classDef["emoji"] + ' ';
+        if (index < userList.length && (index == userList.length - 1 || (classDef['sddaily'] > 0) != (userList[index + 1]['sddaily'] > 0) || (classDef['sdweekly'] > 0) != (userList[index + 1]['sdweekly'] > 0))) {
+            if (classDef['sddaily']) { listString += findEmojiByAttributeName('sddaily') + ' '; }
+            if (classDef['sdweekly']) { listString += findEmojiByAttributeName('sdweekly') + ' '; }
+        }
+    }
+
+    return listString;
+}
+
 function userListToEmojiList(user, emojis = true) {
 	let list = saveManager.getList();
 
@@ -295,7 +314,7 @@ function userListToEmojiList(user, emojis = true) {
 
     let activeListType = list[user]['lists'][list[user]['active']]['type'];
     let activeListConfig = list[user]['lists'][list[user]['active']]['config'];
-    let userList = JSON.parse(JSON.stringify(list[user]['lists'][list[user]['active']]['list'])); //JSON used to copy DO NOT DELETE
+    let userList = JSON.parse(JSON.stringify(list[user]['lists'][list[user]['active']]['list']));
 
     let listString = '';
     switch (activeListType) {
@@ -310,6 +329,9 @@ function userListToEmojiList(user, emojis = true) {
             break;
         case 'rigomor':
             listString = rigomorList(userList, activeListConfig);
+            break;
+        case 'sd':
+            listString = sdList(userList, activeListConfig);
             break;
         default:
             break;
@@ -393,6 +415,11 @@ function specResetWeekly(list) {
                     list['list'][index]['rigomorweekly'] = 15;
                 }
                 break;
+            case 'sd':
+                if (list['list'][index]['sdweekly'] === 0) {
+                    list['list'][index]['sdweekly'] = 5;
+                }
+                break;
             default:
                 break;
         }
@@ -423,6 +450,11 @@ function specResetDaily(list) {
             case 'rigomor':
                 if (list['list'][index]['rigomordaily'] === 0) {
                     list['list'][index]['rigomordaily'] = 5;
+                }
+                break;
+            case 'sd':
+                if (list['list'][index]['sddaily'] === 0) {
+                    list['list'][index]['sddaily'] = 2;
                 }
                 break;
             default:

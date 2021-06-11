@@ -83,10 +83,13 @@
 		{"name": "rigomordaily", "value": 5, "isDefault": ["rigomor"], "emoji": "<:rigomordaily:851376456641806337>", "serverEmoji": ""},
 		{"name": "rigomorweekly", "value": 15, "isDefault": ["rigomor"], "emoji": "<:rigomorweekly:851376475143536672>", "serverEmoji": ""},
 
+		{"name": "sddaily", "value": 2, "isDefault": ["sd"], "emoji": "<:sddaily:852836108920029184>", "serverEmoji": ""},
+		{"name": "sdweekly", "value": 5, "isDefault": ["sd"], "emoji": "<:sdweekly:852836119355588648>", "serverEmoji": ""},
+
 	    {"name": "farm", "value": false, "isDefault": ["rosso"], "emoji": "🌾", "serverEmoji": ""},
 	    {"name": "alias", "value": null, "isDefault": ["rosso", "henir", "heroic", "rigomor"], "emoji": "", "serverEmoji": ""}
 	],
-	"typelists": ["rosso", "henir", "heroic", "rigomor"],
+	"typelists": ["rosso", "henir", "heroic", "rigomor", "sd"],
 	"configurations": [
 	],
 	"aliases": {

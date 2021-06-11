@@ -14,7 +14,8 @@ const client = new Discord.Client();
 require('discord-buttons')(client);
 
 //Mandatory
-//Add list types: SD (Later: Berthe)
+//Disable +/-/0/max buttons if charDef conditions are met
+//Make the addition of buttons and handler functions generic
 
 //Long term
 //Clear logs older than 1 month (parse log date)
