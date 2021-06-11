@@ -37,155 +37,49 @@ async function getEmbedAndButtons(message, selectedClass) {
                 .setID('fresh')
         ], 'newline': true};
     }
-    function displayHeroicDaily(charDef) {
-        return {'buttons': [
-            new disbut.MessageButton()
-                .setEmoji('➕')
-                .setLabel('daily')
-                .setStyle('green')
-                .setID('heroicdailyplus'),
-            new disbut.MessageButton()
-                .setEmoji('➖')
-                .setLabel('daily')
-                .setStyle('red')
-                .setID('heroicdailyminus'),
-            new disbut.MessageButton()
-                .setLabel('Max dailies')
-                .setStyle('grey')
-                .setID('heroicdailymax'),
-            new disbut.MessageButton()
-                .setLabel('0 dailies')
-                .setStyle('grey')
-                .setID('heroicdailyzero')
-        ], 'newline': true};
-    }
-    function displayHeroicWeekly(charDef) {
-        return {'buttons': [
-            new disbut.MessageButton()
-                .setEmoji('➕')
-                .setLabel('weekly')
-                .setStyle('green')
-                .setID('heroicweeklyplus'),
-            new disbut.MessageButton()
-                .setEmoji('➖')
-                .setLabel('weekly')
-                .setStyle('red')
-                .setID('heroicweeklyminus'),
-            new disbut.MessageButton()
-                .setLabel('Max weeklies')
-                .setStyle('grey')
-                .setID('heroicweeklymax'),
-            new disbut.MessageButton()
-                .setLabel('0 weeklies')
-                .setStyle('grey')
-                .setID('heroicweeklyzero')
-        ], 'newline': true};
-    }
-    function displayRigomorDaily(charDef) {
-        return {'buttons': [
-            new disbut.MessageButton()
-                .setEmoji('➕')
-                .setLabel('daily')
-                .setStyle('green')
-                .setID('rigomordailyplus'),
-            new disbut.MessageButton()
-                .setEmoji('➖')
-                .setLabel('daily')
-                .setStyle('red')
-                .setID('rigomordailyminus'),
-            new disbut.MessageButton()
-                .setLabel('Max dailies')
-                .setStyle('grey')
-                .setID('rigomordailymax'),
-            new disbut.MessageButton()
-                .setLabel('0 dailies')
-                .setStyle('grey')
-                .setID('rigomordailyzero')
-        ], 'newline': true};
-    }
-    function displayRigomorWeekly(charDef) {
-        return {'buttons': [
-            new disbut.MessageButton()
-                .setEmoji('➕')
-                .setLabel('weekly')
-                .setStyle('green')
-                .setID('rigomorweeklyplus'),
-            new disbut.MessageButton()
-                .setEmoji('➖')
-                .setLabel('weekly')
-                .setStyle('red')
-                .setID('rigomorweeklyminus'),
-            new disbut.MessageButton()
-                .setLabel('Max weeklies')
-                .setStyle('grey')
-                .setID('rigomorweeklymax'),
-            new disbut.MessageButton()
-                .setLabel('0 weeklies')
-                .setStyle('grey')
-                .setID('rigomorweeklyzero')
-        ], 'newline': true};
-    }
-    function displaySdDaily(charDef) {
-        return {'buttons': [
-            new disbut.MessageButton()
-                .setEmoji('➕')
-                .setLabel('daily')
-                .setStyle('green')
-                .setID('sddailyplus'),
-            new disbut.MessageButton()
-                .setEmoji('➖')
-                .setLabel('daily')
-                .setStyle('red')
-                .setID('sddailyminus'),
-            new disbut.MessageButton()
-                .setLabel('Max dailies')
-                .setStyle('grey')
-                .setID('sddailymax'),
-            new disbut.MessageButton()
-                .setLabel('0 dailies')
-                .setStyle('grey')
-                .setID('sddailyzero')
-        ], 'newline': true};
-    }
-    function displaySdWeekly(charDef) {
-        return {'buttons': [
-            new disbut.MessageButton()
-                .setEmoji('➕')
-                .setLabel('weekly')
-                .setStyle('green')
-                .setID('sdweeklyplus'),
-            new disbut.MessageButton()
-                .setEmoji('➖')
-                .setLabel('weekly')
-                .setStyle('red')
-                .setID('sdweeklyminus'),
-            new disbut.MessageButton()
-                .setLabel('Max weeklies')
-                .setStyle('grey')
-                .setID('sdweeklymax'),
-            new disbut.MessageButton()
-                .setLabel('0 weeklies')
-                .setStyle('grey')
-                .setID('sdweeklyzero')
-        ], 'newline': true};
-    }
     function displayAlias(charDef) { return null; };
 
     let specialDisplayCases = {
         'fresh': displayFresh,
         'stone': displayStone,
-
-        'heroicdaily': displayHeroicDaily,
-        'heroicweekly': displayHeroicWeekly,
-
-        'rigomordaily': displayRigomorDaily,
-        'rigomorweekly': displayRigomorWeekly,
-
-        'sddaily': displaySdDaily,
-        'sdweekly': displaySdWeekly,
         
         'alias': displayAlias
     };
+
+    function addEditionRow(attribute, singularLabel, pluralLabel) {
+        specialDisplayCases[attribute] = function(charDef) {
+            return {'buttons': [
+                new disbut.MessageButton()
+                    .setEmoji('➕')
+                    .setLabel(singularLabel)
+                    .setStyle('green')
+                    .setID(attribute + 'plus'),
+                new disbut.MessageButton()
+                    .setEmoji('➖')
+                    .setLabel(singularLabel)
+                    .setStyle('red')
+                    .setID(attribute + 'minus'),
+                new disbut.MessageButton()
+                    .setLabel('Max ' + pluralLabel)
+                    .setStyle('grey')
+                    .setID(attribute + 'max'),
+                new disbut.MessageButton()
+                    .setLabel('0 ' + pluralLabel)
+                    .setStyle('grey')
+                    .setID(attribute + 'zero')
+            ], 'newline': true};
+        }
+    }
+
+    let dailies = ['daily', 'dailies'];
+    let weeklies = ['weekly', 'weeklies'];
+
+    addEditionRow('heroicdaily', ...dailies);
+    addEditionRow('heroicweekly', ...weeklies);
+    addEditionRow('rigomordaily', ...dailies);
+    addEditionRow('rigomorweekly', ...weeklies);
+    addEditionRow('sddaily', ...dailies);
+    addEditionRow('sdweekly', ...weeklies);
 
     async function classFound(message, index, realName) {
         let charDef = list[message.author.id]['lists'][list[message.author.id]['active']]['list'][index];
