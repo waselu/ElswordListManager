@@ -15,7 +15,6 @@ require('discord-buttons')(client);
 
 //Mandatory
 //Disable +/-/0/max buttons if charDef conditions are met
-//Make the addition of handler functions generic in edit command
 //Add epoch time to logs
 
 //Long term

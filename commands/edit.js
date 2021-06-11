@@ -49,24 +49,10 @@ async function getEmbedAndButtons(message, selectedClass) {
     function addEditionRow(attribute, singularLabel, pluralLabel) {
         specialDisplayCases[attribute] = function(charDef) {
             return {'buttons': [
-                new disbut.MessageButton()
-                    .setEmoji('➕')
-                    .setLabel(singularLabel)
-                    .setStyle('green')
-                    .setID(attribute + 'plus'),
-                new disbut.MessageButton()
-                    .setEmoji('➖')
-                    .setLabel(singularLabel)
-                    .setStyle('red')
-                    .setID(attribute + 'minus'),
-                new disbut.MessageButton()
-                    .setLabel('Max ' + pluralLabel)
-                    .setStyle('grey')
-                    .setID(attribute + 'max'),
-                new disbut.MessageButton()
-                    .setLabel('0 ' + pluralLabel)
-                    .setStyle('grey')
-                    .setID(attribute + 'zero')
+                new disbut.MessageButton().setEmoji('➕').setLabel(singularLabel).setStyle('green').setID(attribute + 'plus'),
+                new disbut.MessageButton().setEmoji('➖').setLabel(singularLabel).setStyle('red').setID(attribute + 'minus'),
+                new disbut.MessageButton().setLabel('Max ' + pluralLabel).setStyle('grey').setID(attribute + 'max'),
+                new disbut.MessageButton().setLabel('0 ' + pluralLabel).setStyle('grey').setID(attribute + 'zero')
             ], 'newline': true};
         }
     }
@@ -255,30 +241,6 @@ async function editAttribute(message, selectedClass, attribute, invert) {
     function callStoneBlue(invert, classDef) { return callStone(invert, 'blue'); };
     function callStoneYellow(invert, classDef) { return callStone(invert, 'yellow'); };
     function callStoneGiant(invert, classDef) { return callStone(invert, 'giant'); };
-    function callHeroicdailyplus(invert, classDef) { return classDef['heroicdaily'] < 3 ? {'heroicdaily': classDef['heroicdaily'] + 1} : {}; };
-    function callHeroicdailyminus(invert, classDef) { return classDef['heroicdaily'] > 0 ? {'heroicdaily': classDef['heroicdaily'] - 1} : {}; };
-    function callHeroicdailymax(invert, classDef) { return {'heroicdaily': 3} };
-    function callHeroicdailyzero(invert, classDef) { return {'heroicdaily': 0} };
-    function callHeroicweeklyplus(invert, classDef) { return classDef['heroicweekly'] < 10 ? {'heroicweekly': classDef['heroicweekly'] + 1} : {}; };
-    function callHeroicweeklyminus(invert, classDef) { return classDef['heroicweekly'] > 0 ? {'heroicweekly': classDef['heroicweekly'] - 1} : {}; };
-    function callHeroicweeklymax(invert, classDef) { return {'heroicweekly': 10} };
-    function callHeroicweeklyzero(invert, classDef) { return {'heroicweekly': 0} };
-    function callRigomorDailyPlus(invert, classDef) { return classDef['rigomordaily'] < 5 ? {'rigomordaily': classDef['rigomordaily'] + 1} : {}; };
-    function callRigomorDailyMinus(invert, classDef) { return classDef['rigomordaily'] > 0 ? {'rigomordaily': classDef['rigomordaily'] - 1} : {}; };
-    function callRigomordailymax(invert, classDef) { return {'rigomordaily': 5} };
-    function callRigomordailyzero(invert, classDef) { return {'rigomordaily': 0} };
-    function callRigomorWeeklyPlus(invert, classDef) { return classDef['rigomorweekly'] < 15 ? {'rigomorweekly': classDef['rigomorweekly'] + 1} : {}; };
-    function callRigomorWeeklyMinus(invert, classDef) { return classDef['rigomorweekly'] > 0 ? {'rigomorweekly': classDef['rigomorweekly'] - 1} : {}; };
-    function callRigomorweeklymax(invert, classDef) { return {'rigomorweekly': 15} };
-    function callRigomorweeklyzero(invert, classDef) { return {'rigomorweekly': 0} };
-    function callSdDailyPlus(invert, classDef) { return classDef['sddaily'] < 2 ? {'sddaily': classDef['sddaily'] + 1} : {}; };
-    function callSdDailyMinus(invert, classDef) { return classDef['sddaily'] > 0 ? {'sddaily': classDef['sddaily'] - 1} : {}; };
-    function callSddailymax(invert, classDef) { return {'sddaily': 2} };
-    function callSddailyzero(invert, classDef) { return {'sddaily': 0} };
-    function callSdWeeklyPlus(invert, classDef) { return classDef['sdweekly'] < 5 ? {'sdweekly': classDef['sdweekly'] + 1} : {}; };
-    function callSdWeeklyMinus(invert, classDef) { return classDef['sdweekly'] > 0 ? {'sdweekly': classDef['sdweekly'] - 1} : {}; };
-    function callSdweeklymax(invert, classDef) { return {'sdweekly': 5} };
-    function callSdweeklyzero(invert, classDef) { return {'sdweekly': 0} };
 
     let attributeCases = {
         fresh: callFresh,
@@ -286,35 +248,22 @@ async function editAttribute(message, selectedClass, attribute, invert) {
         red: callStoneRed,
         blue: callStoneBlue,
         yellow: callStoneYellow,
-        giant: callStoneGiant,
-
-        heroicdailyplus: callHeroicdailyplus,
-        heroicdailyminus: callHeroicdailyminus,
-        heroicdailymax: callHeroicdailymax,
-        heroicdailyzero: callHeroicdailyzero,
-        heroicweeklyplus: callHeroicweeklyplus,
-        heroicweeklyminus: callHeroicweeklyminus,
-        heroicweeklymax: callHeroicweeklymax,
-        heroicweeklyzero: callHeroicweeklyzero,
-
-        rigomordailyplus: callRigomorDailyPlus,
-        rigomordailyminus: callRigomorDailyMinus,
-        rigomordailymax: callRigomordailymax,
-        rigomordailyzero: callRigomordailyzero,
-        rigomorweeklyplus: callRigomorWeeklyPlus,
-        rigomorweeklyminus: callRigomorWeeklyMinus,
-        rigomorweeklymax: callRigomorweeklymax,
-        rigomorweeklyzero: callRigomorweeklyzero,
-
-        sddailyplus: callSdDailyPlus,
-        sddailyminus: callSdDailyMinus,
-        sddailymax: callSddailymax,
-        sddailyzero: callSddailyzero,
-        sdweeklyplus: callSdWeeklyPlus,
-        sdweeklyminus: callSdWeeklyMinus,
-        sdweeklymax: callSdweeklymax,
-        sdweeklyzero: callSdweeklyzero
+        giant: callStoneGiant
     };
+
+    function addRowHandleFunctions(attribute, maxValue) {
+        attributeCases[attribute + 'plus'] = function(invert, classDef) { let setObj = {}; setObj[attribute] = classDef[attribute] + 1; return classDef[attribute] < maxValue ? setObj : {}; };;
+        attributeCases[attribute + 'minus'] = function(invert, classDef) { let setObj = {}; setObj[attribute] = classDef[attribute] - 1; return classDef[attribute] > 0 ? setObj : {}; };;
+        attributeCases[attribute + 'max'] = function(invert, classDef) { let setObj = {}; setObj[attribute] = maxValue; return setObj };;
+        attributeCases[attribute + 'zero'] = function(invert, classDef) { let setObj = {}; setObj[attribute] = 0; return setObj };;
+    }
+
+    addRowHandleFunctions('heroicdaily', 3);
+    addRowHandleFunctions('heroicweekly', 10);
+    addRowHandleFunctions('rigomordaily', 5);
+    addRowHandleFunctions('rigomorweekly', 15);
+    addRowHandleFunctions('sddaily', 2);
+    addRowHandleFunctions('sdweekly', 5);
 
     async function classFound(message, index, realName) {
         if (attributeCases[attribute]) {
