@@ -14,7 +14,7 @@ const client = new Discord.Client();
 require('discord-buttons')(client);
 
 //Long term
-//Clear logs older than 1 month (parse log date)
+//Clear logs older than 1 month
 //Discord slash commands
 
 client.commands = new Discord.Collection();
