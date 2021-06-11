@@ -28,7 +28,8 @@ function getLogs(reload = false) {
 }
 
 function log(message, command, args, save = true) {
-    logs = [...[('[' + (new Date()).toLocaleString('fr-FR') + '] [' + message.author.username + '#' + message.author.discriminator + '] [' + message.author.id + '] ' + command.name + ' ' + args.join(' '))], ...logs];
+    let date = new Date();
+    logs = [...[('[' + date.toLocaleString('fr-FR') + '] [' + date.valueOf() + '] [' + message.author.username + '#' + message.author.discriminator + '] [' + message.author.id + '] ' + command.name + ' ' + args.join(' '))], ...logs];
     if (save) {
         saveLogs();
     }
