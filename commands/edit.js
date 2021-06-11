@@ -46,26 +46,27 @@ async function getEmbedAndButtons(message, selectedClass) {
         'alias': displayAlias
     };
 
-    function addEditionRow(attribute, singularLabel, pluralLabel) {
+    function addEditionRow(attribute, singularLabel, pluralLabel, maxValue) {
         specialDisplayCases[attribute] = function(charDef) {
-            return {'buttons': [
-                new disbut.MessageButton().setEmoji('➕').setLabel(singularLabel).setStyle('green').setID(attribute + 'plus'),
-                new disbut.MessageButton().setEmoji('➖').setLabel(singularLabel).setStyle('red').setID(attribute + 'minus'),
-                new disbut.MessageButton().setLabel('Max ' + pluralLabel).setStyle('grey').setID(attribute + 'max'),
-                new disbut.MessageButton().setLabel('0 ' + pluralLabel).setStyle('grey').setID(attribute + 'zero')
-            ], 'newline': true};
-        }
+            let plusButton = new disbut.MessageButton().setEmoji('➕').setLabel(singularLabel).setStyle('green').setID(attribute + 'plus');
+            let minusButton = new disbut.MessageButton().setEmoji('➖').setLabel(singularLabel).setStyle('red').setID(attribute + 'minus');
+            let maxButton = new disbut.MessageButton().setLabel('Max ' + pluralLabel).setStyle('grey').setID(attribute + 'max');
+            let zeroButton = new disbut.MessageButton().setLabel('0 ' + pluralLabel).setStyle('grey').setID(attribute + 'zero');
+            if (charDef[attribute] === 0) { minusButton.setDisabled(); zeroButton.setDisabled(); };
+            if (charDef[attribute] === maxValue) { plusButton.setDisabled(); maxButton.setDisabled(); };
+            return {'buttons': [plusButton, minusButton, maxButton, zeroButton], 'newline': true};
+        };
     }
 
     let dailies = ['daily', 'dailies'];
     let weeklies = ['weekly', 'weeklies'];
 
-    addEditionRow('heroicdaily', ...dailies);
-    addEditionRow('heroicweekly', ...weeklies);
-    addEditionRow('rigomordaily', ...dailies);
-    addEditionRow('rigomorweekly', ...weeklies);
-    addEditionRow('sddaily', ...dailies);
-    addEditionRow('sdweekly', ...weeklies);
+    addEditionRow('heroicdaily', ...dailies, 3);
+    addEditionRow('heroicweekly', ...weeklies, 10);
+    addEditionRow('rigomordaily', ...dailies, 5);
+    addEditionRow('rigomorweekly', ...weeklies, 15);
+    addEditionRow('sddaily', ...dailies, 2);
+    addEditionRow('sdweekly', ...weeklies, 5);
 
     async function classFound(message, index, realName) {
         let charDef = list[message.author.id]['lists'][list[message.author.id]['active']]['list'][index];

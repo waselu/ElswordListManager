@@ -14,7 +14,6 @@ const client = new Discord.Client();
 require('discord-buttons')(client);
 
 //Mandatory
-//Disable +/-/0/max buttons if charDef conditions are met
 //Add epoch time to logs
 
 //Long term
