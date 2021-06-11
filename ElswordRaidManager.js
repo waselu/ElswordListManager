@@ -15,7 +15,6 @@ require('discord-buttons')(client);
 
 //Long term
 //Clear logs older than 1 month (parse log date)
-//Anti-conflict system on logs, 10+ files and array of used files to use an unused one, store time of command to merge afterward
 //Discord slash commands
 
 client.commands = new Discord.Collection();
@@ -36,7 +35,6 @@ for (let [commandName, commandAliases] of Object.entries(aliases)) {
 client.on('ready', function() {
 	console.log(`logged in as ${client.user.tag}`);
 	saveManager.getList(true);
-	logs.getLogs(true);
 });
 
 client.on('message', function(message) {
@@ -46,6 +44,9 @@ client.on('message', function(message) {
 //Auto resets
 const jobDaily = schedule.scheduleJob('0 9 * * *', helper.resetDaily);
 const jobWeekly = schedule.scheduleJob('0 9 * * 3', helper.resetWeekly);
+
+//Merge logs file
+const jobMergeLogs = schedule.scheduleJob('0 9 * * 3', logs.mergeLogs);
 
 //Bot login
 client.login('ODI4Njc5OTQ2MDcwMjYxODIx.YGtGVw.5isgxBCdahm5poWSqBBy6ck8PMo');
