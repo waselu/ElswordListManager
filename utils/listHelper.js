@@ -207,7 +207,14 @@ function rossoList(userList, config, emojis = true) {
         return !(classDef['fresh']) && !(classDef['reset']) && !(classDef['farm']);
     });
 
-    userList = generateListPerAttribute(userList, [{'fresh': false, 'reset': false}, {'reset': true}, {'fresh': true}]);
+    userList = generateListPerAttribute(userList, [
+        {'dps': true, 'fresh': false, 'reset': false},
+        {'fresh': false, 'reset': false},
+        {'dps': true, 'reset': true},
+        {'reset': true},
+        {'dps': true, 'fresh': true},
+        {'fresh': true}
+    ]);
 
     let listString = '';
     for ([index, classDef] of userList.entries()) {
