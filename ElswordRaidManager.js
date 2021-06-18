@@ -1,11 +1,8 @@
 
 const Discord = require('discord.js');
 const fs = require('fs');
-const schedule = require('node-schedule');
 const { aliases } = require('./config.json');
-const saveManager = require('./utils/saveManager');
-const logs = require('./utils/logs');
-const helper = require('./utils/listHelper');
+const cookieSaveManager = require('./utils/cookieSaveManager');
 const commandManager = require('./utils/commandManager');
 require('discord-reply');
 
@@ -34,19 +31,12 @@ for (let [commandName, commandAliases] of Object.entries(aliases)) {
 //Listeners
 client.on('ready', function() {
 	console.log(`logged in as ${client.user.tag}`);
-	saveManager.getList(true);
+	cookieSaveManager.getCookieSave(true);
 });
 
 client.on('message', function(message) {
 	commandManager.commandManager(message, client);
 })
-
-//Auto resets
-const jobDaily = schedule.scheduleJob('0 9 * * *', helper.resetDaily);
-const jobWeekly = schedule.scheduleJob('0 9 * * 3', helper.resetWeekly);
-
-//Merge logs file
-const jobMergeLogs = schedule.scheduleJob('0 9 * * 3', logs.mergeLogs);
 
 //Bot login
 client.login('ODI4Njc5OTQ2MDcwMjYxODIx.YGtGVw.5isgxBCdahm5poWSqBBy6ck8PMo');

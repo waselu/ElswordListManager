@@ -1,0 +1,10 @@
+{
+    "204486578482053120": {
+        "cookie": 90,
+        "cps": 0,
+        "cpsMultiplier": 1,
+        "click": 10,
+        "clickMultiplier": 1,
+        "clickCpsBoost": 0
+    }
+}
